@@ -1,8 +1,10 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import React from 'react';
 import { View, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from '../styles/Card';
+import Images from '../constants/Images';
 
 const Card = props => {
   const { card, row, column } = props;
@@ -28,7 +30,7 @@ const Card = props => {
     <View style={styles.container}>
       <Image
         style={cardStye}
-        source={card.image}
+        source={Images[card.id]}
         alt="Table"
       />
     </View>

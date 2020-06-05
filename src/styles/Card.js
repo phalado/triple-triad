@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const cardWidth = Dimensions.get('window').width * 0.17;
-const cardHeight = Dimensions.get('window').height * 0.33;
+const cardHeight = Dimensions.get('window').height * 0.28;
 
 const CardStyles = StyleSheet.create({
   container: {
@@ -29,6 +29,7 @@ const CardStyles = StyleSheet.create({
     top: (Dimensions.get('window').height + cardHeight) / 2,
   },
   card: {
+    resizeMode: 'stretch',
     width: '100%',
     height: '100%',
   },

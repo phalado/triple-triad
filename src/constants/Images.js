@@ -1,0 +1,22 @@
+/* eslint-disable global-require */
+export default {
+  player0: require('../contents/img/player0.png'),
+  player1: require('../contents/img/player1.png'),
+  player2: require('../contents/img/player2.png'),
+  rank0: require('../contents/img/rank0.png'),
+  rank1: require('../contents/img/rank1.png'),
+  rank2: require('../contents/img/rank2.png'),
+  rank3: require('../contents/img/rank3.png'),
+  rank4: require('../contents/img/rank4.png'),
+  rank5: require('../contents/img/rank5.png'),
+  rank6: require('../contents/img/rank6.png'),
+  rank7: require('../contents/img/rank7.png'),
+  rank8: require('../contents/img/rank8.png'),
+  rank9: require('../contents/img/rank9.png'),
+  rankA: require('../contents/img/rankA.png'),
+  cursor: require('../contents/img/cursor.png'),
+  board: require('../contents/img/board-mat.jpg'),
+  1: require('../contents/img/cards/001.png'),
+  2: require('../contents/img/cards/002.png'),
+  110: require('../contents/img/cards/110.png'),
+};

@@ -12,7 +12,7 @@ const RankNumbers = props => {
   const rankRt = `rank${ranks[3]}`;
 
   return (
-    <View>
+    <View style={styles.container}>
       <Image
         style={styles.rankUp}
         source={Images[rankUp]}

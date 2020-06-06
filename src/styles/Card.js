@@ -5,7 +5,6 @@ const cardHeight = Dimensions.get('window').height * 0.28;
 
 const CardStyles = StyleSheet.create({
   container: {
-    zIndex: 5,
     position: 'absolute',
     width: cardWidth,
     height: cardHeight,
@@ -30,8 +29,14 @@ const CardStyles = StyleSheet.create({
   },
   card: {
     resizeMode: 'stretch',
+    position: 'absolute',
     width: '100%',
     height: '100%',
+  },
+  rank: {
+    position: 'absolute',
+    width: cardWidth / 8,
+    height: cardHeight / 8,
   },
 });
 

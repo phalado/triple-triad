@@ -33,11 +33,6 @@ const CardStyles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  rank: {
-    position: 'absolute',
-    width: cardWidth / 8,
-    height: cardHeight / 8,
-  },
 });
 
 export default CardStyles;

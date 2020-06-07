@@ -42,4 +42,9 @@ const RankNumbers = props => {
   );
 };
 
+RankNumbers.propTypes = {
+  ranks: PropTypes.arrayOf(PropTypes.number).isRequired,
+  element: PropTypes.string.isRequired,
+};
+
 export default RankNumbers;

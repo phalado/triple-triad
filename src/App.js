@@ -20,7 +20,7 @@ class App extends Component {
       <View style={styles.container}>
         <Table />
         <PlayingCards player playCards={[110, 109, 108, 107, 106]} />
-        <PlayingCards playCards={[1, 2, 3, 4, 5]} />
+        <PlayingCards playCards={[1, 2, 3, 4, 6]} />
       </View>
     );
   }

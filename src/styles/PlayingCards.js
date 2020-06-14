@@ -4,10 +4,9 @@ const PlayingCardsStyles = StyleSheet.create({
   container: {
     position: 'absolute',
     resizeMode: 'stretch',
-    width: Dimensions.get('window').width * 0.2,
+    width: Dimensions.get('window').width * 0.17,
     height: Dimensions.get('window').height * 0.9,
     top: Dimensions.get('window').height * 0.05,
-    textAlign: 'center',
   },
   play1: {
     right: Dimensions.get('window').width * 0.025,
@@ -16,10 +15,7 @@ const PlayingCardsStyles = StyleSheet.create({
     left: Dimensions.get('window').width * 0.025,
   },
   scoreText: {
-    color: 'white',
-    fontSize: 30,
-    position: 'absolute',
-    bottom: 0,
+    bottom: -270,
   },
 });
 

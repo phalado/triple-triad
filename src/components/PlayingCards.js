@@ -6,15 +6,26 @@ import styles from '../styles/PlayingCards';
 import Cards from '../constants/Cards';
 import Card from './Card';
 
+const textStyle = function(myColor) {
+  return {
+    fontSize: 30,
+    textAlign: 'center',
+    color: myColor,
+  }
+}
+
 const PlayingCards = props => {
   const { player, playCards } = props;
   const contStyle = player
     ? { ...styles.container, ...styles.play1 }
     : { ...styles.container, ...styles.play2 };
+  
+  let myColor = player ? "blue" : "red";
+  let scoreTeste = player ? 5 : 6;
 
   return (
     <View style={contStyle}>
-      <Text style={{ color: 'white', fontSize: 30 }}>Text here</Text>
+      <Text style={textStyle(myColor)}>{player ? "Player 1" : "PC"}</Text>
       <View style={{ position: 'relative' }}>
         {playCards.map((playCard, index) => (
           <Card
@@ -26,7 +37,7 @@ const PlayingCards = props => {
           />
         ))}
       </View>
-      <Text style={styles.scoreText}>Score: 5</Text>
+      <Text style={[styles.scoreText,textStyle(myColor)]}>Score: {scoreTeste}</Text>
     </View>
   );
 };

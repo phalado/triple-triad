@@ -19,7 +19,7 @@ const Card = props => {
   } else if (row === 1) {
     cardContainer = { ...cardContainer, ...styles.bottomRow };
   } else {
-    const value = (row - 2) * 30;
+    const value = (row - 2) * 40;
     cardContainer = { ...cardContainer, top: value };
   }
 

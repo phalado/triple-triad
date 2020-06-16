@@ -21,48 +21,63 @@ let styles = StyleSheet.create({
 });
 
 export default class PlayingCardsDraggable extends Component {
-  /* constructor(props) {
-    super(props);
 
-    this.state = {
-      showDraggable: true,
-      dropAreaValues: null,
-      pan: new Animated.ValueXY(),
-      opacity: new Animated.Value(1)
-    };
-  }; */
-
+  showDraggable= true;
+  dropAreaValues = null;
   pan = new Animated.ValueXY();
+  opacity = new Animated.Value(1);
+
   panResponder = PanResponder.create({
-    onMoveShouldSetPanResponder: () => true,
-    onPanResponderGrant: () => {
+
+    onMoveShouldSetPanResponder: (e, gesture) => true,
+    
+    onPanResponderGrant: (e, gesture) => {
       this.pan.setOffset({
         x: this.pan.x._value,
         y: this.pan.y._value
       });
     },
+
     // Initialize PanResponder with move handling
     onPanResponderMove: Animated.event([
       null,
       { dx: this.pan.x, dy: this.pan.y }
     ], { useNativeDriver: false }),
-    onPanResponderRelease: () => {
-      Animated.spring(this.pan, {
-        toValue: { x: 0, y: 0 },
-        friction: 5,
+
+    onPanResponderRelease: (e, gesture) => {
+      if (this.isDropArea(e,gesture)) {
+        Animated.timing(this.opacity, {
+        toValue: 1,
+        duration: 1000,
         useNativeDriver: false
-      }).start();
+        }).start(() =>
+        this.setState({
+           showDraggable: false
+          })
+        );
+      }
+      else{
+        Animated.spring(this.pan, {
+          toValue: { x: 0, y: 0 },
+          friction: 5,
+          useNativeDriver: false
+        }).start();
+      }
     }
+
   });
+
+  isDropArea(e,gesture) {
+    return gesture.moveY < 200;
+  }  
 
   render() {
     return (
         <Animated.View
-          style={{
+          style={[{
             transform: [{ translateX: this.pan.x }, { translateY: this.pan.y }]
-          }}
-          {...this.panResponder.panHandlers}
-        >
+          },{opacity: this.opacity}]}
+          {...this.panResponder.panHandlers}>
           <View style={styles.box} />
         </Animated.View>
     );

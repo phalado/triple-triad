@@ -21,17 +21,6 @@ let styles = StyleSheet.create({
 });
 
 export default class PlayingCardsDraggable extends Component {
-  /* constructor(props) {
-    super(props);
-
-    this.state = {
-      showDraggable: true,
-      dropAreaValues: null,
-      pan: new Animated.ValueXY(),
-      opacity: new Animated.Value(1)
-    };
-  }; */
-
   pan = new Animated.ValueXY();
   panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: () => true,

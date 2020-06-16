@@ -14,8 +14,16 @@ const PlayingCardsStyles = StyleSheet.create({
   play2: {
     left: Dimensions.get('window').width * 0.025,
   },
+  nameText: {
+    fontSize: 30,
+    textAlign: 'center',
+  },
   scoreText: {
-    bottom: -270,
+    position: 'absolute',
+    bottom: -10,
+    left: 10,
+    fontSize: 30,
+    textAlign: 'center',
   },
 });
 

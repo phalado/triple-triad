@@ -2,9 +2,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import styles from '../styles/PlayingCards';
 import Cards from '../constants/Cards';
 import Card from './Card';
+import styles from '../styles/PlayingCards';
 
 const PlayingCards = props => {
   const { player, playCards } = props;

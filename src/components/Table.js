@@ -12,15 +12,15 @@ const Table = () => (
       alt="Table"
     />
     <View style={styles.dropZonesContainer}>
-    <View style={styles.dropZones}/>
-    <View style={styles.dropZones}/>
-    <View style={styles.dropZones}/>
-    <View style={styles.dropZones}/>
-    <View style={styles.dropZones}/>
-    <View style={styles.dropZones}/>
-    <View style={styles.dropZones}/>
-    <View style={styles.dropZones}/>
-    <View style={styles.dropZones}/>
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
     </View>
   </View>
 );

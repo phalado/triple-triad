@@ -20,8 +20,9 @@ let styles = StyleSheet.create({
   },
 });
 
-export default class PlayingCardsDraggable extends Component {
+class PlayingCardsDraggable extends Component {
   pan = new Animated.ValueXY();
+
   panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: () => true,
     onPanResponderGrant: () => {
@@ -30,11 +31,10 @@ export default class PlayingCardsDraggable extends Component {
         y: this.pan.y._value
       });
     },
-    // Initialize PanResponder with move handling
     onPanResponderMove: Animated.event([
       null,
       { dx: this.pan.x, dy: this.pan.y }
-    ], { useNativeDriver: false }),
+    ],{ useNativeDriver: false }),
     onPanResponderRelease: () => {
       Animated.spring(this.pan, {
         toValue: { x: 0, y: 0 },
@@ -51,10 +51,9 @@ export default class PlayingCardsDraggable extends Component {
             transform: [{ translateX: this.pan.x }, { translateY: this.pan.y }]
           }}
           {...this.panResponder.panHandlers}
-        >
-          <View style={styles.box} />
-        </Animated.View>
+        />
     );
   }
-
 };
+
+export default PlayingCardsDraggable;

@@ -11,17 +11,17 @@ const Table = () => (
       source={Images.board}
       alt="Table"
     />
-    <View style={styles.dropZonesContainer}>
-      <View style={styles.dropZones} />
-      {/* <View style={styles.dropZones} />
+    {/* <View style={styles.dropZonesContainer}>
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
-      <View style={styles.dropZones} /> */}
-    </View>
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+      <View style={styles.dropZones} />
+    </View> */}
   </View>
 );
 

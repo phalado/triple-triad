@@ -20,6 +20,8 @@ class Card extends Component {
   dropAreaValues = null;
   pan = new Animated.ValueXY();
   opacity = new Animated.Value(1);
+  screenWidth = Dimensions.get('window').width;
+  scrennHeight = Dimensions.get('window').height;
   cardWidth = Dimensions.get('window').width * 0.17;
   cardHeight = Dimensions.get('window').height * 0.28;
 
@@ -85,6 +87,7 @@ class Card extends Component {
   render() {
     const { card, player } = this.props;
     const { row, column } = this.state;
+    const playerImage = player ? 'player1' : 'player2';
     let cardContainer = styles.container;
 
     if (row === -1) {
@@ -94,9 +97,9 @@ class Card extends Component {
     } else if (row === 1) {
       cardContainer = { ...cardContainer, ...styles.bottomRow };
     } else {
-      const value = Dimensions.get('window').height * 0.05 + (row - 2) * 40;
-      // const value = 40;
-      cardContainer = { ...cardContainer, top: value, right: 40 };
+      const value = (this.scrennHeight * 0.15)  + (row - 2) * this.scrennHeight * 0.1;
+      player ? cardContainer = { ...cardContainer, top: value, right: '2.5%' } :
+      cardContainer = { ...cardContainer, top: value, left: '2.5%' }
     }
 
     if (column === -1) {
@@ -107,7 +110,7 @@ class Card extends Component {
       cardContainer = { ...cardContainer, ...styles.rightColumn };
     }
 
-    if (player === 'player2' && !rules.open) {
+    if (!player && !rules.open) {
       return (
         <View style={cardContainer}>
           <Image
@@ -130,7 +133,7 @@ class Card extends Component {
         >
           <Image
             style={styles.card}
-            source={Images[player]}
+            source={Images[playerImage]}
             alt="Background"
           />
           <Image
@@ -147,7 +150,7 @@ class Card extends Component {
       <View style={cardContainer}>
         <Image
           style={styles.card}
-          source={Images[player]}
+          source={Images[playerImage]}
           alt="Background"
         />
         <Image
@@ -165,7 +168,11 @@ Card.propTypes = {
   card: PropTypes.objectOf(PropTypes.any).isRequired,
   row: PropTypes.number.isRequired,
   column: PropTypes.number.isRequired,
-  player: PropTypes.string.isRequired,
+  player: PropTypes.bool,
 };
+
+Card.defaultProps = {
+  player: false,
+}
 
 export default Card;

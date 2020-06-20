@@ -13,6 +13,7 @@ class Card extends Component {
       dragable: true,
       row: this.props.row,
       column: this.props.column,
+      table: this.props.table 
     })
   }
 
@@ -38,26 +39,37 @@ class Card extends Component {
       { dx: this.pan.x, dy: this.pan.y }
     ],{ useNativeDriver: false }),
     onPanResponderRelease: (e, gesture) => {
-      for (let i = 0; i <= 2; i += 1) {
-        for (let j = 0; j <= 2; j += 1) {
-          if (this.isDropArea(e, gesture, i, j)) {
-            Animated.spring(this.pan, {
-              toValue: { x: -this.cardWidth, y: -this.cardHeight },
-              friction: 10,
-              useNativeDriver: false,
-            }).start(() =>
+      if (!this.props.player) {
+        Animated.spring(this.pan, {
+          toValue: { x: 0, y: 0 },
+          friction: 5,
+          useNativeDriver: false
+        }).start();
+      } else {
+        for (let i = 0; i <= 2; i += 1) {
+          for (let j = 0; j <= 2; j += 1) {
+            if (this.state.table[i][j] === null && this.isDropArea(e, gesture, i, j)) {
+              Animated.spring(this.pan, {
+                toValue: { x: -this.cardWidth, y: -this.cardHeight },
+                friction: 10,
+                useNativeDriver: false,
+              }).start(() =>
+                this.setState({
+                  showDraggable: false
+                })
+              );
+              this.props.table[i][j] = this.props.card;
               this.setState({
-                showDraggable: false
+                dragable: false,
+                row: i - 1,
+                column: j - 1,
+                table: [...this.props.table],
               })
-            );
-            this.setState({
-              dragable: false,
-              row: i - 1,
-              column: j - 1,
-            })
+            }
           }
         }
-      } 
+      }
+      console.log(this.state.table)
       if (this.state.dragable) {
         Animated.spring(this.pan, {
           toValue: { x: 0, y: 0 },
@@ -74,7 +86,7 @@ class Card extends Component {
     const begY = Dimensions.get('window').height * 0.08;
     const endY = Dimensions.get('window').height * 0.36;
 
-    if (row === 1 && column === 1) return;
+    if (this.state.table === null) return;
 
     return (
       gesture.moveY > begY + (row * this.cardHeight)
@@ -169,6 +181,7 @@ Card.propTypes = {
   row: PropTypes.number.isRequired,
   column: PropTypes.number.isRequired,
   player: PropTypes.bool,
+  table: PropTypes.arrayOf(PropTypes.array).isRequired,
 };
 
 Card.defaultProps = {

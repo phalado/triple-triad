@@ -10,6 +10,11 @@ import styles from '../styles/GamePlay';
 const GamePlay = props => {
   const { route } = props;
   const { play1Cards, play2Cards } = route.params;
+  const table = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ]
   return (
     <View style={styles.container}>
       <Table />
@@ -21,6 +26,7 @@ const GamePlay = props => {
           row={index + 2}
           column={2}
           player
+          table={table}
           key={playCard}
         />
       ))}
@@ -29,6 +35,7 @@ const GamePlay = props => {
           card={Cards.find(card => card.id === playCard)}
           row={index + 2}
           column={2}
+          table={table}
           key={playCard}
         />
       ))}

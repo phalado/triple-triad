@@ -5,8 +5,20 @@ import styles from '../styles/App';
 
 const InitialScreen = props => {
   const { navigation } = props;
-  const play1Cards = [110, 107, 104, 103, 102];
-  const play2Cards = [99, 96, 95, 91, 88];
+  const play1Cards = [
+    { id: 110, row: 3, column: 3 },
+    { id: 107, row: 4, column: 3 },
+    { id: 104, row: 5, column: 3 },
+    { id: 103, row: 6, column: 3 },
+    { id: 102, row: 7, column: 3 },
+  ];
+  const play2Cards = [
+    { id: 99, row: 3, column: 3 },
+    { id: 96, row: 4, column: 3 },
+    { id: 95, row: 5, column: 3 },
+    { id: 91, row: 6, column: 3 },
+    { id: 88, row: 7, column: 3 },
+  ];
 
   return (
     <View style={styles.container}>

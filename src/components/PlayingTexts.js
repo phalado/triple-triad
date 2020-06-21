@@ -4,8 +4,8 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from '../styles/PlayingCards';
 
-const PlayingCards = props => {
-  const { player } = props;
+const PlayingTexts = props => {
+  const { player, score } = props;
   const contStyle = player
     ? { ...styles.container, ...styles.play1 }
     : { ...styles.container, ...styles.play2 };
@@ -18,18 +18,21 @@ const PlayingCards = props => {
         {player ? 'Player 1' : 'PC'}
       </Text>
       <Text style={{ ...styles.scoreText, color: myColor }}>
-        Score: 5
+        Score:
+        {' '}
+        {score}
       </Text>
     </View>
   );
 };
 
-PlayingCards.propTypes = {
+PlayingTexts.propTypes = {
   player: PropTypes.bool,
+  score: PropTypes.number.isRequired,
 };
 
-PlayingCards.defaultProps = {
+PlayingTexts.defaultProps = {
   player: false,
 };
 
-export default PlayingCards;
+export default PlayingTexts;

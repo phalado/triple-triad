@@ -296,7 +296,7 @@ export default [
     id: 94, name: 'Cerberus', ranks: [7, 10, 4, 6], element: 'neutral', level: 9,
   },
   {
-    id: 95, name: 'Alexander', ranks: [9, 2, 10, 4], element: 'HOLY', level: 9,
+    id: 95, name: 'Alexander', ranks: [9, 2, 10, 4], element: 'holy', level: 9,
   },
   {
     id: 96, name: 'Phoenix', ranks: [7, 10, 2, 7], element: 'fire', level: 9,

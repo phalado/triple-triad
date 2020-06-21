@@ -17,10 +17,7 @@ class Card extends Component {
     })
   }
 
-  showDraggable = true;
-  dropAreaValues = null;
   pan = new Animated.ValueXY();
-  opacity = new Animated.Value(1);
   screenWidth = Dimensions.get('window').width;
   scrennHeight = Dimensions.get('window').height;
   cardWidth = Dimensions.get('window').width * 0.17;
@@ -39,13 +36,13 @@ class Card extends Component {
       { dx: this.pan.x, dy: this.pan.y }
     ],{ useNativeDriver: false }),
     onPanResponderRelease: (e, gesture) => {
-      if (!this.props.player) {
-        Animated.spring(this.pan, {
-          toValue: { x: 0, y: 0 },
-          friction: 5,
-          useNativeDriver: false
-        }).start();
-      } else {
+      // if (!this.props.player) {
+      //   Animated.spring(this.pan, {
+      //     toValue: { x: 0, y: 0 },
+      //     friction: 5,
+      //     useNativeDriver: false
+      //   }).start();
+      // } else {
         for (let i = 0; i <= 2; i += 1) {
           for (let j = 0; j <= 2; j += 1) {
             if (this.state.table[i][j] === null && this.isDropArea(e, gesture, i, j)) {
@@ -58,18 +55,18 @@ class Card extends Component {
                   showDraggable: false
                 })
               );
-              this.props.table[i][j] = this.props.card;
+              this.props.table[i][j] = [this.props.card, this.props.player];
               this.setState({
                 dragable: false,
-                row: i - 1,
-                column: j - 1,
+                row: i,
+                column: j,
                 table: [...this.props.table],
               })
+              this.props.handlePlaceCard(this.props.card, this.state.table, i, j);
             }
           }
         }
-      }
-      console.log(this.state.table)
+      // }
       if (this.state.dragable) {
         Animated.spring(this.pan, {
           toValue: { x: 0, y: 0 },
@@ -102,23 +99,23 @@ class Card extends Component {
     const playerImage = player ? 'player1' : 'player2';
     let cardContainer = styles.container;
 
-    if (row === -1) {
+    if (row === 0) {
       cardContainer = { ...cardContainer, ...styles.topRow };
-    } else if (row === 0) {
-      cardContainer = { ...cardContainer, ...styles.centerRow };
     } else if (row === 1) {
+      cardContainer = { ...cardContainer, ...styles.centerRow };
+    } else if (row === 2) {
       cardContainer = { ...cardContainer, ...styles.bottomRow };
     } else {
-      const value = (this.scrennHeight * 0.15)  + (row - 2) * this.scrennHeight * 0.1;
+      const value = (this.scrennHeight * 0.15)  + (row - 3) * this.scrennHeight * 0.1;
       player ? cardContainer = { ...cardContainer, top: value, right: '2.5%' } :
       cardContainer = { ...cardContainer, top: value, left: '2.5%' }
     }
 
-    if (column === -1) {
+    if (column === 0) {
       cardContainer = { ...cardContainer, ...styles.leftColumn };
-    } else if (column === 0) {
-      cardContainer = { ...cardContainer, ...styles.centerColumn };
     } else if (column === 1) {
+      cardContainer = { ...cardContainer, ...styles.centerColumn };
+    } else if (column === 2) {
       cardContainer = { ...cardContainer, ...styles.rightColumn };
     }
 

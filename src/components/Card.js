@@ -95,7 +95,7 @@ class Card extends Component {
   }
 
   render() {
-    const { card, player } = this.props;
+    const { card, player, gameOver } = this.props;
     const { row, column } = this.state;
     const playerImage = player ? 'player1' : 'player2';
     let cardContainer = styles.container;
@@ -132,7 +132,7 @@ class Card extends Component {
       );
     }
 
-    if (this.state.dragable) {
+    if (this.state.dragable && !gameOver) {
       return (
         <Animated.View
           style={{
@@ -180,6 +180,8 @@ Card.propTypes = {
   column: PropTypes.number.isRequired,
   player: PropTypes.bool,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  handlePlaceCard: PropTypes.func.isRequired,
+  gameOver: PropTypes.bool.isRequired,
 };
 
 Card.defaultProps = {

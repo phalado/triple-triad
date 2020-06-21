@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable import/no-named-as-default */
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
@@ -18,6 +20,7 @@ const GamePlay = props => {
   ]);
   const [play1Cards, setPlay1Cards] = useState(route.params.play1Cards);
   const [play2Cards, setPlay2Cards] = useState(route.params.play2Cards);
+  const [gameOver, setGameOver] = useState(false);
 
   const handlePlaceCard = (card, tble, row, column) => {
     const newProps = CardCombat({
@@ -32,6 +35,7 @@ const GamePlay = props => {
     setTable(newProps.table);
     setPlay1Cards(newProps.play1Cards);
     setPlay2Cards(newProps.play2Cards);
+    if (table.every(value => value.every(v => v !== null))) setGameOver(true);
   };
 
   return (
@@ -47,6 +51,7 @@ const GamePlay = props => {
           player
           table={table}
           handlePlaceCard={handlePlaceCard}
+          gameOver={gameOver}
           key={[playCard.id, playCard.row, playCard.column, true]}
         />
       ))}
@@ -57,6 +62,7 @@ const GamePlay = props => {
           column={playCard.column}
           table={table}
           handlePlaceCard={handlePlaceCard}
+          gameOver={gameOver}
           key={[playCard.id, playCard.row, playCard.column, false]}
         />
       ))}

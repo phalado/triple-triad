@@ -5,6 +5,7 @@ import Table from './Table';
 import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
+import CardCombat from '../Helpers/CardCombatLogic';
 import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
@@ -19,28 +20,18 @@ const GamePlay = props => {
   const [play2Cards, setPlay2Cards] = useState(route.params.play2Cards);
 
   const handlePlaceCard = (card, tble, row, column) => {
-    setTable(tble);
-    if (column === 0) return;
-    if (table[row][column - 1] !== null) {
-      const otherCard = table[row][column - 1][0];
-      if (!table[row][column - 1][1] && card.ranks[1] > otherCard.ranks[3]) {
-        table[row][column - 1][1] = true;
-        setPlay1Cards([
-          ...play1Cards.filter(c => c.id !== card.id),
-          {
-            id: card.id,
-            row,
-            column,
-          },
-          {
-            id: otherCard.id,
-            row,
-            column: column - 1,
-          },
-        ]);
-        setPlay2Cards(play2Cards.filter(card => card.id !== otherCard.id));
-      }
-    }
+    const newProps = CardCombat({
+      card,
+      table: tble,
+      row,
+      column,
+      player: tble[row][column][1],
+      play1Cards,
+      play2Cards,
+    });
+    setTable(newProps.table);
+    setPlay1Cards(newProps.play1Cards);
+    setPlay2Cards(newProps.play2Cards);
   };
 
   return (
@@ -56,7 +47,7 @@ const GamePlay = props => {
           player
           table={table}
           handlePlaceCard={handlePlaceCard}
-          key={playCard.id}
+          key={[playCard.id, playCard.row, playCard.column, true]}
         />
       ))}
       {play2Cards.map(playCard => (
@@ -66,7 +57,7 @@ const GamePlay = props => {
           column={playCard.column}
           table={table}
           handlePlaceCard={handlePlaceCard}
-          key={playCard.id}
+          key={[playCard.id, playCard.row, playCard.column, false]}
         />
       ))}
     </View>

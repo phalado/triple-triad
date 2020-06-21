@@ -55,6 +55,7 @@ class Card extends Component {
                   showDraggable: false
                 })
               );
+              console.log(this.props.table[i][j])
               this.props.table[i][j] = [this.props.card, this.props.player];
               this.setState({
                 dragable: false,

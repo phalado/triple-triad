@@ -17,6 +17,7 @@ const repositiongCard = props => {
           id: card.id,
           row,
           column,
+          dragable: false,
         },
       ],
       play2Cards,
@@ -37,6 +38,7 @@ const repositiongCard = props => {
         id: card.id,
         row,
         column,
+        dragable: false,
       },
     ],
   };
@@ -67,6 +69,7 @@ const Combat = (props, newRow, newColumn, rank1, rank2) => {
           id: otherCard.id,
           row: newRow,
           column: newColumn,
+          dragable: false,
         },
       ],
       play2Cards: play2Cards.filter(c => (c.row !== newRow || c.column !== newColumn)),
@@ -85,6 +88,7 @@ const Combat = (props, newRow, newColumn, rank1, rank2) => {
         id: otherCard.id,
         row: newRow,
         column: newColumn,
+        dragable: false,
       },
     ],
   });

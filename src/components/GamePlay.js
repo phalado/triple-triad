@@ -18,32 +18,48 @@ const GamePlay = props => {
     [null, null, null],
     [null, null, null],
   ]);
-  const [play1Cards, setPlay1Cards] = useState(route.params.play1Cards);
-  const [play2Cards, setPlay2Cards] = useState(route.params.play2Cards);
+  const [playCards, setPlayCards] = useState({
+    play1Cards: route.params.play1Cards,
+    play2Cards: route.params.play2Cards,
+  });
+  // const [play1Cards, setPlay1Cards] = useState(route.params.play1Cards);
+  // const [play2Cards, setPlay2Cards] = useState(route.params.play2Cards);
   const [gameOver, setGameOver] = useState(false);
 
   const handlePlaceCard = (card, tble, row, column) => {
+    // console.log('1 - Player 1: ', play1Cards);
+    // console.log('1 - Player 2: ', play2Cards);
+    // console.log('');
     const newProps = CardCombat({
       card,
       table: tble,
       row,
       column,
       player: tble[row][column][1],
-      play1Cards,
-      play2Cards,
+      play1Cards: playCards.play1Cards,
+      play2Cards: playCards.play2Cards,
     });
+    playCards.play1Cards = newProps.play1Cards;
+    playCards.play2Cards = newProps.play2Cards;
     setTable(newProps.table);
-    setPlay1Cards(newProps.play1Cards);
-    setPlay2Cards(newProps.play2Cards);
+    setPlayCards({
+      play1Cards: newProps.play1Cards,
+      play2Cards: newProps.play2Cards,
+    });
+    // setPlay1Cards(newProps.play1Cards);
+    // setPlay2Cards([...newProps.play2Cards]);
     if (table.every(value => value.every(v => v !== null))) setGameOver(true);
+    // console.log('2 - Player 1: ', newProps.play1Cards);
+    // console.log('');
+    // console.log('');
   };
 
   return (
     <View style={styles.container}>
       <Table />
-      <PlayingTexts player score={play1Cards.length} />
-      <PlayingTexts score={play2Cards.length} />
-      {play1Cards.map(playCard => (
+      <PlayingTexts player score={playCards.play1Cards.length} />
+      <PlayingTexts score={playCards.play2Cards.length} />
+      {playCards.play1Cards.map(playCard => (
         <Card
           card={Cards.find(card => card.id === playCard.id)}
           row={playCard.row}
@@ -52,10 +68,11 @@ const GamePlay = props => {
           table={table}
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
+          dragable={playCard.dragable}
           key={[playCard.id, playCard.row, playCard.column, true]}
         />
       ))}
-      {play2Cards.map(playCard => (
+      {playCards.play2Cards.map(playCard => (
         <Card
           card={Cards.find(card => card.id === playCard.id)}
           row={playCard.row}
@@ -63,6 +80,7 @@ const GamePlay = props => {
           table={table}
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
+          dragable={playCard.dragable}
           key={[playCard.id, playCard.row, playCard.column, false]}
         />
       ))}

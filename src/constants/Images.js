@@ -23,6 +23,7 @@ export default {
   wind: require('../contents/img/wind.png'),
   poison: require('../contents/img/poison.png'),
   thunder: require('../contents/img/thunder.png'),
+  earth: require('../contents/img/earth.png'),
   holy: require('../contents/img/holy.png'),
   1: require('../contents/img/cards/001.png'),
   2: require('../contents/img/cards/002.png'),

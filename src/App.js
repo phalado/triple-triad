@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import GamePlay from './components/GamePlay';
 import styles from './styles/App';
-import Table from './components/Table';
-import PlayingCards from './components/PlayingCards';
+import InitialScreen from './components/InitialScreen';
+
+const Stack = createStackNavigator();
 
 class App extends Component {
   componentDidMount() {
@@ -15,11 +19,16 @@ class App extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Table />
-        <PlayingCards player playCards={[110, 109, 108, 107, 106]} />
-        <PlayingCards playCards={[1, 2, 3, 4, 6]} />
-      </View>
+      <NavigationContainer style={styles.container}>
+        <Stack.Navigator>
+          <Stack.Screen name="Initial Screen" component={InitialScreen} />
+          <Stack.Screen name="GamePlay" component={GamePlay} options={{ headerShown: false }} />
+          {/* <Button
+            title="Play game"
+            onPress={() => navigation.navigate('GamePlay')}
+          /> */}
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 }

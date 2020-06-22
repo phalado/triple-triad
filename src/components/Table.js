@@ -11,7 +11,7 @@ const Table = () => (
       source={Images.board}
       alt="Table"
     />
-    <View style={styles.dropZonesContainer}>
+    {/* <View style={styles.dropZonesContainer}>
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
@@ -21,7 +21,7 @@ const Table = () => (
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
       <View style={styles.dropZones} />
-    </View>
+    </View> */}
   </View>
 );
 

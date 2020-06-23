@@ -1,13 +1,9 @@
 const turnReducer = (state = null, action) => {
   switch (action.type) {
     case 'CREATE_TURN':
-      return ({
-        turn: action.turn,
-      });
+      return action.turn;
     case 'CHANGE_TURN':
-      return ({
-        turn: action.turn,
-      });
+      return action.turn;
     default:
       return state;
   }

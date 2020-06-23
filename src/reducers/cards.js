@@ -1,10 +1,10 @@
-const cardReducer = (state = null, action) => {
+const cardReducer = (state = { play1Cards: [], play2Cards: [] }, action) => {
   switch (action.type) {
     case 'CREATE_CARD':
       if (action.player) {
         return ({
           play1Cards: [
-            ...state,
+            ...state.play1Cards,
             {
               id: action.id,
               row: action.row,
@@ -18,7 +18,7 @@ const cardReducer = (state = null, action) => {
       return ({
         play1Cards: state.play1Cards,
         play2Cards: [
-          ...state,
+          ...state.play2Cards,
           {
             id: action.id,
             row: action.row,

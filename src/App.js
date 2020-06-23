@@ -17,15 +17,15 @@ const initialState = {
   turn: null,
 };
 
-const store = createStore{
+const store = createStore(
   rootReducer,
   initialState,
-};
+);
 
-const App = () => {
+const App = () => (
   <Provider store={store}>
     <Navigation />
   </Provider>
-};
+);
 
 export default App;

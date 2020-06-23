@@ -3,8 +3,8 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GamePlay from './container/GamePlay';
+import InitialScreen from './container/InitialScreen';
 import styles from './styles/App';
-import InitialScreen from './components/InitialScreen';
 
 const Stack = createStackNavigator();
 

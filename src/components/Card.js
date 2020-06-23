@@ -9,20 +9,18 @@ import Images from '../constants/Images';
 import RankNumbers from './RankNumbers';
 import rules from '../constants/Rules';
 import styles from '../styles/Card';
+import { cardsOnTheTable } from '../Helpers/OtherHelpers';
 
 const Card = props => {
   const {
-    card, row, column, player, table, handlePlaceCard, gameOver, dragable,
+    card, playCard, player, table, handlePlaceCard, gameOver, turn,
   } = props;
-  const [myState, setMyState] = useState({
-    dragable,
-    row,
-    column,
-    table,
-  });
+  const { row, column, dragable } = playCard;
+  const [myTable, setMyTable] = useState(table);
+  let [myTurn] = useState(turn);
 
   const pan = useRef(new Animated.ValueXY()).current;
-  // const screenWidth = Dimensions.get('window').width;
+
   const scrennHeight = Dimensions.get('window').height;
   const cardWidth = Dimensions.get('window').width * 0.17;
   const cardHeight = Dimensions.get('window').height * 0.28;
@@ -33,7 +31,7 @@ const Card = props => {
     const begY = Dimensions.get('window').height * 0.08;
     const endY = Dimensions.get('window').height * 0.36;
 
-    if (myState.table === null) return;
+    if (myTable === null) return;
 
     return (
       gesture.moveY > begY + (row * cardHeight)
@@ -56,34 +54,31 @@ const Card = props => {
       { dx: pan.x, dy: pan.y },
     ], { useNativeDriver: false }),
     onPanResponderRelease: (e, gesture) => {
-      // if (!player) {
-      //   Animated.spring(pan, {
-      //     toValue: { x: 0, y: 0 },
-      //     friction: 5,
-      //     useNativeDriver: false
-      //   }).start();
-      // } else {
-      for (let i = 0; i <= 2; i += 1) {
-        for (let j = 0; j <= 2; j += 1) {
-          if (myState.table[i][j] === null && isDropArea(e, gesture, i, j)) {
-            Animated.spring(pan, {
-              toValue: { x: -cardWidth, y: -cardHeight },
-              friction: 10,
-              useNativeDriver: false,
-            }).start();
-            myState.table[i][j] = [card, player];
-            setMyState({
-              dragable: false,
-              row: i,
-              column: j,
-              table: [...myState.table],
-            });
-            handlePlaceCard(card, myState.table, i, j);
+      myTurn = cardsOnTheTable(myTable) % 2 === 1 ? !myTurn : myTurn;
+      if (player !== myTurn) {
+        Animated.spring(pan, {
+          toValue: { x: 0, y: 0 },
+          friction: 5,
+          useNativeDriver: false,
+        }).start();
+      } else {
+        for (let i = 0; i <= 2; i += 1) {
+          for (let j = 0; j <= 2; j += 1) {
+            if (myTable[i][j] === null && isDropArea(e, gesture, i, j)) {
+              Animated.spring(pan, {
+                toValue: { x: -cardWidth, y: -cardHeight },
+                friction: 10,
+                useNativeDriver: false,
+              }).start();
+              myTable[i][j] = [card, player];
+              setMyTable(myTable);
+              myTurn = !myTurn;
+              handlePlaceCard(card, myTable, i, j);
+            }
           }
         }
       }
-      // }
-      if (myState.dragable) {
+      if (dragable) {
         Animated.spring(pan, {
           toValue: { x: 0, y: 0 },
           friction: 5,
@@ -128,7 +123,7 @@ const Card = props => {
     );
   }
 
-  if (myState.dragable && !gameOver) {
+  if (dragable && !gameOver) {
     return (
       <Animated.View
         style={{
@@ -172,13 +167,17 @@ const Card = props => {
 
 Card.propTypes = {
   card: PropTypes.objectOf(PropTypes.any).isRequired,
-  row: PropTypes.number.isRequired,
-  column: PropTypes.number.isRequired,
+  playCard: PropTypes.shape({
+    row: PropTypes.number,
+    column: PropTypes.number,
+    dragable: PropTypes.bool,
+  }).isRequired,
   player: PropTypes.bool,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   handlePlaceCard: PropTypes.func.isRequired,
   gameOver: PropTypes.bool.isRequired,
-  dragable: PropTypes.bool.isRequired,
+  turn: PropTypes.bool.isRequired,
+  handleChangeTurn: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {

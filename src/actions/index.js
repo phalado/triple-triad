@@ -1,11 +1,11 @@
-const changeTurn = turn => ({
+const changeTurn = value => ({
   type: 'CHANGE_TURN',
-  turn,
+  turn: value,
 });
 
-const createTurn = turn => ({
+const createTurn = value => ({
   type: 'CREATE_TURN',
-  turn,
+  turn: value,
 });
 
 const createCard = card => ({

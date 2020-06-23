@@ -1,9 +1,7 @@
-const tableReducer = (state = null, action) => {
+const tableReducer = (state = [], action) => {
   switch (action.type) {
     case 'MODIFY_TABLE':
-      return ({
-        table: action.teble,
-      });
+      return action.table;
     default:
       return state;
   }

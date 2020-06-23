@@ -11,68 +11,112 @@ import CardCombat from '../Helpers/CardCombatLogic';
 import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
-  const { route } = props;
-  const [table, setTable] = useState([
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ]);
-  const [playCards, setPlayCards] = useState({
-    play1Cards: route.params.play1Cards,
-    play2Cards: route.params.play2Cards,
-  });
+  const {
+    cards, table, turn, modifyTable, addCard, removeCard, changeTurn,
+  } = props;
   const [gameOver, setGameOver] = useState(false);
+  const [pCards] = useState(cards);
+  let [myTurn] = useState(turn);
   // const gameMusic = new Sound('gameSound.mp3', Sound.MAIN_BUNDLE);
   // gameMusic.setNumberOfLoops(-1);
 
+  const handleChangeTurn = () => {
+    myTurn = !myTurn;
+    changeTurn(myTurn);
+  };
+
+  const handleAddCard = data => {
+    if (data.player) {
+      pCards.play1Cards = [
+        ...pCards.play1Cards,
+        {
+          id: data.id,
+          row: data.row,
+          column: data.column,
+          dragable: data.dragable,
+        },
+      ];
+    } else {
+      pCards.play2Cards = [
+        ...pCards.play2Cards,
+        {
+          id: data.id,
+          row: data.row,
+          column: data.column,
+          dragable: data.dragable,
+        },
+      ];
+    }
+    addCard(data);
+  };
+
+  const handleRemoveCard = data => {
+    if (data.player) {
+      const removable = pCards.play1Cards.find(c => c.id === data.id);
+      pCards.play1Cards = pCards.play1Cards.filter(c => c !== removable);
+    } else {
+      const removable = pCards.play2Cards.find(c => c.id === data.id);
+      pCards.play2Cards = pCards.play2Cards.filter(c => c !== removable);
+    }
+    removeCard(data);
+  };
+
+  const handleChangeTable = table => {
+    modifyTable(table);
+  };
+
   const handlePlaceCard = (card, tble, row, column) => {
-    const newProps = CardCombat({
+    modifyTable(tble);
+    handleRemoveCard({ player: tble[row][column][1], id: card.id });
+    handleAddCard({
+      player: tble[row][column][1], id: card.id, row, column, dragable: false,
+    });
+
+    const newProps = {
       card,
       table: tble,
-      row,
-      column,
       player: tble[row][column][1],
-      play1Cards: playCards.play1Cards,
-      play2Cards: playCards.play2Cards,
-    });
-    playCards.play1Cards = newProps.play1Cards;
-    playCards.play2Cards = newProps.play2Cards;
-    setTable(newProps.table);
-    setPlayCards({
-      play1Cards: newProps.play1Cards,
-      play2Cards: newProps.play2Cards,
-    });
+      handleAddCard,
+      handleRemoveCard,
+      handleChangeTable,
+    };
+
+    if (row > 0 && !!table[row - 1][column]) CardCombat(newProps, row - 1, column, 0, 2);
+    if (row < 2 && !!table[row + 1][column]) CardCombat(newProps, row + 1, column, 2, 0);
+    if (column > 0 && !!table[row][column - 1]) CardCombat(newProps, row, column - 1, 1, 3);
+    if (column < 2 && !!table[row][column + 1]) CardCombat(newProps, row, column + 1, 3, 1);
+
     if (table.every(value => value.every(v => v !== null))) setGameOver(true);
   };
 
   return (
     <View style={styles.container}>
       <Table />
-      <PlayingTexts player score={playCards.play1Cards.length} />
-      <PlayingTexts score={playCards.play2Cards.length} />
+      <PlayingTexts player score={pCards.play1Cards.length} />
+      <PlayingTexts score={pCards.play2Cards.length} />
       {/* {gameMusic.play()} */}
-      {playCards.play1Cards.map(playCard => (
+      {pCards.play1Cards.map(playCard => (
         <Card
           card={Cards.find(card => card.id === playCard.id)}
-          row={playCard.row}
-          column={playCard.column}
+          playCard={playCard}
           player
           table={table}
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
-          dragable={playCard.dragable}
+          turn={myTurn}
+          handleChangeTurn={handleChangeTurn}
           key={[playCard.id, playCard.row, playCard.column, true]}
         />
       ))}
-      {playCards.play2Cards.map(playCard => (
+      {pCards.play2Cards.map(playCard => (
         <Card
           card={Cards.find(card => card.id === playCard.id)}
-          row={playCard.row}
-          column={playCard.column}
+          playCard={playCard}
           table={table}
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
-          dragable={playCard.dragable}
+          turn={myTurn}
+          handleChangeTurn={handleChangeTurn}
           key={[playCard.id, playCard.row, playCard.column, false]}
         />
       ))}
@@ -81,7 +125,16 @@ const GamePlay = props => {
 };
 
 GamePlay.propTypes = {
-  route: PropTypes.objectOf(PropTypes.any).isRequired,
+  cards: PropTypes.shape({
+    play1Cards: PropTypes.arrayOf(PropTypes.object),
+    play2Cards: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  turn: PropTypes.bool.isRequired,
+  modifyTable: PropTypes.func.isRequired,
+  addCard: PropTypes.func.isRequired,
+  removeCard: PropTypes.func.isRequired,
+  changeTurn: PropTypes.func.isRequired,
 };
 
 export default GamePlay;

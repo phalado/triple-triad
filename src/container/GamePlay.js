@@ -1,19 +1,15 @@
 import { connect } from 'react-redux';
 import GamePlay from '../components/GamePlay';
 import {
-  modifyTable, createCard, removeCard, changeTurn,
+  modifyTable, createCard, removeCard,
 } from '../actions';
 
 const mapStateToProps = state => ({
   cards: state.cards,
   table: state.table,
-  turn: state.turn,
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeTurn: turn => {
-    dispatch(changeTurn(turn));
-  },
   modifyTable: table => {
     dispatch(modifyTable(table));
   },

@@ -14,7 +14,6 @@ const initialState = {
     [null, null, null],
     [null, null, null],
   ],
-  turn: null,
 };
 
 const store = createStore(

@@ -2,11 +2,10 @@
 import React, { useEffect } from 'react';
 import { View, Button } from 'react-native';
 import PropTypes from 'prop-types';
-import { getRandomBoolean } from '../Helpers/OtherHelpers';
 import styles from '../styles/App';
 
 const InitialScreen = props => {
-  const { navigation, createCard, createTurn } = props;
+  const { navigation, createCard } = props;
 
   useEffect(() => {
     let mounted = true;
@@ -29,12 +28,7 @@ const InitialScreen = props => {
         createCard(card);
       };
 
-      const initialTurn = () => {
-        createTurn(getRandomBoolean());
-      };
-
       cards.forEach(c => addCardToRedux(c));
-      initialTurn();
     }
 
     return () => {
@@ -55,7 +49,6 @@ const InitialScreen = props => {
 InitialScreen.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
   createCard: PropTypes.func.isRequired,
-  createTurn: PropTypes.func.isRequired,
 };
 
 export default InitialScreen;

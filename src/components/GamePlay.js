@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable import/no-named-as-default */
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
@@ -8,22 +6,18 @@ import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
 import CardCombat from '../Helpers/CardCombatLogic';
+import { getRandomBoolean } from '../Helpers/OtherHelpers';
 import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
   const {
-    cards, table, turn, modifyTable, addCard, removeCard, changeTurn,
+    cards, table, modifyTable, addCard, removeCard,
   } = props;
   const [gameOver, setGameOver] = useState(false);
   const [pCards] = useState(cards);
-  let [myTurn] = useState(turn);
-  // const gameMusic = new Sound('gameSound.mp3', Sound.MAIN_BUNDLE);
+  const [myTurn] = useState(getRandomBoolean());
+  // const gameMusic = new S ound('gameSound.mp3', Sound.MAIN_BUNDLE);
   // gameMusic.setNumberOfLoops(-1);
-
-  const handleChangeTurn = () => {
-    myTurn = !myTurn;
-    changeTurn(myTurn);
-  };
 
   const handleAddCard = data => {
     if (data.player) {
@@ -104,7 +98,6 @@ const GamePlay = props => {
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
           turn={myTurn}
-          handleChangeTurn={handleChangeTurn}
           key={[playCard.id, playCard.row, playCard.column, true]}
         />
       ))}
@@ -116,7 +109,6 @@ const GamePlay = props => {
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
           turn={myTurn}
-          handleChangeTurn={handleChangeTurn}
           key={[playCard.id, playCard.row, playCard.column, false]}
         />
       ))}
@@ -130,11 +122,9 @@ GamePlay.propTypes = {
     play2Cards: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
-  turn: PropTypes.bool.isRequired,
   modifyTable: PropTypes.func.isRequired,
   addCard: PropTypes.func.isRequired,
   removeCard: PropTypes.func.isRequired,
-  changeTurn: PropTypes.func.isRequired,
 };
 
 export default GamePlay;

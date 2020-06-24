@@ -31,7 +31,7 @@ const Card = props => {
     const begY = Dimensions.get('window').height * 0.08;
     const endY = Dimensions.get('window').height * 0.36;
 
-    if (myTable === null) return;
+    if (myTable[row][column] !== null) return;
 
     return (
       gesture.moveY > begY + (row * cardHeight)
@@ -54,7 +54,7 @@ const Card = props => {
       { dx: pan.x, dy: pan.y },
     ], { useNativeDriver: false }),
     onPanResponderRelease: (e, gesture) => {
-      myTurn = cardsOnTheTable(myTable) % 2 === 1 ? !myTurn : myTurn;
+      myTurn = cardsOnTheTable(myTable) % 2 === 1 ? !turn : turn;
       if (player !== myTurn) {
         Animated.spring(pan, {
           toValue: { x: 0, y: 0 },
@@ -72,7 +72,6 @@ const Card = props => {
               }).start();
               myTable[i][j] = [card, player];
               setMyTable(myTable);
-              myTurn = !myTurn;
               handlePlaceCard(card, myTable, i, j);
             }
           }
@@ -111,7 +110,7 @@ const Card = props => {
     cardContainer = { ...cardContainer, ...styles.rightColumn };
   }
 
-  if (!player && !rules.open) {
+  if (!player && !rules.open && row > 2) {
     return (
       <View style={cardContainer}>
         <Image
@@ -177,7 +176,6 @@ Card.propTypes = {
   handlePlaceCard: PropTypes.func.isRequired,
   gameOver: PropTypes.bool.isRequired,
   turn: PropTypes.bool.isRequired,
-  handleChangeTurn: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {

@@ -24,11 +24,8 @@ const InitialScreen = props => {
     ];
 
     if (mounted) {
-      const addCardToRedux = card => {
-        createCard(card);
-      };
-
-      cards.forEach(c => addCardToRedux(c));
+      const addCardToRedux = card => createCard(card);
+      cards.forEach(card => addCardToRedux(card));
     }
 
     return () => {

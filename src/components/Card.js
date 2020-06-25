@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 import Images from '../constants/Images';
 import RankNumbers from './RankNumbers';
 import rules from '../constants/Rules';
+import { cardsOnTheTable, getCardContainer } from '../Helpers/OtherHelpers';
 import styles from '../styles/Card';
-import { cardsOnTheTable } from '../Helpers/OtherHelpers';
 
 const Card = props => {
   const {
@@ -24,6 +24,9 @@ const Card = props => {
   const scrennHeight = Dimensions.get('window').height;
   const cardWidth = Dimensions.get('window').width * 0.17;
   const cardHeight = Dimensions.get('window').height * 0.28;
+
+  const playerImage = player ? 'player1' : 'player2';
+  const cardContainer = getCardContainer(row, column, player, scrennHeight, styles);
 
   const isDropArea = (e, gesture, row, column) => {
     const begX = Dimensions.get('window').width * 0.245;
@@ -86,29 +89,6 @@ const Card = props => {
       }
     },
   })).current;
-
-  const playerImage = player ? 'player1' : 'player2';
-  let cardContainer = styles.container;
-
-  if (row === 0) {
-    cardContainer = { ...cardContainer, ...styles.topRow };
-  } else if (row === 1) {
-    cardContainer = { ...cardContainer, ...styles.centerRow };
-  } else if (row === 2) {
-    cardContainer = { ...cardContainer, ...styles.bottomRow };
-  } else {
-    const value = (scrennHeight * 0.15) + (row - 3) * scrennHeight * 0.1;
-    cardContainer = player ? { ...cardContainer, top: value, right: '2.5%' }
-      : { ...cardContainer, top: value, left: '2.5%' };
-  }
-
-  if (column === 0) {
-    cardContainer = { ...cardContainer, ...styles.leftColumn };
-  } else if (column === 1) {
-    cardContainer = { ...cardContainer, ...styles.centerColumn };
-  } else if (column === 2) {
-    cardContainer = { ...cardContainer, ...styles.rightColumn };
-  }
 
   if (!player && !rules.open && row > 2) {
     return (

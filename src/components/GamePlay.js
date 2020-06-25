@@ -6,8 +6,9 @@ import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
 import CardCombat from '../Helpers/CardCombatLogic';
-import { getRandomBoolean } from '../Helpers/OtherHelpers';
+import { getRandomBoolean, cardsOnTheTable, handleEndOfTurn } from '../Helpers/OtherHelpers';
 import styles from '../styles/GamePlay';
+import ChangeTurnModal from './ChangeTurnModal';
 
 const GamePlay = props => {
   const {
@@ -16,6 +17,8 @@ const GamePlay = props => {
   const [gameOver, setGameOver] = useState(false);
   const [pCards] = useState(cards);
   const [myTurn] = useState(getRandomBoolean());
+  const [visibleModal, setVisibleModal] = useState(false);
+  let firstMovement = true;
   // const gameMusic = new S ound('gameSound.mp3', Sound.MAIN_BUNDLE);
   // gameMusic.setNumberOfLoops(-1);
 
@@ -59,6 +62,11 @@ const GamePlay = props => {
     modifyTable(table);
   };
 
+  const showModalWindow = () => {
+    setVisibleModal(true);
+    setTimeout(() => setVisibleModal(false), 2000);
+  };
+
   const handlePlaceCard = (card, tble, row, column) => {
     modifyTable(tble);
     handleRemoveCard({ player: tble[row][column][1], id: card.id });
@@ -80,7 +88,9 @@ const GamePlay = props => {
     if (column > 0 && !!table[row][column - 1]) CardCombat(newProps, row, column - 1, 1, 3);
     if (column < 2 && !!table[row][column + 1]) CardCombat(newProps, row, column + 1, 3, 1);
 
-    if (table.every(value => value.every(v => v !== null))) setGameOver(true);
+    if (cardsOnTheTable(table) === 9) setGameOver(true);
+    // handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table);
+    showModalWindow();
   };
 
   return (
@@ -88,6 +98,12 @@ const GamePlay = props => {
       <Table />
       <PlayingTexts player score={pCards.play1Cards.length} />
       <PlayingTexts score={pCards.play2Cards.length} />
+      {/* {handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table)} */}
+      <ChangeTurnModal
+        visible={visibleModal}
+        turn={myTurn}
+        table={table}
+      />
       {/* {gameMusic.play()} */}
       {pCards.play1Cards.map(playCard => (
         <Card

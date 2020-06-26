@@ -154,7 +154,10 @@ Card.propTypes = {
   player: PropTypes.bool,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   handlePlaceCard: PropTypes.func.isRequired,
-  gameOver: PropTypes.bool.isRequired,
+  gameOver: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]).isRequired,
   turn: PropTypes.bool.isRequired,
 };
 

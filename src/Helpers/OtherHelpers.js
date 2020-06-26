@@ -1,6 +1,5 @@
-import { ToastAndroid } from 'react-native';
-
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
+const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + min;
 
 const fields = board => [].concat(...board);
 
@@ -34,16 +33,26 @@ const getCardContainer = (row, column, player, scrennHeight, styles) => {
   return cardContainer;
 };
 
-const handleEndOfTurn = (turn, gameOver, score, table) => {
-  if (gameOver) return;
-
-  const myTurn = cardsOnTheTable(table) % 2 === 1 ? !turn : turn;
-  if (myTurn) ToastAndroid.show('Player 1 turn', ToastAndroid.LONG);
-  else ToastAndroid.show('Player 2 turn', ToastAndroid.LONG);
-
-  return;
+const getRandomCards = () => {
+  const cards = [];
+  cards.push(getRandomNumber(100, 110));
+  cards.push(getRandomNumber(78, 99));
+  cards.push(getRandomNumber(56, 77));
+  cards.push(getRandomNumber(1, 55));
+  cards.push(getRandomNumber(1, 55));
+  return cards;
 };
 
+// const handleEndOfTurn = (turn, gameOver, score, table) => {
+//   if (gameOver) return;
+
+//   const myTurn = cardsOnTheTable(table) % 2 === 1 ? !turn : turn;
+//   if (myTurn) ToastAndroid.show('Player 1 turn', ToastAndroid.LONG);
+//   else ToastAndroid.show('Player 2 turn', ToastAndroid.LONG);
+
+//   return;
+// };
+
 export {
-  getRandomBoolean, cardsOnTheTable, getCardContainer, handleEndOfTurn,
+  getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards,
 };

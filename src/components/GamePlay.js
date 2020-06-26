@@ -6,19 +6,18 @@ import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
 import CardCombat from '../Helpers/CardCombatLogic';
-import { getRandomBoolean, cardsOnTheTable, handleEndOfTurn } from '../Helpers/OtherHelpers';
+import { getRandomBoolean, cardsOnTheTable } from '../Helpers/OtherHelpers';
+import ChangeTurnModal from '../container/ChangeTurnModal';
 import styles from '../styles/GamePlay';
-import ChangeTurnModal from './ChangeTurnModal';
 
 const GamePlay = props => {
   const {
-    cards, table, modifyTable, addCard, removeCard,
+    cards, table, modifyTable, addCard, removeCard, navigation,
   } = props;
   const [gameOver, setGameOver] = useState(false);
   const [pCards] = useState(cards);
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
-  let firstMovement = true;
   // const gameMusic = new S ound('gameSound.mp3', Sound.MAIN_BUNDLE);
   // gameMusic.setNumberOfLoops(-1);
 
@@ -64,7 +63,7 @@ const GamePlay = props => {
 
   const showModalWindow = () => {
     setVisibleModal(true);
-    setTimeout(() => setVisibleModal(false), 2000);
+    if (cardsOnTheTable(table) < 9) setTimeout(() => setVisibleModal(false), 1000);
   };
 
   const handlePlaceCard = (card, tble, row, column) => {
@@ -88,7 +87,11 @@ const GamePlay = props => {
     if (column > 0 && !!table[row][column - 1]) CardCombat(newProps, row, column - 1, 1, 3);
     if (column < 2 && !!table[row][column + 1]) CardCombat(newProps, row, column + 1, 3, 1);
 
-    if (cardsOnTheTable(table) === 9) setGameOver(true);
+    if (cardsOnTheTable(table) === 9) {
+      if (pCards.play1Cards.length > pCards.play2Cards.length) setGameOver('win');
+      else if (pCards.play1Cards.length < pCards.play2Cards.length) setGameOver('loose');
+      else setGameOver('tie');
+    }
     // handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table);
     showModalWindow();
   };
@@ -102,7 +105,8 @@ const GamePlay = props => {
       <ChangeTurnModal
         visible={visibleModal}
         turn={myTurn}
-        table={table}
+        gameOver={gameOver}
+        navigation={navigation}
       />
       {/* {gameMusic.play()} */}
       {pCards.play1Cards.map(playCard => (
@@ -141,6 +145,7 @@ GamePlay.propTypes = {
   modifyTable: PropTypes.func.isRequired,
   addCard: PropTypes.func.isRequired,
   removeCard: PropTypes.func.isRequired,
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default GamePlay;

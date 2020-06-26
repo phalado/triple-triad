@@ -2,41 +2,32 @@
 import React, { useEffect } from 'react';
 import { View, Button } from 'react-native';
 import PropTypes from 'prop-types';
+import { getRandomCards } from '../Helpers/OtherHelpers';
 import styles from '../styles/App';
 
 const InitialScreen = props => {
   const { navigation, createCard } = props;
 
   useEffect(() => {
-    let mounted = true;
+    let newCards = getRandomCards();
+    newCards.forEach((card, index) => {
+      createCard({
+        player: true, id: card, row: 3 + index, column: 3, dragable: true,
+      });
+    });
 
-    const cards = [
-      { player: true, id: 110, row: 3, column: 3, dragable: true },
-      { player: true, id: 107, row: 4, column: 3, dragable: true },
-      { player: true, id: 104, row: 5, column: 3, dragable: true },
-      { player: true, id: 103, row: 6, column: 3, dragable: true },
-      { player: true, id: 102, row: 7, column: 3, dragable: true },
-      { player: false, id: 99, row: 3, column: 3, dragable: true },
-      { player: false, id: 96, row: 4, column: 3, dragable: true },
-      { player: false, id: 95, row: 5, column: 3, dragable: true },
-      { player: false, id: 91, row: 6, column: 3, dragable: true },
-      { player: false, id: 88, row: 7, column: 3, dragable: true },
-    ];
-
-    if (mounted) {
-      const addCardToRedux = card => createCard(card);
-      cards.forEach(card => addCardToRedux(card));
-    }
-
-    return () => {
-      mounted = false;
-    };
+    newCards = getRandomCards();
+    newCards.forEach((card, index) => {
+      createCard({
+        player: false, id: card, row: 3 + index, column: 3, dragable: true,
+      });
+    });
   }, []);
 
   return (
     <View style={styles.container}>
       <Button
-        title="Play game"
+        title="Play random game"
         onPress={() => navigation.navigate('GamePlay')}
       />
     </View>

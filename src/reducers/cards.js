@@ -41,6 +41,11 @@ const cardReducer = (state = { play1Cards: [], play2Cards: [] }, action) => {
         play1Cards: state.play1Cards,
         play2Cards: state.play2Cards.filter(c => c !== removable),
       });
+    case 'RESET_CARDS':
+      return ({
+        play1Cards: [],
+        play2Cards: [],
+      });
     default:
       return state;
   }

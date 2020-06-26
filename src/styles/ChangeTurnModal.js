@@ -14,6 +14,11 @@ const ChangeTurnModalStyles = StyleSheet.create({
     height: '50%',
     resizeMode: 'stretch',
   },
+  gameOverImage: {
+    width: '50%',
+    height: '50%',
+    resizeMode: 'stretch',
+  },
 });
 
 export default ChangeTurnModalStyles;

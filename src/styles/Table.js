@@ -13,9 +13,8 @@ const TableStyles = StyleSheet.create({
   },
   elementalSpot: {
     position: 'absolute',
-    zIndex: 3,
-    width: cardWidth,
-    height: cardHeight,
+    width: cardWidth / 2,
+    height: cardHeight / 2,
   },
 });
 

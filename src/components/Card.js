@@ -17,7 +17,6 @@ const Card = props => {
   } = props;
   const { row, column, dragable } = playCard;
   const [myTable, setMyTable] = useState(table);
-  const [plusMinus, setPlusMinus] = useState('none');
   let [myTurn] = useState(turn);
 
   const pan = useRef(new Animated.ValueXY()).current;
@@ -76,10 +75,7 @@ const Card = props => {
               }).start();
               myTable[i][j] = [card, player, table[i][j][2]];
               setMyTable(myTable);
-              if (table[i][j][2] !== null) {
-                setPlusMinus(table[i][j][2] === card.element
-                  ? 'plus' : 'minus');
-              }
+              // console.log(table);
               handlePlaceCard(card, myTable, i, j);
             }
           }
@@ -127,7 +123,7 @@ const Card = props => {
           source={Images[card.id]}
           alt="Table"
         />
-        <RankNumbers ranks={card.ranks} element={card.element} plusMinus={plusMinus} />
+        <RankNumbers ranks={card.ranks} element={card.element} table={table} playCard={playCard} />
       </Animated.View>
     );
   }
@@ -144,7 +140,7 @@ const Card = props => {
         source={Images[card.id]}
         alt="Table"
       />
-      <RankNumbers ranks={card.ranks} element={card.element} plusMinus={plusMinus} />
+      <RankNumbers ranks={card.ranks} element={card.element} table={table} playCard={playCard} />
     </View>
   );
 };

@@ -12,8 +12,12 @@ const letterheight = cardHeight / 6;
 const RankNumberStyles = StyleSheet.create({
   container: {
     position: 'relative',
+    flexDirection: 'column',
     top: '10%',
     left: '10%',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    height: cardHeight,
   },
   rankUp: {
     position: 'absolute',
@@ -52,16 +56,15 @@ const RankNumberStyles = StyleSheet.create({
     width: cardWidth / 2.5,
     height: cardHeight / 2.5,
     resizeMode: 'contain',
-    top: '10%',
+    top: 0,
     right: '10%',
   },
   plusMinus: {
-    position: 'absolute',
+    position: 'relative',
     width: cardWidth / 2.5,
     height: cardHeight / 2.5,
     resizeMode: 'contain',
-    bottom: '10%',
-    right: '10%',
+    margin: '15%',
   },
 });
 

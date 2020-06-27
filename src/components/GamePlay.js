@@ -76,6 +76,7 @@ const GamePlay = props => {
     const newProps = {
       card,
       table: tble,
+      element: table[row][column][2],
       player: tble[row][column][1],
       handleAddCard,
       handleRemoveCard,

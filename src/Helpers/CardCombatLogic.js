@@ -1,12 +1,26 @@
+import Rules from '../constants/Rules';
+
+const getRank = (rank, cardElement, element) => {
+  if (Rules.elemental) {
+    if (element !== null) {
+      return element === cardElement ? rank + 1 : rank - 1;
+    }
+    return rank;
+  }
+  return rank;
+};
+
 const CardCombat = (props, newRow, newColumn, rank1, rank2) => {
   const {
-    card, table, player, handleAddCard, handleRemoveCard, handleChangeTable,
+    card, table, element, player, handleAddCard, handleRemoveCard, handleChangeTable,
   } = props;
 
   if (table[newRow][newColumn][1] === player) return;
 
   const otherCard = table[newRow][newColumn][0];
-  if (otherCard.ranks[rank2] >= card.ranks[rank1]) return;
+  const atk = getRank(card.ranks[rank1], card.element, element);
+  const def = getRank(otherCard.ranks[rank2], otherCard.element, table[newRow][newColumn][2]);
+  if (def >= atk) return;
 
   table[newRow][newColumn][1] = player;
   handleChangeTable(table);

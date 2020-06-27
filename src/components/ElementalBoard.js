@@ -18,31 +18,42 @@ const ElementalBoard = props => {
     return elements[value];
   };
 
-  return (
-    <View>
-      {table.forEach((row, i) => row.forEach((column, j) => {
-        if (rules.elemental) {
-          const element = getRandomElement();
-          const spotStyle = {
-            ...styles.elementalSpot,
-            top: (i - 1) * cardHeight,
-            right: (j - 1) * cardWidth,
-          };
-          table[i][j] = [null, null, element];
-          return (
-            <Image
-              style={spotStyle}
-              source={Images[element]}
-              alt="Table"
-            />
-          );
-        }
-        table[i][j] = [null, null, null];
-        return null;
-      }))}
-      {modifyTable(table)}
-    </View>
-  );
+  table.forEach((row, i) => row.forEach((column, j) => {
+    if (rules.elemental) {
+      const element = getRandomElement();
+      table[i][j] = [null, null, element];
+    } else table[i][j] = [null, null, null];
+  }));
+
+  modifyTable(table);
+
+
+  if (rules.elemental) {
+    return (
+      <View>
+        {table.map((row, i) => row.map((col, j) => {
+          if (table[i][j][2] !== null) {
+            const spotStyle = {
+              ...styles.elementalSpot,
+              bottom: (1 - i) * cardHeight - Dimensions.get('window').height / 2,
+              left: (j - 1) * cardWidth,
+            };
+            return (
+              <Image
+                style={spotStyle}
+                source={Images[table[i][j][2]]}
+                alt="Table"
+                key={[i, j, table]}
+              />
+            );
+          }
+          return null;
+        }))}
+      </View>
+    );
+  }
+
+  return null;
 };
 
 ElementalBoard.propTypes = {

@@ -7,6 +7,8 @@ export default {
   win: require('../contents/img/winResult.png'),
   loose: require('../contents/img/looseResult.png'),
   tie: require('../contents/img/tieResult.png'),
+  plus: require('../contents/img/plusOne.png'),
+  minus: require('../contents/img/minusOne.png'),
   rank0: require('../contents/img/rank0.png'),
   rank1: require('../contents/img/rank1.png'),
   rank2: require('../contents/img/rank2.png'),

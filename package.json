@@ -13,6 +13,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
+    "logkitty": "^0.7.1",
     "prop-types": "^15.7.2",
     "react": "16.11.0",
     "react-dom": "^16.13.1",

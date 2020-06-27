@@ -55,6 +55,14 @@ const RankNumberStyles = StyleSheet.create({
     top: '10%',
     right: '10%',
   },
+  plusMinus: {
+    position: 'absolute',
+    width: cardWidth / 2.5,
+    height: cardHeight / 2.5,
+    resizeMode: 'contain',
+    bottom: '10%',
+    right: '10%',
+  },
 });
 
 export default RankNumberStyles;

@@ -17,6 +17,7 @@ const Card = props => {
   } = props;
   const { row, column, dragable } = playCard;
   const [myTable, setMyTable] = useState(table);
+  const [plusMinus, setPlusMinus] = useState('none');
   let [myTurn] = useState(turn);
 
   const pan = useRef(new Animated.ValueXY()).current;
@@ -34,7 +35,7 @@ const Card = props => {
     const begY = Dimensions.get('window').height * 0.08;
     const endY = Dimensions.get('window').height * 0.36;
 
-    if (myTable[row][column] !== null) return;
+    if (myTable[row][column][0] !== null) return;
 
     return (
       gesture.moveY > begY + (row * cardHeight)
@@ -67,14 +68,18 @@ const Card = props => {
       } else {
         for (let i = 0; i <= 2; i += 1) {
           for (let j = 0; j <= 2; j += 1) {
-            if (myTable[i][j] === null && isDropArea(e, gesture, i, j)) {
+            if (myTable[i][j][0] === null && isDropArea(e, gesture, i, j)) {
               Animated.spring(pan, {
                 toValue: { x: -cardWidth, y: -cardHeight },
                 friction: 10,
                 useNativeDriver: false,
               }).start();
-              myTable[i][j] = [card, player];
+              myTable[i][j] = [card, player, table[i][j][2]];
               setMyTable(myTable);
+              if (table[i][j][2] !== null) {
+                setPlusMinus(table[i][j][2] === card.element
+                  ? 'plus' : 'minus');
+              }
               handlePlaceCard(card, myTable, i, j);
             }
           }
@@ -122,7 +127,7 @@ const Card = props => {
           source={Images[card.id]}
           alt="Table"
         />
-        <RankNumbers ranks={card.ranks} element={card.element} />
+        <RankNumbers ranks={card.ranks} element={card.element} plusMinus={plusMinus} />
       </Animated.View>
     );
   }
@@ -139,7 +144,7 @@ const Card = props => {
         source={Images[card.id]}
         alt="Table"
       />
-      <RankNumbers ranks={card.ranks} element={card.element} />
+      <RankNumbers ranks={card.ranks} element={card.element} plusMinus={plusMinus} />
     </View>
   );
 };

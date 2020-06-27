@@ -82,10 +82,10 @@ const GamePlay = props => {
       handleChangeTable,
     };
 
-    if (row > 0 && !!table[row - 1][column]) CardCombat(newProps, row - 1, column, 0, 2);
-    if (row < 2 && !!table[row + 1][column]) CardCombat(newProps, row + 1, column, 2, 0);
-    if (column > 0 && !!table[row][column - 1]) CardCombat(newProps, row, column - 1, 1, 3);
-    if (column < 2 && !!table[row][column + 1]) CardCombat(newProps, row, column + 1, 3, 1);
+    if (row > 0 && !!table[row - 1][column][0]) CardCombat(newProps, row - 1, column, 0, 2);
+    if (row < 2 && !!table[row + 1][column][0]) CardCombat(newProps, row + 1, column, 2, 0);
+    if (column > 0 && !!table[row][column - 1][0]) CardCombat(newProps, row, column - 1, 1, 3);
+    if (column < 2 && !!table[row][column + 1][0]) CardCombat(newProps, row, column + 1, 3, 1);
 
     if (cardsOnTheTable(table) === 9) {
       if (pCards.play1Cards.length > pCards.play2Cards.length) setGameOver('win');

@@ -78,7 +78,6 @@ const ChangeTurnModal = props => {
       </View>
       <Button
         title="New random game"
-        // onPress={() => navigation.navigate('GamePlay')}
         onPress={() => newRandomGame()}
       />
     </Modal>

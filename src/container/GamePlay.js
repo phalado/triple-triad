@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import GamePlay from '../components/GamePlay';
-import {
-  modifyTable, createCard, removeCard,
-} from '../actions';
+import { modifyTable, createCard, removeCard } from '../actions';
 
 const mapStateToProps = state => ({
   cards: state.cards,

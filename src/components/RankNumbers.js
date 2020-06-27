@@ -5,11 +5,19 @@ import Images from '../constants/Images';
 import styles from '../styles/RankNumbers';
 
 const RankNumbers = props => {
-  const { ranks, element } = props;
+  const { ranks, element, plusMinus } = props;
   const rankUp = `rank${ranks[0]}`;
   const rankLf = `rank${ranks[1]}`;
   const rankDn = `rank${ranks[2]}`;
   const rankRt = `rank${ranks[3]}`;
+
+  const addPlusMinus = () => (
+    <Image
+      style={styles.plusMinus}
+      source={Images[plusMinus]}
+      alt="Plus or Minus"
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -38,6 +46,7 @@ const RankNumbers = props => {
         source={Images[element]}
         alt="Element"
       />
+      {plusMinus !== 'none' ? addPlusMinus() : null}
     </View>
   );
 };
@@ -45,6 +54,7 @@ const RankNumbers = props => {
 RankNumbers.propTypes = {
   ranks: PropTypes.arrayOf(PropTypes.number).isRequired,
   element: PropTypes.string.isRequired,
+  plusMinus: PropTypes.string.isRequired,
 };
 
 export default RankNumbers;

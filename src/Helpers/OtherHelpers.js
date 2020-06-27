@@ -4,7 +4,7 @@ const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + 
 const fields = board => [].concat(...board);
 
 const cardsOnTheTable = board => (
-  fields(board).filter(field => field !== null).length
+  fields(board).filter(field => field[0] !== null).length
 );
 
 const getCardContainer = (row, column, player, scrennHeight, styles) => {
@@ -35,11 +35,11 @@ const getCardContainer = (row, column, player, scrennHeight, styles) => {
 
 const getRandomCards = () => {
   const cards = [];
-  cards.push(getRandomNumber(100, 110));
-  cards.push(getRandomNumber(78, 99));
+  cards.push(getRandomNumber(1, 55));
+  cards.push(getRandomNumber(1, 55));
   cards.push(getRandomNumber(56, 77));
-  cards.push(getRandomNumber(1, 55));
-  cards.push(getRandomNumber(1, 55));
+  cards.push(getRandomNumber(78, 99));
+  cards.push(getRandomNumber(100, 110));
   return cards;
 };
 

@@ -2,7 +2,7 @@ export default {
   open: true,
   plus: false,
   same: false,
-  elemental: false,
+  elemental: true,
   sameWall: false,
   sudenDeath: false,
   random: false,

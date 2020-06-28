@@ -5,68 +5,132 @@ import Table from './Table';
 import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
+import CardCombat from '../Helpers/CardCombatLogic';
+import { getRandomBoolean, cardsOnTheTable } from '../Helpers/OtherHelpers';
+import ChangeTurnModal from '../container/ChangeTurnModal';
 import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
-  const { route } = props;
-  // const { play1Cards, play2Cards } = route.params;
-  const [table, setTable] = useState([
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ]);
-  const [play1Cards, setPlay1Cards] = useState(route.params.play1Cards);
-  const [play2Cards, setPlay2Cards] = useState(route.params.play2Cards);
+  const {
+    cards, table, modifyTable, addCard, removeCard, navigation,
+  } = props;
+  const [gameOver, setGameOver] = useState(false);
+  const [pCards] = useState(cards);
+  const [myTurn] = useState(getRandomBoolean());
+  const [visibleModal, setVisibleModal] = useState(false);
+  // const gameMusic = new S ound('gameSound.mp3', Sound.MAIN_BUNDLE);
+  // gameMusic.setNumberOfLoops(-1);
+
+  const handleAddCard = data => {
+    if (data.player) {
+      pCards.play1Cards = [
+        ...pCards.play1Cards,
+        {
+          id: data.id,
+          row: data.row,
+          column: data.column,
+          dragable: data.dragable,
+        },
+      ];
+    } else {
+      pCards.play2Cards = [
+        ...pCards.play2Cards,
+        {
+          id: data.id,
+          row: data.row,
+          column: data.column,
+          dragable: data.dragable,
+        },
+      ];
+    }
+    addCard(data);
+  };
+
+  const handleRemoveCard = data => {
+    if (data.player) {
+      const removable = pCards.play1Cards.find(c => c.id === data.id);
+      pCards.play1Cards = pCards.play1Cards.filter(c => c !== removable);
+    } else {
+      const removable = pCards.play2Cards.find(c => c.id === data.id);
+      pCards.play2Cards = pCards.play2Cards.filter(c => c !== removable);
+    }
+    removeCard(data);
+  };
+
+  const handleChangeTable = table => {
+    modifyTable(table);
+  };
+
+  const showModalWindow = () => {
+    setVisibleModal(true);
+    if (cardsOnTheTable(table) < 9) setTimeout(() => setVisibleModal(false), 1000);
+  };
 
   const handlePlaceCard = (card, tble, row, column) => {
-    setTable(tble);
-    if (column === 0) return;
-    if (table[row][column - 1] !== null) {
-      const otherCard = table[row][column - 1][0];
-      if (!table[row][column - 1][1] && card.ranks[1] > otherCard.ranks[3]) {
-        table[row][column - 1][1] = true;
-        setPlay1Cards([
-          ...play1Cards.filter(c => c.id !== card.id),
-          {
-            id: card.id,
-            row,
-            column,
-          },
-          {
-            id: otherCard.id,
-            row,
-            column: column - 1,
-          },
-        ]);
-        setPlay2Cards(play2Cards.filter(card => card.id !== otherCard.id));
-      }
+    modifyTable(tble);
+    handleRemoveCard({ player: tble[row][column][1], id: card.id });
+    handleAddCard({
+      player: tble[row][column][1], id: card.id, row, column, dragable: false,
+    });
+
+    const newProps = {
+      card,
+      table: tble,
+      element: table[row][column][2],
+      player: tble[row][column][1],
+      handleAddCard,
+      handleRemoveCard,
+      handleChangeTable,
+    };
+
+    if (row > 0 && !!table[row - 1][column][0]) CardCombat(newProps, row - 1, column, 0, 2);
+    if (row < 2 && !!table[row + 1][column][0]) CardCombat(newProps, row + 1, column, 2, 0);
+    if (column > 0 && !!table[row][column - 1][0]) CardCombat(newProps, row, column - 1, 1, 3);
+    if (column < 2 && !!table[row][column + 1][0]) CardCombat(newProps, row, column + 1, 3, 1);
+
+    if (cardsOnTheTable(table) === 9) {
+      if (pCards.play1Cards.length > pCards.play2Cards.length) setGameOver('win');
+      else if (pCards.play1Cards.length < pCards.play2Cards.length) setGameOver('loose');
+      else setGameOver('tie');
     }
+    // handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table);
+    showModalWindow();
   };
 
   return (
     <View style={styles.container}>
       <Table />
-      <PlayingTexts player score={play1Cards.length} />
-      <PlayingTexts score={play2Cards.length} />
-      {play1Cards.map(playCard => (
+      <PlayingTexts player score={pCards.play1Cards.length} />
+      <PlayingTexts score={pCards.play2Cards.length} />
+      {/* {handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table)} */}
+      <ChangeTurnModal
+        visible={visibleModal}
+        turn={myTurn}
+        gameOver={gameOver}
+        navigation={navigation}
+      />
+      {/* {gameMusic.play()} */}
+      {pCards.play1Cards.map(playCard => (
         <Card
           card={Cards.find(card => card.id === playCard.id)}
-          row={playCard.row}
-          column={playCard.column}
+          playCard={playCard}
           player
           table={table}
           handlePlaceCard={handlePlaceCard}
-          key={playCard.id}
+          gameOver={gameOver}
+          turn={myTurn}
+          key={[playCard.id, playCard.row, playCard.column, true]}
         />
       ))}
-      {play2Cards.map(playCard => (
+      {pCards.play2Cards.map(playCard => (
         <Card
           card={Cards.find(card => card.id === playCard.id)}
-          row={playCard.row}
-          column={playCard.column}
+          playCard={playCard}
           table={table}
           handlePlaceCard={handlePlaceCard}
-          key={playCard.id}
+          gameOver={gameOver}
+          turn={myTurn}
+          key={[playCard.id, playCard.row, playCard.column, false]}
         />
       ))}
     </View>
@@ -74,7 +138,15 @@ const GamePlay = props => {
 };
 
 GamePlay.propTypes = {
-  route: PropTypes.objectOf(PropTypes.any).isRequired,
+  cards: PropTypes.shape({
+    play1Cards: PropTypes.arrayOf(PropTypes.object),
+    play2Cards: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  modifyTable: PropTypes.func.isRequired,
+  addCard: PropTypes.func.isRequired,
+  removeCard: PropTypes.func.isRequired,
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default GamePlay;

@@ -1,162 +1,118 @@
-import React, { Component } from 'react';
-import { View, Image, PanResponder, Animated, Dimensions } from 'react-native';
+/* eslint-disable consistent-return */
+/* eslint-disable no-underscore-dangle */
+import React, { useState, useRef } from 'react';
+import {
+  View, Image, PanResponder, Animated, Dimensions,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import Images from '../constants/Images';
 import RankNumbers from './RankNumbers';
 import rules from '../constants/Rules';
+import { cardsOnTheTable, getCardContainer } from '../Helpers/OtherHelpers';
 import styles from '../styles/Card';
 
-class Card extends Component {
-  constructor(props) {
-    super(props);
-    this.state = ({
-      dragable: true,
-      row: this.props.row,
-      column: this.props.column,
-      table: this.props.table 
-    })
-  }
+const Card = props => {
+  const {
+    card, playCard, player, table, handlePlaceCard, gameOver, turn,
+  } = props;
+  const { row, column, dragable } = playCard;
+  const [myTable, setMyTable] = useState(table);
+  let [myTurn] = useState(turn);
 
-  pan = new Animated.ValueXY();
-  screenWidth = Dimensions.get('window').width;
-  scrennHeight = Dimensions.get('window').height;
-  cardWidth = Dimensions.get('window').width * 0.17;
-  cardHeight = Dimensions.get('window').height * 0.28;
+  const pan = useRef(new Animated.ValueXY()).current;
 
-  panResponder = PanResponder.create({
-    onMoveShouldSetPanResponder: () => true,
-    onPanResponderGrant: () => {
-      this.pan.setOffset({
-        x: this.pan.x._value,
-        y: this.pan.y._value
-      });
-    },
-    onPanResponderMove: Animated.event([
-      null,
-      { dx: this.pan.x, dy: this.pan.y }
-    ],{ useNativeDriver: false }),
-    onPanResponderRelease: (e, gesture) => {
-      // if (!this.props.player) {
-      //   Animated.spring(this.pan, {
-      //     toValue: { x: 0, y: 0 },
-      //     friction: 5,
-      //     useNativeDriver: false
-      //   }).start();
-      // } else {
-        for (let i = 0; i <= 2; i += 1) {
-          for (let j = 0; j <= 2; j += 1) {
-            if (this.state.table[i][j] === null && this.isDropArea(e, gesture, i, j)) {
-              Animated.spring(this.pan, {
-                toValue: { x: -this.cardWidth, y: -this.cardHeight },
-                friction: 10,
-                useNativeDriver: false,
-              }).start(() =>
-                this.setState({
-                  showDraggable: false
-                })
-              );
-              this.props.table[i][j] = [this.props.card, this.props.player];
-              this.setState({
-                dragable: false,
-                row: i,
-                column: j,
-                table: [...this.props.table],
-              })
-              this.props.handlePlaceCard(this.props.card, this.state.table, i, j);
-            }
-          }
-        }
-      // }
-      if (this.state.dragable) {
-        Animated.spring(this.pan, {
-          toValue: { x: 0, y: 0 },
-          friction: 5,
-          useNativeDriver: false
-        }).start();
-      }
-    }
-  });
+  const scrennHeight = Dimensions.get('window').height;
+  const cardWidth = Dimensions.get('window').width * 0.17;
+  const cardHeight = Dimensions.get('window').height * 0.28;
 
-  isDropArea(e, gesture, row, column) {
+  const playerImage = player ? 'player1' : 'player2';
+  const cardContainer = getCardContainer(row, column, player, scrennHeight, styles);
+
+  const isDropArea = (e, gesture, row, column) => {
     const begX = Dimensions.get('window').width * 0.245;
     const endX = Dimensions.get('window').width * 0.415;
     const begY = Dimensions.get('window').height * 0.08;
     const endY = Dimensions.get('window').height * 0.36;
 
-    if (this.state.table === null) return;
+    if (myTable[row][column][0] !== null) return;
 
     return (
-      gesture.moveY > begY + (row * this.cardHeight)
-      && gesture.moveY < endY + (row * this.cardHeight)
-      && gesture.moveX > begX + (column * this.cardWidth)
-      && gesture.moveX < endX + (column * this.cardWidth)
-    )
-  }
+      gesture.moveY > begY + (row * cardHeight)
+      && gesture.moveY < endY + (row * cardHeight)
+      && gesture.moveX > begX + (column * cardWidth)
+      && gesture.moveX < endX + (column * cardWidth)
+    );
+  };
 
-  render() {
-    const { card, player } = this.props;
-    const { row, column } = this.state;
-    const playerImage = player ? 'player1' : 'player2';
-    let cardContainer = styles.container;
+  const panResponder = useRef(PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderGrant: () => {
+      pan.setOffset({
+        x: pan.x._value,
+        y: pan.y._value,
+      });
+    },
+    onPanResponderMove: Animated.event([
+      null,
+      { dx: pan.x, dy: pan.y },
+    ], { useNativeDriver: false }),
+    onPanResponderRelease: (e, gesture) => {
+      myTurn = cardsOnTheTable(myTable) % 2 === 1 ? !turn : turn;
+      if (player !== myTurn) {
+        Animated.spring(pan, {
+          toValue: { x: 0, y: 0 },
+          friction: 5,
+          useNativeDriver: false,
+        }).start();
+      } else {
+        for (let i = 0; i <= 2; i += 1) {
+          for (let j = 0; j <= 2; j += 1) {
+            if (myTable[i][j][0] === null && isDropArea(e, gesture, i, j)) {
+              Animated.spring(pan, {
+                toValue: { x: -cardWidth, y: -cardHeight },
+                friction: 10,
+                useNativeDriver: false,
+              }).start();
+              myTable[i][j] = [card, player, table[i][j][2]];
+              setMyTable(myTable);
+              // console.log(table);
+              handlePlaceCard(card, myTable, i, j);
+            }
+          }
+        }
+      }
+      if (dragable) {
+        Animated.spring(pan, {
+          toValue: { x: 0, y: 0 },
+          friction: 5,
+          useNativeDriver: false,
+        }).start();
+      }
+    },
+  })).current;
 
-    if (row === 0) {
-      cardContainer = { ...cardContainer, ...styles.topRow };
-    } else if (row === 1) {
-      cardContainer = { ...cardContainer, ...styles.centerRow };
-    } else if (row === 2) {
-      cardContainer = { ...cardContainer, ...styles.bottomRow };
-    } else {
-      const value = (this.scrennHeight * 0.15)  + (row - 3) * this.scrennHeight * 0.1;
-      player ? cardContainer = { ...cardContainer, top: value, right: '2.5%' } :
-      cardContainer = { ...cardContainer, top: value, left: '2.5%' }
-    }
-
-    if (column === 0) {
-      cardContainer = { ...cardContainer, ...styles.leftColumn };
-    } else if (column === 1) {
-      cardContainer = { ...cardContainer, ...styles.centerColumn };
-    } else if (column === 2) {
-      cardContainer = { ...cardContainer, ...styles.rightColumn };
-    }
-
-    if (!player && !rules.open) {
-      return (
-        <View style={cardContainer}>
-          <Image
-            style={styles.card}
-            source={Images.cardBack}
-            alt="Background"
-          />
-        </View>
-      );
-    }
-
-    if (this.state.dragable) {
-      return (
-        <Animated.View
-          style={{
-            ...cardContainer,
-            transform: [{ translateX: this.pan.x }, { translateY: this.pan.y }]
-          }}
-          {...this.panResponder.panHandlers}
-        >
-          <Image
-            style={styles.card}
-            source={Images[playerImage]}
-            alt="Background"
-          />
-          <Image
-            style={styles.card}
-            source={Images[card.id]}
-            alt="Table"
-          />
-          <RankNumbers ranks={card.ranks} element={card.element} />
-        </Animated.View>
-      );
-    };
-
+  if (!player && !rules.open && row > 2) {
     return (
       <View style={cardContainer}>
+        <Image
+          style={styles.card}
+          source={Images.cardBack}
+          alt="Background"
+        />
+      </View>
+    );
+  }
+
+  if (dragable && !gameOver) {
+    return (
+      <Animated.View
+        style={{
+          ...cardContainer,
+          transform: [{ translateX: pan.x }, { translateY: pan.y }],
+        }}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...panResponder.panHandlers}
+      >
         <Image
           style={styles.card}
           source={Images[playerImage]}
@@ -167,22 +123,47 @@ class Card extends Component {
           source={Images[card.id]}
           alt="Table"
         />
-        <RankNumbers ranks={card.ranks} element={card.element} />
-      </View>
+        <RankNumbers ranks={card.ranks} element={card.element} table={table} playCard={playCard} />
+      </Animated.View>
     );
-  };
+  }
+
+  return (
+    <View style={cardContainer}>
+      <Image
+        style={styles.card}
+        source={Images[playerImage]}
+        alt="Background"
+      />
+      <Image
+        style={styles.card}
+        source={Images[card.id]}
+        alt="Table"
+      />
+      <RankNumbers ranks={card.ranks} element={card.element} table={table} playCard={playCard} />
+    </View>
+  );
 };
 
 Card.propTypes = {
   card: PropTypes.objectOf(PropTypes.any).isRequired,
-  row: PropTypes.number.isRequired,
-  column: PropTypes.number.isRequired,
+  playCard: PropTypes.shape({
+    row: PropTypes.number,
+    column: PropTypes.number,
+    dragable: PropTypes.bool,
+  }).isRequired,
   player: PropTypes.bool,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  handlePlaceCard: PropTypes.func.isRequired,
+  gameOver: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]).isRequired,
+  turn: PropTypes.bool.isRequired,
 };
 
 Card.defaultProps = {
   player: false,
-}
+};
 
 export default Card;

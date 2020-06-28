@@ -1,8 +1,9 @@
 /* eslint-disable global-require */
 import React from 'react';
 import { View, Image } from 'react-native';
-import styles from '../styles/Table';
+import ElementalBoard from '../container/ElementalBoard';
 import Images from '../constants/Images';
+import styles from '../styles/Table';
 
 const Table = () => (
   <View>
@@ -11,17 +12,7 @@ const Table = () => (
       source={Images.board}
       alt="Table"
     />
-    {/* <View style={styles.dropZonesContainer}>
-      <View style={styles.dropZones} />
-      <View style={styles.dropZones} />
-      <View style={styles.dropZones} />
-      <View style={styles.dropZones} />
-      <View style={styles.dropZones} />
-      <View style={styles.dropZones} />
-      <View style={styles.dropZones} />
-      <View style={styles.dropZones} />
-      <View style={styles.dropZones} />
-    </View> */}
+    <ElementalBoard />
   </View>
 );
 

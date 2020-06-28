@@ -1,30 +1,34 @@
-import React from 'react';
+/* eslint-disable object-curly-newline */
+import React, { useEffect } from 'react';
 import { View, Button } from 'react-native';
 import PropTypes from 'prop-types';
+import { getRandomCards } from '../Helpers/OtherHelpers';
 import styles from '../styles/App';
 
 const InitialScreen = props => {
-  const { navigation } = props;
-  const play1Cards = [
-    { id: 110, row: 3, column: 3 },
-    { id: 107, row: 4, column: 3 },
-    { id: 104, row: 5, column: 3 },
-    { id: 103, row: 6, column: 3 },
-    { id: 102, row: 7, column: 3 },
-  ];
-  const play2Cards = [
-    { id: 99, row: 3, column: 3 },
-    { id: 96, row: 4, column: 3 },
-    { id: 95, row: 5, column: 3 },
-    { id: 91, row: 6, column: 3 },
-    { id: 88, row: 7, column: 3 },
-  ];
+  const { navigation, createCard } = props;
+
+  useEffect(() => {
+    let newCards = getRandomCards();
+    newCards.forEach((card, index) => {
+      createCard({
+        player: true, id: card, row: 3 + index, column: 3, dragable: true,
+      });
+    });
+
+    newCards = getRandomCards();
+    newCards.forEach((card, index) => {
+      createCard({
+        player: false, id: card, row: 3 + index, column: 3, dragable: true,
+      });
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
       <Button
-        title="Play game"
-        onPress={() => navigation.navigate('GamePlay', { play1Cards, play2Cards })}
+        title="Play random game"
+        onPress={() => navigation.navigate('GamePlay')}
       />
     </View>
   );
@@ -32,6 +36,7 @@ const InitialScreen = props => {
 
 InitialScreen.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+  createCard: PropTypes.func.isRequired,
 };
 
 export default InitialScreen;

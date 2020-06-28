@@ -11,23 +11,11 @@ const TableStyles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  dropZonesContainer: {
-    flex: 1,
+  elementalSpot: {
     position: 'absolute',
-    flexWrap: 'wrap',
-    left: -Dimensions.get('window').width / 3.9,
-    top: Dimensions.get('window').height / 12.4,
-    width: cardWidth * 3,
-    height: cardHeight * 3,
+    width: cardWidth / 2,
+    height: cardHeight / 2,
   },
-  dropZones: {
-    borderWidth: 2,
-    borderColor: 'red',
-    position: 'relative',
-    width: cardWidth,
-    height: cardHeight,
-  },
-
 });
 
 export default TableStyles;

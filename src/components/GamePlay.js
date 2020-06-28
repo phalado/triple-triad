@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import Table from './Table';
 import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
-import CardCombat from '../Helpers/CardCombatLogic';
+import { CardCombat, checkSamePlus } from '../Helpers/CardCombatLogic';
 import { getRandomBoolean, cardsOnTheTable } from '../Helpers/OtherHelpers';
 import ChangeTurnModal from '../container/ChangeTurnModal';
 import styles from '../styles/GamePlay';
@@ -47,11 +47,22 @@ const GamePlay = props => {
   };
 
   const handleRemoveCard = data => {
-    if (data.player) {
-      const removable = pCards.play1Cards.find(c => c.id === data.id);
+    const { id, row, column } = data;
+    if (row) {
+      if (data.player) {
+        const removable = pCards.play1Cards.find(c => c.row === row && c.column === column);
+        console.log(removable);
+        pCards.play1Cards = pCards.play1Cards.filter(c => c !== removable);
+      } else {
+        const removable = pCards.play2Cards.find(c => c.row === row && c.column === column);
+        pCards.play2Cards = pCards.play2Cards.filter(c => c !== removable);
+      }
+    } else if (data.player) {
+      const removable = pCards.play1Cards.find(c => c.id === id);
+      console.log(removable);
       pCards.play1Cards = pCards.play1Cards.filter(c => c !== removable);
     } else {
-      const removable = pCards.play2Cards.find(c => c.id === data.id);
+      const removable = pCards.play2Cards.find(c => c.id === id);
       pCards.play2Cards = pCards.play2Cards.filter(c => c !== removable);
     }
     removeCard(data);
@@ -66,9 +77,14 @@ const GamePlay = props => {
     if (cardsOnTheTable(table) < 9) setTimeout(() => setVisibleModal(false), 1000);
   };
 
+  useEffect(() => showModalWindow(), []);
+
   const handlePlaceCard = (card, tble, row, column) => {
+    console.log(card);
     modifyTable(tble);
-    handleRemoveCard({ player: tble[row][column][1], id: card.id });
+    handleRemoveCard({
+      player: tble[row][column][1], id: card.id, row: card.row, column: card.column,
+    });
     handleAddCard({
       player: tble[row][column][1], id: card.id, row, column, dragable: false,
     });
@@ -82,6 +98,8 @@ const GamePlay = props => {
       handleRemoveCard,
       handleChangeTable,
     };
+
+    checkSamePlus(newProps, row, column);
 
     if (row > 0 && !!table[row - 1][column][0]) CardCombat(newProps, row - 1, column, 0, 2);
     if (row < 2 && !!table[row + 1][column][0]) CardCombat(newProps, row + 1, column, 2, 0);

@@ -3,9 +3,10 @@ const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + 
 
 const fields = board => [].concat(...board);
 
-const cardsOnTheTable = board => (
-  fields(board).filter(field => field[0] !== null).length
-);
+const cardsOnTheTable = board => {
+  if (board[0][0]) return fields(board).filter(field => !!field[0]).length;
+  return fields(board).filter(field => !!field).length;
+};
 
 const getCardContainer = (row, column, player, scrennHeight, styles) => {
   let cardContainer = styles.container;

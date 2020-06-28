@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import {
   createCard, resetCards, resetTable,
 } from '../actions';
-import ChangeTurnModal from '../components/ChangeTurnModal';
+import ModalScreen from '../components/ModalScreen';
 
 const mapStateToProps = state => ({
   table: state.table,
@@ -20,4 +20,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChangeTurnModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalScreen);

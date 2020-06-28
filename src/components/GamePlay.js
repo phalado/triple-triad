@@ -5,9 +5,9 @@ import Table from './Table';
 import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
-import { CardCombat, checkSamePlus } from '../Helpers/CardCombatLogic';
+import { cardCombat, checkSamePlus } from '../Helpers/CardCombatLogic';
 import { getRandomBoolean, cardsOnTheTable } from '../Helpers/OtherHelpers';
-import ChangeTurnModal from '../container/ChangeTurnModal';
+import ModalScreen from '../container/ModalScreen';
 import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
@@ -18,6 +18,7 @@ const GamePlay = props => {
   const [pCards] = useState(cards);
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
+  const [modalValue, setModalValue] = useState('none');
   // const gameMusic = new S ound('gameSound.mp3', Sound.MAIN_BUNDLE);
   // gameMusic.setNumberOfLoops(-1);
 
@@ -51,7 +52,6 @@ const GamePlay = props => {
     if (row) {
       if (data.player) {
         const removable = pCards.play1Cards.find(c => c.row === row && c.column === column);
-        console.log(removable);
         pCards.play1Cards = pCards.play1Cards.filter(c => c !== removable);
       } else {
         const removable = pCards.play2Cards.find(c => c.row === row && c.column === column);
@@ -59,7 +59,6 @@ const GamePlay = props => {
       }
     } else if (data.player) {
       const removable = pCards.play1Cards.find(c => c.id === id);
-      console.log(removable);
       pCards.play1Cards = pCards.play1Cards.filter(c => c !== removable);
     } else {
       const removable = pCards.play2Cards.find(c => c.id === id);
@@ -72,15 +71,20 @@ const GamePlay = props => {
     modifyTable(table);
   };
 
-  const showModalWindow = () => {
+  const showModalWindow = value => {
     setVisibleModal(true);
-    if (cardsOnTheTable(table) < 9) setTimeout(() => setVisibleModal(false), 1000);
+    if (value) setModalValue(value);
+    if (cardsOnTheTable(table) < 9) {
+      setTimeout(() => {
+        setVisibleModal(false);
+        setModalValue('none');
+      }, 1000);
+    }
   };
 
   useEffect(() => showModalWindow(), []);
 
   const handlePlaceCard = (card, tble, row, column) => {
-    console.log(card);
     modifyTable(tble);
     handleRemoveCard({
       player: tble[row][column][1], id: card.id, row: card.row, column: card.column,
@@ -99,12 +103,12 @@ const GamePlay = props => {
       handleChangeTable,
     };
 
-    checkSamePlus(newProps, row, column);
+    checkSamePlus(newProps, row, column, showModalWindow);
 
-    if (row > 0 && !!table[row - 1][column][0]) CardCombat(newProps, row - 1, column, 0, 2);
-    if (row < 2 && !!table[row + 1][column][0]) CardCombat(newProps, row + 1, column, 2, 0);
-    if (column > 0 && !!table[row][column - 1][0]) CardCombat(newProps, row, column - 1, 1, 3);
-    if (column < 2 && !!table[row][column + 1][0]) CardCombat(newProps, row, column + 1, 3, 1);
+    if (row > 0 && !!table[row - 1][column][0]) cardCombat(newProps, row - 1, column, 0, 2);
+    if (row < 2 && !!table[row + 1][column][0]) cardCombat(newProps, row + 1, column, 2, 0);
+    if (column > 0 && !!table[row][column - 1][0]) cardCombat(newProps, row, column - 1, 1, 3);
+    if (column < 2 && !!table[row][column + 1][0]) cardCombat(newProps, row, column + 1, 3, 1);
 
     if (cardsOnTheTable(table) === 9) {
       if (pCards.play1Cards.length > pCards.play2Cards.length) setGameOver('win');
@@ -121,11 +125,12 @@ const GamePlay = props => {
       <PlayingTexts player score={pCards.play1Cards.length} />
       <PlayingTexts score={pCards.play2Cards.length} />
       {/* {handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table)} */}
-      <ChangeTurnModal
+      <ModalScreen
         visible={visibleModal}
         turn={myTurn}
         gameOver={gameOver}
         navigation={navigation}
+        value={modalValue}
       />
       {/* {gameMusic.play()} */}
       {pCards.play1Cards.map(playCard => (

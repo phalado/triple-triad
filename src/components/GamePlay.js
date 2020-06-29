@@ -72,6 +72,7 @@ const GamePlay = props => {
   };
 
   const showModalWindow = value => {
+    if (cardsOnTheTable(table) < 9) setGameOver(false);
     setVisibleModal(true);
     if (value) setModalValue(value);
     if (cardsOnTheTable(table) < 9) {
@@ -79,10 +80,15 @@ const GamePlay = props => {
         setVisibleModal(false);
         setModalValue('none');
       }, 1000);
+    } else if (value) {
+      setTimeout(() => {
+        setVisibleModal(false);
+        setModalValue('none');
+      }, 1000);
     }
   };
 
-  useEffect(() => showModalWindow(), []);
+  useEffect(() => showModalWindow('none'), []);
 
   const handlePlaceCard = (card, tble, row, column) => {
     modifyTable(tble);

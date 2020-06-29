@@ -5,6 +5,7 @@ import {
 import ModalScreen from '../components/ModalScreen';
 
 const mapStateToProps = state => ({
+  cards: state.cards,
   table: state.table,
 });
 

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import Rules from '../constants/Rules';
+import { cardsOnTheTable } from './OtherHelpers';
 
 const turnCard = props => {
   const {
@@ -47,25 +48,32 @@ const cardCombat = (props, newRow, newColumn, rank1, rank2, showModalWindow = nu
     handleRemoveCard,
     handleChangeTable,
   });
-  if (showModalWindow) showModalWindow('combo');
+  if (showModalWindow) {
+    showModalWindow('combo');
+    if (cardsOnTheTable(table) === 9) setTimeout(() => showModalWindow(), 1100);
+  }
 };
 
-const checkCombo = (props, card, showModalWindow) => {
+const checkCombo = (props, crd, showModalWindow) => {
   const { table } = props;
-  const row = card[0];
-  const column = card[1];
+  const row = crd[0];
+  const column = crd[1];
 
   if (row > 0 && !!table[row - 1][column][0]) {
-    cardCombat(props, row - 1, column, 0, 2, showModalWindow);
+    // console.log(row - 1, column, props.card.ranks[0], table[row - 1][column][0].ranks[2]);
+    cardCombat({ ...props, card: table[row][column][0] }, row - 1, column, 0, 2, showModalWindow);
   }
   if (row < 2 && !!table[row + 1][column][0]) {
-    cardCombat(props, row + 1, column, 2, 0, showModalWindow);
+    // console.log(row + 1, column, props.card.ranks[2], table[row + 1][column][0].ranks[0]);
+    cardCombat({ ...props, card: table[row][column][0] }, row + 1, column, 2, 0, showModalWindow);
   }
   if (column > 0 && !!table[row][column - 1][0]) {
-    cardCombat(props, row, column - 1, 1, 3, showModalWindow);
+    // console.log(row, column - 1, props.card.ranks[1], table[row][column - 1][0].ranks[3]);
+    cardCombat({ ...props, card: table[row][column][0] }, row, column - 1, 1, 3, showModalWindow);
   }
   if (column < 2 && !!table[row][column + 1][0]) {
-    cardCombat(props, row, column + 1, 3, 1, showModalWindow);
+    // console.log(row, column + 1, props.card.ranks[3], table[row][column + 1][0].ranks[1]);
+    cardCombat({ ...props, card: table[row][column][0] }, row, column + 1, 3, 1, showModalWindow);
   }
 };
 
@@ -148,25 +156,27 @@ const checkPlus = (props, row, column, showModalWindow) => {
         : plusCards[sum] = [[row, column + 1]];
     }
 
-    // console.log(plusCards);
-
     // eslint-disable-next-line no-unused-vars
     Object.entries(plusCards).forEach(([key, value]) => {
       if (value.length > 1 && value.some(v => table[v[0]][v[1]][1] !== player)) {
         value.forEach(crd => {
-          table[crd[0]][crd[1]][1] = !player;
-          turnCard({
-            table,
-            player,
-            id: table[crd[0]][crd[1]][0].id,
-            row: crd[0],
-            column: crd[1],
-            handleAddCard,
-            handleRemoveCard,
-            handleChangeTable,
-          });
-          showModalWindow('plusSp');
-          setTimeout(() => checkCombo(props, crd, showModalWindow), 1500);
+          if (table[crd[0]][crd[1]][1] !== player) {
+            table[crd[0]][crd[1]][1] = player;
+            turnCard({
+              table,
+              player,
+              id: table[crd[0]][crd[1]][0].id,
+              row: crd[0],
+              column: crd[1],
+              handleAddCard,
+              handleRemoveCard,
+              handleChangeTable,
+            });
+            showModalWindow('plusSp');
+            setTimeout(() => {
+              checkCombo(props, crd, showModalWindow);
+            }, 1500);
+          }
         });
       }
     });

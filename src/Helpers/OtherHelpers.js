@@ -44,6 +44,21 @@ const getRandomCards = () => {
   return cards;
 };
 
+const getCardsId = cards => {
+  const newP1Cards = [];
+  const newP2Cards = [];
+  cards.forEach(card => newP1Cards.push(card.id));
+
+  let value = 0;
+  while (newP1Cards.length > 5) {
+    value = getRandomNumber(0, newP1Cards.length);
+    newP2Cards.push(newP1Cards[value]);
+    newP1Cards.splice(value, 1);
+  }
+
+  return ({ newP1Cards, newP2Cards });
+};
+
 // const handleEndOfTurn = (turn, gameOver, score, table) => {
 //   if (gameOver) return;
 
@@ -55,5 +70,5 @@ const getRandomCards = () => {
 // };
 
 export {
-  getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards,
+  getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards, getCardsId,
 };

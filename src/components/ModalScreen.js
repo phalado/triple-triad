@@ -4,13 +4,14 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
-import { cardsOnTheTable, getRandomCards } from '../Helpers/OtherHelpers';
+import { cardsOnTheTable, getRandomCards, getCardsId } from '../Helpers/OtherHelpers';
 import Images from '../constants/Images';
+import Rules from '../constants/Rules';
 import styles from '../styles/ChangeTurnModal';
 
 const ModalScreen = props => {
   const {
-    visible, turn, gameOver, navigation, value, table, createCard, resetCards, resetTable,
+    visible, turn, gameOver, navigation, value, cards, table, createCard, resetCards, resetTable,
   } = props;
 
   if (value !== 'none') {
@@ -49,6 +50,43 @@ const ModalScreen = props => {
       navigation.goBack(null);
       navigation.navigate('GamePlay');
     };
+
+    const sudenDeathGame = () => {
+      resetTable();
+      const allCards = getCardsId([...cards.play1Cards, ...cards.play2Cards]);
+      resetCards();
+
+      allCards.newP1Cards.forEach((card, index) => {
+        createCard({
+          player: true, id: card, row: 3 + index, column: 3, dragable: true,
+        });
+      });
+
+      allCards.newP2Cards.forEach((card, index) => {
+        createCard({
+          player: false, id: card, row: 3 + index, column: 3, dragable: true,
+        });
+      });
+
+      navigation.goBack(null);
+      navigation.navigate('GamePlay');
+    };
+
+    if (Rules.sudenDeath && gameOver === 'tie') {
+      // setTimeout(() => sudenDeathGame(), 2000);
+      sudenDeathGame();
+      return (
+        <Modal isVisible={visible}>
+          <View style={styles.container}>
+            <Image
+              style={styles.gameOverImage}
+              source={Images[gameOver]}
+              alt="Cursor"
+            />
+          </View>
+        </Modal>
+      );
+    }
 
     return (
       <Modal isVisible={visible}>
@@ -101,6 +139,10 @@ const ModalScreen = props => {
 ModalScreen.propTypes = {
   visible: PropTypes.bool.isRequired,
   turn: PropTypes.bool.isRequired,
+  cards: PropTypes.shape({
+    play1Cards: PropTypes.arrayOf(PropTypes.object),
+    play2Cards: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   gameOver: PropTypes.oneOfType([
     PropTypes.bool,

@@ -1,9 +1,9 @@
 export default {
   open: true,
-  plus: true,
-  same: true,
+  plus: false,
+  same: false,
   elemental: false,
   sameWall: false,
-  sudenDeath: false,
+  sudenDeath: true,
   random: false,
 };

@@ -4,9 +4,9 @@ const tableReducer = (state = [], action) => {
       return action.table;
     case 'RESET_TABLE':
       return [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null],
+        [[null, null, null], [null, null, null], [null, null, null]],
+        [[null, null, null], [null, null, null], [null, null, null]],
+        [[null, null, null], [null, null, null], [null, null, null]],
       ];
     default:
       return state;

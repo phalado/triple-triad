@@ -101,8 +101,12 @@ const checkSame = (props, row, column, showModalWindow) => {
       if (card.ranks[3] === table[row][column + 1][0].ranks[1]) sameCards.push([row, column + 1]);
     }
 
-    if (sameCards.every(card => table[card[0]][card[1]][1] === player)
-      || sameCards.length < 2) return;
+    if (sameCards.every(card => table[card[0]][card[1]][1] === player)) return;
+    if (sameCards.length < 2) {
+      if (!Rules.sameWall) return;
+      if ((row !== 0 || card.ranks[0] !== 10) && (row !== 2 || card.ranks[2] !== 10)
+        && (column !== 0 || card.ranks[1] !== 10) && (column !== 0 || card.ranks[4] !== 10)) return;
+    }
 
     const crds = sameCards.filter(card => table[card[0]][card[1]][1] !== player);
 

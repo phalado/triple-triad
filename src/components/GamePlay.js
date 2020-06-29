@@ -5,7 +5,7 @@ import Table from './Table';
 import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
-import { cardCombat, checkSamePlus } from '../Helpers/CardCombatLogic';
+import { cardCombat, checkSame, checkPlus } from '../Helpers/CardCombatLogic';
 import { getRandomBoolean, cardsOnTheTable } from '../Helpers/OtherHelpers';
 import ModalScreen from '../container/ModalScreen';
 import styles from '../styles/GamePlay';
@@ -103,7 +103,8 @@ const GamePlay = props => {
       handleChangeTable,
     };
 
-    checkSamePlus(newProps, row, column, showModalWindow);
+    checkSame(newProps, row, column, showModalWindow);
+    checkPlus(newProps, row, column, showModalWindow);
 
     if (row > 0 && !!table[row - 1][column][0]) cardCombat(newProps, row - 1, column, 0, 2);
     if (row < 2 && !!table[row + 1][column][0]) cardCombat(newProps, row + 1, column, 2, 0);

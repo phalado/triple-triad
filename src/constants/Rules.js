@@ -1,6 +1,6 @@
 export default {
   open: true,
-  plus: false,
+  plus: true,
   same: true,
   elemental: false,
   sameWall: false,

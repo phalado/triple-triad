@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import Rules from '../constants/Rules';
 
 const turnCard = props => {
@@ -53,15 +54,22 @@ const checkCombo = (props, card, showModalWindow) => {
   const { table } = props;
   const row = card[0];
   const column = card[1];
-  console.log(row, column, table);
 
-  if (row > 0 && !!table[row - 1][column][0]) cardCombat(props, row - 1, column, 0, 2, showModalWindow);
-  if (row < 2 && !!table[row + 1][column][0]) cardCombat(props, row + 1, column, 2, 0, showModalWindow);
-  if (column > 0 && !!table[row][column - 1][0]) cardCombat(props, row, column - 1, 1, 3, showModalWindow);
-  if (column < 2 && !!table[row][column + 1][0]) cardCombat(props, row, column + 1, 3, 1, showModalWindow);
+  if (row > 0 && !!table[row - 1][column][0]) {
+    cardCombat(props, row - 1, column, 0, 2, showModalWindow);
+  }
+  if (row < 2 && !!table[row + 1][column][0]) {
+    cardCombat(props, row + 1, column, 2, 0, showModalWindow);
+  }
+  if (column > 0 && !!table[row][column - 1][0]) {
+    cardCombat(props, row, column - 1, 1, 3, showModalWindow);
+  }
+  if (column < 2 && !!table[row][column + 1][0]) {
+    cardCombat(props, row, column + 1, 3, 1, showModalWindow);
+  }
 };
 
-const checkSamePlus = (props, row, column, showModalWindow) => {
+const checkSame = (props, row, column, showModalWindow) => {
   const {
     card, table, player, handleAddCard, handleRemoveCard, handleChangeTable,
   } = props;
@@ -108,4 +116,82 @@ const checkSamePlus = (props, row, column, showModalWindow) => {
   }
 };
 
-export { cardCombat, checkSamePlus };
+const checkPlus = (props, row, column, showModalWindow) => {
+  const {
+    card, table, player, handleAddCard, handleRemoveCard, handleChangeTable,
+  } = props;
+
+  if (Rules.plus) {
+    const plusCards = {};
+
+    if (row > 0 && table[row - 1][column][0] !== null) {
+      const sum = card.ranks[0] + table[row - 1][column][0].ranks[2];
+      plusCards[sum] ? plusCards[sum].push([row - 1, column])
+        : plusCards[sum] = [[row - 1, column]];
+    }
+
+    if (row < 2 && table[row + 1][column][0] !== null) {
+      const sum = card.ranks[2] + table[row + 1][column][0].ranks[0];
+      plusCards[sum] ? plusCards[sum].push([row + 1, column])
+        : plusCards[sum] = [[row + 1, column]];
+    }
+
+    if (column > 0 && table[row][column - 1][0] !== null) {
+      const sum = card.ranks[1] + table[row][column - 1][0].ranks[3];
+      plusCards[sum] ? plusCards[sum].push([row, column - 1])
+        : plusCards[sum] = [[row, column - 1]];
+    }
+
+    if (column < 2 && table[row][column + 1][0] !== null) {
+      const sum = card.ranks[3] + table[row][column + 1][0].ranks[1];
+      plusCards[sum] ? plusCards[sum].push([row, column + 1])
+        : plusCards[sum] = [[row, column + 1]];
+    }
+
+    // console.log(plusCards);
+
+    // eslint-disable-next-line no-unused-vars
+    Object.entries(plusCards).forEach(([key, value]) => {
+      if (value.length > 1 && value.some(v => table[v[0]][v[1]][1] !== player)) {
+        value.forEach(crd => {
+          table[crd[0]][crd[1]][1] = !player;
+          turnCard({
+            table,
+            player,
+            id: table[crd[0]][crd[1]][0].id,
+            row: crd[0],
+            column: crd[1],
+            handleAddCard,
+            handleRemoveCard,
+            handleChangeTable,
+          });
+          showModalWindow('plusSp');
+          setTimeout(() => checkCombo(props, crd, showModalWindow), 1500);
+        });
+      }
+    });
+
+    // if (sameCards.every(card => table[card[0]][card[1]][1] === player)
+    //   || sameCards.length < 2) return;
+
+    // const crds = sameCards.filter(card => table[card[0]][card[1]][1] !== player);
+
+    // crds.forEach(crd => {
+    //   table[crd[0]][crd[1]][1] = player;
+    //   turnCard({
+    //     table,
+    //     player,
+    //     id: table[crd[0]][crd[1]][0].id,
+    //     row: crd[0],
+    //     column: crd[1],
+    //     handleAddCard,
+    //     handleRemoveCard,
+    //     handleChangeTable,
+    //   });
+    //   showModalWindow('same');
+    //   setTimeout(() => checkCombo(props, crd, showModalWindow), 1500);
+    // });
+  }
+};
+
+export { cardCombat, checkSame, checkPlus };

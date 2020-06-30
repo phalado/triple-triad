@@ -4,6 +4,7 @@ import { modifyTable } from '../actions';
 
 const mapStateToProps = state => ({
   table: state.table,
+  rules: state.rules,
 });
 
 const mapDispatchToProps = dispatch => ({

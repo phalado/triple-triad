@@ -12,7 +12,7 @@ import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
   const {
-    cards, table, modifyTable, addCard, removeCard, navigation,
+    cards, table, rules, modifyTable, addCard, removeCard, navigation,
   } = props;
   const [gameOver, setGameOver] = useState(false);
   const [pCards] = useState(cards);
@@ -104,6 +104,7 @@ const GamePlay = props => {
       table: tble,
       element: table[row][column][2],
       player: tble[row][column][1],
+      rules,
       handleAddCard,
       handleRemoveCard,
       handleChangeTable,
@@ -149,6 +150,7 @@ const GamePlay = props => {
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
           turn={myTurn}
+          rules={rules}
           key={[playCard.id, playCard.row, playCard.column, true]}
         />
       ))}
@@ -160,6 +162,7 @@ const GamePlay = props => {
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
           turn={myTurn}
+          rules={rules}
           key={[playCard.id, playCard.row, playCard.column, false]}
         />
       ))}
@@ -173,6 +176,7 @@ GamePlay.propTypes = {
     play2Cards: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  rules: PropTypes.objectOf(PropTypes.bool).isRequired,
   modifyTable: PropTypes.func.isRequired,
   addCard: PropTypes.func.isRequired,
   removeCard: PropTypes.func.isRequired,

@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 const AppStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     height: Dimensions.get('window').height,
   },
 });

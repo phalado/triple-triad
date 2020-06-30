@@ -7,6 +7,7 @@ import ModalScreen from '../components/ModalScreen';
 const mapStateToProps = state => ({
   cards: state.cards,
   table: state.table,
+  rules: state.rules,
 });
 
 const mapDispatchToProps = dispatch => ({

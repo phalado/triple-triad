@@ -5,6 +5,7 @@ import { modifyTable, createCard, removeCard } from '../actions';
 const mapStateToProps = state => ({
   cards: state.cards,
   table: state.table,
+  rules: state.rules,
 });
 
 const mapDispatchToProps = dispatch => ({

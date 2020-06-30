@@ -14,6 +14,15 @@ const initialState = {
     [null, null, null],
     [null, null, null],
   ],
+  rules: {
+    open: true,
+    plus: false,
+    same: false,
+    elemental: false,
+    sameWall: false,
+    sudenDeath: false,
+    random: false,
+  },
 };
 
 const store = createStore(

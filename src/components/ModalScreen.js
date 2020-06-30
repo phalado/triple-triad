@@ -6,12 +6,12 @@ import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
 import { cardsOnTheTable, getRandomCards, getCardsId } from '../Helpers/OtherHelpers';
 import Images from '../constants/Images';
-import Rules from '../constants/Rules';
 import styles from '../styles/ChangeTurnModal';
 
 const ModalScreen = props => {
   const {
-    visible, turn, gameOver, navigation, value, cards, table, createCard, resetCards, resetTable,
+    visible, turn, gameOver, navigation, value, cards,
+    table, rules, createCard, resetCards, resetTable,
   } = props;
 
   if (value !== 'none') {
@@ -72,7 +72,7 @@ const ModalScreen = props => {
       navigation.navigate('GamePlay');
     };
 
-    if (Rules.sudenDeath && gameOver === 'tie') {
+    if (rules.sudenDeath && gameOver === 'tie') {
       // setTimeout(() => sudenDeathGame(), 2000);
       sudenDeathGame();
       return (
@@ -144,6 +144,7 @@ ModalScreen.propTypes = {
     play2Cards: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  rules: PropTypes.objectOf(PropTypes.bool).isRequired,
   gameOver: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.string,

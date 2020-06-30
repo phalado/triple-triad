@@ -2,11 +2,10 @@ import React from 'react';
 import { View, Image, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import Images from '../constants/Images';
-import rules from '../constants/Rules';
 import styles from '../styles/Table';
 
 const ElementalBoard = props => {
-  const { table, modifyTable } = props;
+  const { table, rules, modifyTable } = props;
   const elements = ['fire', 'water', 'ice', 'wind', 'poison', 'thunder', 'earth', 'holy'];
   const cardWidth = Dimensions.get('window').width * 0.17;
   const cardHeight = Dimensions.get('window').height * 0.28;
@@ -58,6 +57,7 @@ const ElementalBoard = props => {
 
 ElementalBoard.propTypes = {
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  rules: PropTypes.objectOf(PropTypes.bool).isRequired,
   modifyTable: PropTypes.func.isRequired,
 };
 

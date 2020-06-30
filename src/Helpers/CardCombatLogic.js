@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-expressions */
-import Rules from '../constants/Rules';
 import { cardsOnTheTable } from './OtherHelpers';
 
 const turnCard = props => {
@@ -15,11 +14,9 @@ const turnCard = props => {
   });
 };
 
-const getRank = (rank, cardElement, element) => {
-  if (Rules.elemental) {
-    if (element !== null) {
-      return element === cardElement ? rank + 1 : rank - 1;
-    }
+const getRank = (rank, cardElement, rules, element) => {
+  if (rules.elemental) {
+    if (element !== null) return element === cardElement ? rank + 1 : rank - 1;
     return rank;
   }
   return rank;
@@ -27,15 +24,15 @@ const getRank = (rank, cardElement, element) => {
 
 const cardCombat = (props, newRow, newColumn, rank1, rank2, showModalWindow = null) => {
   const {
-    card, table, element, player, handleAddCard, handleRemoveCard, handleChangeTable,
+    card, table, element, player, rules, handleAddCard, handleRemoveCard, handleChangeTable,
   } = props;
 
   if (table[newRow][newColumn][1] === player) return;
 
   const otherCard = table[newRow][newColumn][0];
-  const atk = getRank(card.ranks[rank1], card.element, element);
-  const def = getRank(otherCard.ranks[rank2], otherCard.element, table[newRow][newColumn][2]);
-  if (def >= atk) return;
+  const at = getRank(card.ranks[rank1], card.element, rules, element);
+  const df = getRank(otherCard.ranks[rank2], otherCard.element, rules, table[newRow][newColumn][2]);
+  if (df >= at) return;
 
   table[newRow][newColumn][1] = player;
   turnCard({
@@ -79,10 +76,10 @@ const checkCombo = (props, crd, showModalWindow) => {
 
 const checkSame = (props, row, column, showModalWindow) => {
   const {
-    card, table, player, handleAddCard, handleRemoveCard, handleChangeTable,
+    card, table, player, rules, handleAddCard, handleRemoveCard, handleChangeTable,
   } = props;
 
-  if (Rules.same) {
+  if (rules.same) {
     const sameCards = [];
 
     if (row > 0 && table[row - 1][column][0] !== null) {
@@ -103,7 +100,7 @@ const checkSame = (props, row, column, showModalWindow) => {
 
     if (sameCards.every(card => table[card[0]][card[1]][1] === player)) return;
     if (sameCards.length < 2) {
-      if (!Rules.sameWall) return;
+      if (!rules.sameWall) return;
       if ((row !== 0 || card.ranks[0] !== 10) && (row !== 2 || card.ranks[2] !== 10)
         && (column !== 0 || card.ranks[1] !== 10) && (column !== 0 || card.ranks[4] !== 10)) return;
     }
@@ -130,10 +127,10 @@ const checkSame = (props, row, column, showModalWindow) => {
 
 const checkPlus = (props, row, column, showModalWindow) => {
   const {
-    card, table, player, handleAddCard, handleRemoveCard, handleChangeTable,
+    card, table, player, rules, handleAddCard, handleRemoveCard, handleChangeTable,
   } = props;
 
-  if (Rules.plus) {
+  if (rules.plus) {
     const plusCards = {};
 
     if (row > 0 && table[row - 1][column][0] !== null) {
@@ -184,27 +181,6 @@ const checkPlus = (props, row, column, showModalWindow) => {
         });
       }
     });
-
-    // if (sameCards.every(card => table[card[0]][card[1]][1] === player)
-    //   || sameCards.length < 2) return;
-
-    // const crds = sameCards.filter(card => table[card[0]][card[1]][1] !== player);
-
-    // crds.forEach(crd => {
-    //   table[crd[0]][crd[1]][1] = player;
-    //   turnCard({
-    //     table,
-    //     player,
-    //     id: table[crd[0]][crd[1]][0].id,
-    //     row: crd[0],
-    //     column: crd[1],
-    //     handleAddCard,
-    //     handleRemoveCard,
-    //     handleChangeTable,
-    //   });
-    //   showModalWindow('same');
-    //   setTimeout(() => checkCombo(props, crd, showModalWindow), 1500);
-    // });
   }
 };
 

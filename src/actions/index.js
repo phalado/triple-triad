@@ -1,13 +1,3 @@
-// const changeTurn = value => ({
-//   type: 'CHANGE_TURN',
-//   turn: value,
-// });
-
-// const createTurn = value => ({
-//   type: 'CREATE_TURN',
-//   turn: value,
-// });
-
 const createCard = card => ({
   type: 'CREATE_CARD',
   player: card.player,
@@ -36,6 +26,11 @@ const resetTable = () => ({
   type: 'RESET_TABLE',
 });
 
+const changeRules = rules => ({
+  type: 'CHANGE_RULES',
+  rules,
+});
+
 export {
-  createCard, removeCard, modifyTable, resetCards, resetTable,
+  createCard, removeCard, modifyTable, resetCards, resetTable, changeRules,
 };

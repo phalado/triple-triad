@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, BackHandler, Alert } from 'react-native';
+import { View, BackHandler } from 'react-native';
 import PropTypes from 'prop-types';
 import { useFocusEffect } from '@react-navigation/native';
 import Table from './Table';
 import PlayingTexts from './PlayingTexts';
-import Card from './Card';
+import AnimatedCard from './AnimatedCard';
 import Cards from '../constants/Cards';
 import { cardCombat, checkSame, checkPlus } from '../Helpers/CardCombatLogic';
-import { getRandomBoolean, cardsOnTheTable, getRandomCards } from '../Helpers/OtherHelpers';
+import { getRandomBoolean, cardsOnTheTable, resetGame } from '../Helpers/OtherHelpers';
 import ModalScreen from '../container/ModalScreen';
 import styles from '../styles/GamePlay';
 
@@ -26,35 +26,9 @@ const GamePlay = props => {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        Alert.alert('Wait!', 'If you leave this game will be canceled. Are you sure?', [
-          {
-            text: 'Cancel',
-            onPress: () => null,
-            style: 'cancel',
-          },
-          {
-            text: 'Whatever',
-            onPress: () => {
-              resetTable();
-              resetCards();
-
-              let newCards = getRandomCards();
-              newCards.forEach((card, index) => {
-                createCard({
-                  player: true, id: card, row: 3 + index, column: 3, dragable: true,
-                });
-              });
-
-              newCards = getRandomCards();
-              newCards.forEach((card, index) => {
-                createCard({
-                  player: false, id: card, row: 3 + index, column: 3, dragable: true,
-                });
-              });
-              navigation.goBack(null);
-            },
-          },
-        ]);
+        resetGame({
+          resetCards, resetTable, createCard, navigation,
+        });
         return true;
       };
 
@@ -184,7 +158,7 @@ const GamePlay = props => {
       />
       {/* {gameMusic.play()} */}
       {pCards.play1Cards.map(playCard => (
-        <Card
+        <AnimatedCard
           card={Cards.find(card => card.id === playCard.id)}
           playCard={playCard}
           player
@@ -197,7 +171,7 @@ const GamePlay = props => {
         />
       ))}
       {pCards.play2Cards.map(playCard => (
-        <Card
+        <AnimatedCard
           card={Cards.find(card => card.id === playCard.id)}
           playCard={playCard}
           table={table}

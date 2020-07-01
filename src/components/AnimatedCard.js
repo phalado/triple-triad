@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Images from '../constants/Images';
 import RankNumbers from './RankNumbers';
 import { cardsOnTheTable, getCardContainer } from '../Helpers/OtherHelpers';
-import styles from '../styles/Card';
+import styles from '../styles/AnimatedCard';
 
 const Card = props => {
   const {

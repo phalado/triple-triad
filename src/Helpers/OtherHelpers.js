@@ -1,3 +1,5 @@
+import { Alert } from 'react-native';
+
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
 const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + min;
 
@@ -59,16 +61,42 @@ const getCardsId = cards => {
   return ({ newP1Cards, newP2Cards });
 };
 
-// const handleEndOfTurn = (turn, gameOver, score, table) => {
-//   if (gameOver) return;
+const resetGame = props => {
+  const {
+    resetCards, resetTable, createCard, navigation,
+  } = props;
 
-//   const myTurn = cardsOnTheTable(table) % 2 === 1 ? !turn : turn;
-//   if (myTurn) ToastAndroid.show('Player 1 turn', ToastAndroid.LONG);
-//   else ToastAndroid.show('Player 2 turn', ToastAndroid.LONG);
+  Alert.alert('Wait!', 'If you leave this game will be canceled. Are you sure?', [
+    {
+      text: 'Cancel',
+      onPress: () => null,
+      style: 'cancel',
+    },
+    {
+      text: 'Whatever',
+      onPress: () => {
+        resetTable();
+        resetCards();
 
-//   return;
-// };
+        let newCards = getRandomCards();
+        newCards.forEach((card, index) => {
+          createCard({
+            player: true, id: card, row: 3 + index, column: 3, dragable: true,
+          });
+        });
+
+        newCards = getRandomCards();
+        newCards.forEach((card, index) => {
+          createCard({
+            player: false, id: card, row: 3 + index, column: 3, dragable: true,
+          });
+        });
+        navigation.goBack(null);
+      },
+    },
+  ]);
+};
 
 export {
-  getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards, getCardsId,
+  getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards, getCardsId, resetGame,
 };

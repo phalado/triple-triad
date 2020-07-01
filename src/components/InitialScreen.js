@@ -36,6 +36,11 @@ const InitialScreen = props => {
         title="Change game rules"
         onPress={() => navigation.navigate('Choose Rules')}
       />
+      <Button
+        style={{ margin: 20 }}
+        title="All the cards"
+        onPress={() => navigation.navigate('Flat List')}
+      />
     </View>
   );
 };

@@ -1,15 +1,19 @@
 import React from 'react';
 import {
-  View, Text, Button, Alert,
+  View, Text, Button,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from '../styles/GameDrawer';
-import { getRandomCards } from '../Helpers/OtherHelpers';
+import { resetGame } from '../Helpers/OtherHelpers';
 
 const GameDrawer = props => {
   const {
     rules, createCard, resetCards, resetTable, navigation,
   } = props;
+
+  const giveUpButton = () => resetGame({
+    resetCards, resetTable, createCard, navigation,
+  });
 
   return (
     <View style={styles.container}>
@@ -24,37 +28,7 @@ const GameDrawer = props => {
       <Button
         style={{ margin: 20 }}
         title="Give up"
-        onPress={() => {
-          Alert.alert('Wait!', 'If you leave this game will be canceled. Are you sure?', [
-            {
-              text: 'Cancel',
-              onPress: () => null,
-              style: 'cancel',
-            },
-            {
-              text: 'Whatever',
-              onPress: () => {
-                resetTable();
-                resetCards();
-
-                let newCards = getRandomCards();
-                newCards.forEach((card, index) => {
-                  createCard({
-                    player: true, id: card, row: 3 + index, column: 3, dragable: true,
-                  });
-                });
-
-                newCards = getRandomCards();
-                newCards.forEach((card, index) => {
-                  createCard({
-                    player: false, id: card, row: 3 + index, column: 3, dragable: true,
-                  });
-                });
-                navigation.goBack(null);
-              },
-            },
-          ]);
-        }}
+        onPress={() => giveUpButton()}
       />
     </View>
   );

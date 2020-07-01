@@ -7,6 +7,7 @@ import InitialScreen from './container/InitialScreen';
 import GamePlay from './container/GamePlay';
 import ChooseRules from './container/ChooseRules';
 import GameDrawer from './container/GameDrawer';
+import FlatList from './container/MyFlatList';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -34,6 +35,7 @@ class Navigation extends Component {
           <Stack.Screen name="Initial Screen" component={InitialScreen} options={{ headerShown: false }} />
           <Stack.Screen name="GamePlay" component={DrawerContainer} options={{ headerShown: false }} />
           <Stack.Screen name="Choose Rules" component={ChooseRules} />
+          <Stack.Screen name="Flat List" component={FlatList} />
         </Stack.Navigator>
       </NavigationContainer>
     );

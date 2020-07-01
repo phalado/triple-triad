@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-native-gesture-handler';
 import styles from '../styles/Options';
@@ -8,11 +9,10 @@ const ChooseRules = props => {
   const { rules, changeRules } = props;
   const [myState, setMyState] = useState(rules);
 
-  const toggleSwitch = key => {
-    setMyState({
-      ...myState,
-      [key]: !myState[key],
-    });
+  useFocusEffect(() => changeRules(myState));
+
+  const toggleSwitch = (key, value) => {
+    setMyState({ ...myState, [key]: value });
     changeRules(myState);
   };
 
@@ -20,10 +20,9 @@ const ChooseRules = props => {
     <View style={styles.options}>
       <Text>{name}</Text>
       <Switch
-        // style={{ width: '50%' }}
         trackColor={{ false: '#767577', true: '#81b0ff' }}
         thumbColor={myState[key] ? '#f5dd4b' : '#f4f3f4'}
-        onValueChange={() => toggleSwitch(key)}
+        onValueChange={() => toggleSwitch(key, !myState[key])}
         value={myState[key]}
       />
     </View>

@@ -1,26 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, BackHandler, Alert } from 'react-native';
 import PropTypes from 'prop-types';
+import { useFocusEffect } from '@react-navigation/native';
 import Table from './Table';
 import PlayingTexts from './PlayingTexts';
 import Card from './Card';
 import Cards from '../constants/Cards';
 import { cardCombat, checkSame, checkPlus } from '../Helpers/CardCombatLogic';
-import { getRandomBoolean, cardsOnTheTable } from '../Helpers/OtherHelpers';
+import { getRandomBoolean, cardsOnTheTable, getRandomCards } from '../Helpers/OtherHelpers';
 import ModalScreen from '../container/ModalScreen';
 import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
   const {
-    cards, table, rules, modifyTable, addCard, removeCard, navigation,
+    cards, table, rules, modifyTable, createCard, removeCard, resetCards, resetTable, navigation,
   } = props;
   const [gameOver, setGameOver] = useState(false);
   const [pCards] = useState(cards);
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
-  // const gameMusic = new S ound('gameSound.mp3', Sound.MAIN_BUNDLE);
+  // const gameMusic = new Sound('gameSound.mp3', Sound.MAIN_BUNDLE);
   // gameMusic.setNumberOfLoops(-1);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert('Wait!', 'If you leave this game will be canceled. Are you sure?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {
+            text: 'Whatever',
+            onPress: () => {
+              resetTable();
+              resetCards();
+
+              let newCards = getRandomCards();
+              newCards.forEach((card, index) => {
+                createCard({
+                  player: true, id: card, row: 3 + index, column: 3, dragable: true,
+                });
+              });
+
+              newCards = getRandomCards();
+              newCards.forEach((card, index) => {
+                createCard({
+                  player: false, id: card, row: 3 + index, column: 3, dragable: true,
+                });
+              });
+              navigation.goBack(null);
+            },
+          },
+        ]);
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, []),
+  );
 
   const handleAddCard = data => {
     if (data.player) {
@@ -44,7 +86,7 @@ const GamePlay = props => {
         },
       ];
     }
-    addCard(data);
+    createCard(data);
   };
 
   const handleRemoveCard = data => {
@@ -178,8 +220,10 @@ GamePlay.propTypes = {
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   rules: PropTypes.objectOf(PropTypes.bool).isRequired,
   modifyTable: PropTypes.func.isRequired,
-  addCard: PropTypes.func.isRequired,
+  createCard: PropTypes.func.isRequired,
   removeCard: PropTypes.func.isRequired,
+  resetCards: PropTypes.func.isRequired,
+  resetTable: PropTypes.func.isRequired,
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

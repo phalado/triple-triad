@@ -6,7 +6,7 @@ import { getRandomCards } from '../Helpers/OtherHelpers';
 import styles from '../styles/App';
 
 const InitialScreen = props => {
-  const { decks, navigation, createCard } = props;
+  const { navigation, createCard } = props;
 
   useEffect(() => {
     let newCards = getRandomCards();
@@ -39,14 +39,14 @@ const InitialScreen = props => {
       <Button
         style={{ margin: 20 }}
         title="All the cards"
-        onPress={() => navigation.navigate('Game Deck', { deck: decks.custom.deck1 })}
+        onPress={() => navigation.navigate('Game Deck', { screen: 'Game Deck', params: { deck: 'none' } })}
       />
     </View>
   );
 };
 
 InitialScreen.propTypes = {
-  decks: PropTypes.objectOf(PropTypes.object).isRequired,
+  // decks: PropTypes.objectOf(PropTypes.object).isRequired,
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
   createCard: PropTypes.func.isRequired,
 };

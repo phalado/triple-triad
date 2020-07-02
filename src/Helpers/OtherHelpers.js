@@ -1,4 +1,5 @@
-import { Alert } from 'react-native';
+import React from 'react';
+import { Alert, View, Button } from 'react-native';
 
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
 const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + min;
@@ -97,6 +98,47 @@ const resetGame = props => {
   ]);
 };
 
+const getDeckButtons = (navigation, style) => (
+  <View style={style}>
+    <Button
+      title="Deck 1"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck1' } });
+      }}
+    />
+    <Button
+      title="Deck 2"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck2' } });
+      }}
+    />
+    <Button
+      title="Deck 3"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck3' } });
+      }}
+    />
+    <Button
+      title="Deck 4"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck4' } });
+      }}
+    />
+    <Button
+      title="Deck 5"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck5' } });
+      }}
+    />
+  </View>
+);
+
 export {
   getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards, getCardsId, resetGame,
+  getDeckButtons,
 };

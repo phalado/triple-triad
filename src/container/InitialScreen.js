@@ -3,6 +3,7 @@ import { createCard } from '../actions';
 import InitialScreen from '../components/InitialScreen';
 
 const mapStateToProps = state => ({
+  cards: state.cards,
   decks: state.decks,
 });
 

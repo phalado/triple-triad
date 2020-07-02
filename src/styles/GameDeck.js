@@ -14,7 +14,6 @@ const GameDeckStyle = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 8,
     width: Dimensions.get('window').width * 0.25,
-    height: '45%',
     alignItems: 'center',
   },
   title: {
@@ -30,6 +29,31 @@ const GameDeckStyle = StyleSheet.create({
     height: cardHeight,
     resizeMode: 'stretch',
     position: 'absolute',
+  },
+  buttons: {
+    flexDirection: 'row',
+    height: '65%',
+    width: '90%',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  dropZone: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '95%',
+    marginBottom: 10,
+  },
+  playerCardContainer: {
+    position: 'relative',
+    alignItems: 'center',
+  },
+  removeClickable: {
+    position: 'absolute',
+    bottom: '5%',
+    right: '5%',
+    backgroundColor: 'white',
+    borderColor: 'red',
+    borderWidth: 1,
   },
 });
 

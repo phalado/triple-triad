@@ -31,13 +31,36 @@ const GameDeck = props => {
     navigation.push('Game Deck', { screen: 'Game Deck', params: { deck } });
   };
 
+  const handleAddCard = (cardId, deck) => {
+    if (myDecks.custom[deck].some(value => value === null)) {
+      setMyDecks({
+        player: myDecks.player,
+        custom: {
+          ...myDecks.custom,
+          [deck]: myDecks.custom[deck].splice(myDecks.custom[deck].indexOf(null), 1, cardId)
+            .sort(),
+        },
+      });
+      changeDeck(myDecks);
+      navigation.pop();
+      navigation.push('Game Deck', { screen: 'Game Deck', params: { deck } });
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ height: '50%', alignItems: 'center' }}>
         <Text style={styles.title}>See your cards and change your decks</Text>
         <FlatList
           data={Cards}
-          renderItem={({ item }) => <DeckAnimatedCard card={item} table={table} />}
+          renderItem={({ item }) => (
+            <DeckAnimatedCard
+              card={item}
+              table={table}
+              handleAddCard={handleAddCard}
+              deck={deck}
+            />
+          )}
           horizontal
           keyExtractor={card => card.name}
         />

@@ -42,6 +42,7 @@ const GameDeckStyle = StyleSheet.create({
     justifyContent: 'space-around',
     width: '95%',
     marginBottom: 10,
+    zIndex: 2,
   },
   playerCardContainer: {
     position: 'relative',

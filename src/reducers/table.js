@@ -3,11 +3,7 @@ const tableReducer = (state = [], action) => {
     case 'MODIFY_TABLE':
       return action.table;
     case 'RESET_TABLE':
-      return [
-        [[null, null, null], [null, null, null], [null, null, null]],
-        [[null, null, null], [null, null, null], [null, null, null]],
-        [[null, null, null], [null, null, null], [null, null, null]],
-      ];
+      return Array(3).fill(Array(3).fill(Array(3).fill(null)));
     default:
       return state;
   }

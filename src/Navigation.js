@@ -7,15 +7,21 @@ import InitialScreen from './container/InitialScreen';
 import GamePlay from './container/GamePlay';
 import ChooseRules from './container/ChooseRules';
 import GameDrawer from './container/GameDrawer';
-import FlatList from './container/MyFlatList';
+import GameDeck from './container/GameDeck';
+import DeckDrawer from './container/DeckDrawer';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const DrawerContainer = () => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
+const GameDrawerContainer = () => (
   <Drawer.Navigator drawerContent={props => <GameDrawer {...props} />}>
     <Drawer.Screen name="GamePlay" component={GamePlay} />
+  </Drawer.Navigator>
+);
+
+const DecksDrawerContainer = () => (
+  <Drawer.Navigator drawerContent={props => <DeckDrawer {...props} />}>
+    <Drawer.Screen name="Game Deck" component={GameDeck} />
   </Drawer.Navigator>
 );
 
@@ -33,9 +39,9 @@ class Navigation extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Initial Screen" component={InitialScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="GamePlay" component={DrawerContainer} options={{ headerShown: false }} />
+          <Stack.Screen name="GamePlay" component={GameDrawerContainer} options={{ headerShown: false }} />
           <Stack.Screen name="Choose Rules" component={ChooseRules} />
-          <Stack.Screen name="Flat List" component={FlatList} />
+          <Stack.Screen name="Game Deck" component={DecksDrawerContainer} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     );

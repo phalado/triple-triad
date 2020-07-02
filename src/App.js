@@ -9,11 +9,7 @@ const initialState = {
     play1Cards: [],
     play2Cards: [],
   },
-  table: [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ],
+  table: Array(3).fill(Array(3).fill(Array(3).fill(null))),
   rules: {
     open: true,
     plus: false,
@@ -22,6 +18,22 @@ const initialState = {
     sameWall: false,
     sudenDeath: false,
     random: false,
+  },
+  decks: {
+    player: {
+      deck1: Array(5).fill(null),
+      deck2: Array(5).fill(null),
+      deck3: Array(5).fill(null),
+      deck4: Array(5).fill(null),
+      deck5: Array(5).fill(null),
+    },
+    custom: {
+      deck1: Array(5).fill(null),
+      deck2: Array(5).fill(null),
+      deck3: Array(5).fill(null),
+      deck4: Array(5).fill(null),
+      deck5: Array(5).fill(null),
+    },
   },
 };
 

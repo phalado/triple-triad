@@ -3,11 +3,11 @@ import { Alert } from 'react-native';
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
 const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + min;
 
-const fields = board => [].concat(...board);
+const fields = table => [].concat(...table);
 
-const cardsOnTheTable = board => {
-  if (board[0][0]) return fields(board).filter(field => !!field[0]).length;
-  return fields(board).filter(field => !!field).length;
+const cardsOnTheTable = table => {
+  if (table[0][0]) return fields(table).filter(field => !!field[0]).length;
+  return fields(table).filter(field => !!field).length;
 };
 
 const getCardContainer = (row, column, player, scrennHeight, styles) => {

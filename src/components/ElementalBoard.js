@@ -21,7 +21,7 @@ const ElementalBoard = props => {
     if (rules.elemental) {
       const element = getRandomElement();
       table[i][j] = [null, null, element];
-    } else table[i][j] = [null, null, null];
+    }
   }));
 
   modifyTable(table);

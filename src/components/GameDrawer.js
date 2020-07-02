@@ -3,8 +3,8 @@ import {
   View, Text, Button,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import styles from '../styles/GameDrawer';
 import { resetGame } from '../Helpers/OtherHelpers';
+import styles from '../styles/GameDrawer';
 
 const GameDrawer = props => {
   const {

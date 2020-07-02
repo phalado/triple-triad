@@ -1,6 +1,8 @@
 import React from 'react';
 import { Alert, View, Button } from 'react-native';
 
+import RankNumbers from '../components/RankNumbers';
+
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
 const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + min;
 

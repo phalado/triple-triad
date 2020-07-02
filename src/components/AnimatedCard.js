@@ -109,7 +109,6 @@ const Card = props => {
           ...cardContainer,
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
         }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...panResponder.panHandlers}
       >
         <Image

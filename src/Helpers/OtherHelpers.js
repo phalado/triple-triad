@@ -1,11 +1,15 @@
+import React from 'react';
+import { Alert, View, Button } from 'react-native';
+
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
 const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + min;
 
-const fields = board => [].concat(...board);
+const fields = table => [].concat(...table);
 
-const cardsOnTheTable = board => (
-  fields(board).filter(field => field[0] !== null).length
-);
+const cardsOnTheTable = table => {
+  if (table[0][0]) return fields(table).filter(field => !!field[0]).length;
+  return fields(table).filter(field => !!field).length;
+};
 
 const getCardContainer = (row, column, player, scrennHeight, styles) => {
   let cardContainer = styles.container;
@@ -43,16 +47,98 @@ const getRandomCards = () => {
   return cards;
 };
 
-// const handleEndOfTurn = (turn, gameOver, score, table) => {
-//   if (gameOver) return;
+const getCardsId = cards => {
+  const newP1Cards = [];
+  const newP2Cards = [];
+  cards.forEach(card => newP1Cards.push(card.id));
 
-//   const myTurn = cardsOnTheTable(table) % 2 === 1 ? !turn : turn;
-//   if (myTurn) ToastAndroid.show('Player 1 turn', ToastAndroid.LONG);
-//   else ToastAndroid.show('Player 2 turn', ToastAndroid.LONG);
+  let value = 0;
+  while (newP1Cards.length > 5) {
+    value = getRandomNumber(0, newP1Cards.length);
+    newP2Cards.push(newP1Cards[value]);
+    newP1Cards.splice(value, 1);
+  }
 
-//   return;
-// };
+  return ({ newP1Cards, newP2Cards });
+};
+
+const resetGame = props => {
+  const {
+    resetCards, resetTable, createCard, navigation,
+  } = props;
+
+  Alert.alert('Wait!', 'If you leave this game will be canceled. Are you sure?', [
+    {
+      text: 'Cancel',
+      onPress: () => null,
+      style: 'cancel',
+    },
+    {
+      text: 'Whatever',
+      onPress: () => {
+        resetTable();
+        resetCards();
+
+        let newCards = getRandomCards();
+        newCards.forEach((card, index) => {
+          createCard({
+            player: true, id: card, row: 3 + index, column: 3, dragable: true,
+          });
+        });
+
+        newCards = getRandomCards();
+        newCards.forEach((card, index) => {
+          createCard({
+            player: false, id: card, row: 3 + index, column: 3, dragable: true,
+          });
+        });
+        navigation.goBack(null);
+      },
+    },
+  ]);
+};
+
+const getDeckButtons = (navigation, style) => (
+  <View style={style}>
+    <Button
+      title="Deck 1"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck1' } });
+      }}
+    />
+    <Button
+      title="Deck 2"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck2' } });
+      }}
+    />
+    <Button
+      title="Deck 3"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck3' } });
+      }}
+    />
+    <Button
+      title="Deck 4"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck4' } });
+      }}
+    />
+    <Button
+      title="Deck 5"
+      onPress={() => {
+        navigation.pop();
+        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck5' } });
+      }}
+    />
+  </View>
+);
 
 export {
-  getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards,
+  getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards, getCardsId, resetGame,
+  getDeckButtons,
 };

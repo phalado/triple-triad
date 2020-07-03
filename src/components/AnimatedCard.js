@@ -7,13 +7,12 @@ import {
 import PropTypes from 'prop-types';
 import Images from '../constants/Images';
 import RankNumbers from './RankNumbers';
-import rules from '../constants/Rules';
 import { cardsOnTheTable, getCardContainer } from '../Helpers/OtherHelpers';
-import styles from '../styles/Card';
+import styles from '../styles/AnimatedCard';
 
 const Card = props => {
   const {
-    card, playCard, player, table, handlePlaceCard, gameOver, turn,
+    card, playCard, player, table, handlePlaceCard, gameOver, turn, rules,
   } = props;
   const { row, column, dragable } = playCard;
   const [myTable, setMyTable] = useState(table);
@@ -110,7 +109,6 @@ const Card = props => {
           ...cardContainer,
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
         }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...panResponder.panHandlers}
       >
         <Image
@@ -160,6 +158,7 @@ Card.propTypes = {
     PropTypes.string,
   ]).isRequired,
   turn: PropTypes.bool.isRequired,
+  rules: PropTypes.objectOf(PropTypes.bool).isRequired,
 };
 
 Card.defaultProps = {

@@ -2,11 +2,28 @@ import React, { Component } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import GamePlay from './container/GamePlay';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import InitialScreen from './container/InitialScreen';
-import styles from './styles/App';
+import GamePlay from './container/GamePlay';
+import ChooseRules from './container/ChooseRules';
+import GameDrawer from './container/GameDrawer';
+import GameDeck from './container/GameDeck';
+import DeckDrawer from './container/DeckDrawer';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const GameDrawerContainer = () => (
+  <Drawer.Navigator drawerContent={props => <GameDrawer {...props} />}>
+    <Drawer.Screen name="GamePlay" component={GamePlay} />
+  </Drawer.Navigator>
+);
+
+const DecksDrawerContainer = () => (
+  <Drawer.Navigator drawerContent={props => <DeckDrawer {...props} />}>
+    <Drawer.Screen name="Game Deck" component={GameDeck} />
+  </Drawer.Navigator>
+);
 
 class Navigation extends Component {
   componentDidMount() {
@@ -19,10 +36,12 @@ class Navigation extends Component {
 
   render() {
     return (
-      <NavigationContainer style={styles.container}>
+      <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Initial Screen" component={InitialScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="GamePlay" component={GamePlay} options={{ headerShown: false }} />
+          <Stack.Screen name="GamePlay" component={GameDrawerContainer} options={{ headerShown: false }} />
+          <Stack.Screen name="Choose Rules" component={ChooseRules} />
+          <Stack.Screen name="Game Deck" component={DecksDrawerContainer} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     );

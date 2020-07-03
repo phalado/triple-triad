@@ -4,12 +4,11 @@ import { modifyTable } from '../actions';
 
 const mapStateToProps = state => ({
   table: state.table,
+  rules: state.rules,
 });
 
 const mapDispatchToProps = dispatch => ({
-  modifyTable: table => {
-    dispatch(modifyTable(table));
-  },
+  modifyTable: table => dispatch(modifyTable(table)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ElementalBoard);

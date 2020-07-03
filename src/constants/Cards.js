@@ -1,17 +1,3 @@
-/* eslint-disable global-require */
-// export default {
-//   110: {
-//     name: 'Squal',
-//     image: require('../contents/img/cards/110.png'),
-//     element: 'neutral',
-//     up: 10,
-//     right: 4,
-//     down: 6,
-//     left: 9,
-//     level: 10,
-//   },
-// };
-
 export default [
   {
     id: 1, name: 'Geezard', ranks: [1, 5, 4, 1], element: 'neutral', level: 1,

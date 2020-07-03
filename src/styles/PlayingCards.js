@@ -25,6 +25,22 @@ const PlayingCardsStyles = StyleSheet.create({
     fontSize: Dimensions.get('window').width * 0.04,
     textAlign: 'center',
   },
+  cursorR: {
+    position: 'absolute',
+    top: 0,
+    right: '100%',
+    width: '50%',
+    height: '10%',
+    resizeMode: 'stretch',
+  },
+  cursorL: {
+    position: 'absolute',
+    top: 0,
+    left: '100%',
+    width: '50%',
+    height: '10%',
+    resizeMode: 'stretch',
+  },
 });
 
 export default PlayingCardsStyles;

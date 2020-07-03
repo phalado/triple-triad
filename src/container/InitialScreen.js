@@ -1,11 +1,15 @@
 import { connect } from 'react-redux';
-import { createCard } from '../actions';
+import { createCard, resetTable } from '../actions';
 import InitialScreen from '../components/InitialScreen';
 
-const mapDispatchToProps = dispatch => ({
-  createCard: card => {
-    dispatch(createCard(card));
-  },
+const mapStateToProps = state => ({
+  cards: state.cards,
+  decks: state.decks,
 });
 
-export default connect(null, mapDispatchToProps)(InitialScreen);
+const mapDispatchToProps = dispatch => ({
+  createCard: card => dispatch(createCard(card)),
+  resetTable: () => dispatch(resetTable()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(InitialScreen);

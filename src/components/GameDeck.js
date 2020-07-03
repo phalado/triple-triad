@@ -1,9 +1,9 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import {
   View, Text, FlatList, Button,
 } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
+import PropTypes from 'prop-types';
 import DeckAnimatedCard from './DeckAnimatedCard';
 import GetDecksCards from './GetDecksCards';
 import Cards from '../constants/Cards';
@@ -16,6 +16,7 @@ const GameDeck = props => {
   } = props;
   const { deck } = route.params;
   const [myDecks, setMyDecks] = useState(decks);
+  const myCards = Cards.sort((a, b) => a > b);
 
   const handleRemoveCard = (cardId, deck) => {
     setMyDecks({
@@ -52,7 +53,7 @@ const GameDeck = props => {
       <View style={{ height: '50%', alignItems: 'center' }}>
         <Text style={styles.title}>See your cards and change your decks</Text>
         <FlatList
-          data={Cards.sort((a, b) => a > b)}
+          data={myCards}
           renderItem={({ item }) => (
             <DeckAnimatedCard
               card={item}
@@ -71,7 +72,7 @@ const GameDeck = props => {
             ? myDecks.custom[deck].map((cardId, index) => GetDecksCards({
               cardId, table, index, handleRemoveCard, deck,
             }))
-            : getDeckButtons(navigation, styles.buttons)}
+            : getDeckButtons(navigation, styles.buttons, 'Game Deck')}
         </View>
         {deck === 'none' ? null
           : (
@@ -88,6 +89,14 @@ const GameDeck = props => {
       </View>
     </SafeAreaView>
   );
+};
+
+GameDeck.propTypes = {
+  decks: PropTypes.objectOf(PropTypes.object).isRequired,
+  table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+  changeDeck: PropTypes.func.isRequired,
+  route: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default GameDeck;

@@ -91,47 +91,71 @@ const resetGame = props => {
   ]);
 };
 
-const getDeckButtons = (navigation, style) => (
+const getDeckButtons = (navigation, style, screen) => (
   <View style={style}>
     <Button
       title="Deck 1"
       onPress={() => {
         navigation.pop();
-        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck1' } });
+        navigation.push(screen, { screen, params: { deck: 'deck1' } });
       }}
     />
     <Button
       title="Deck 2"
       onPress={() => {
         navigation.pop();
-        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck2' } });
+        navigation.push(screen, { screen, params: { deck: 'deck2' } });
       }}
     />
     <Button
       title="Deck 3"
       onPress={() => {
         navigation.pop();
-        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck3' } });
+        navigation.push(screen, { screen, params: { deck: 'deck3' } });
       }}
     />
     <Button
       title="Deck 4"
       onPress={() => {
         navigation.pop();
-        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck4' } });
+        navigation.push(screen, { screen, params: { deck: 'deck4' } });
       }}
     />
     <Button
       title="Deck 5"
       onPress={() => {
         navigation.pop();
-        navigation.push('Game Deck', { screen: 'Game Deck', params: { deck: 'deck5' } });
+        navigation.push(screen, { screen, params: { deck: 'deck5' } });
       }}
     />
   </View>
 );
 
+const deckName = name => {
+  const newName = name.split('');
+  newName[0] = newName[0].toUpperCase();
+  newName.splice(newName.length - 1, 0, ' ');
+  return newName.join('');
+};
+
+const getPcDeck = deck => {
+  const pcDeck = [];
+  deck.forEach(cardId => {
+    const newCardLvl = Math.ceil(cardId / 11);
+    let newCardId = getRandomNumber(((newCardLvl - 1) * 11) + 1, (newCardLvl * 11) + 1);
+
+    if (newCardLvl > 7) {
+      while (deck.includes(newCardId) || pcDeck.includes(newCardId)) {
+        newCardId = getRandomNumber(((newCardLvl - 1) * 11) + 1, (newCardLvl * 11) + 1);
+      }
+    }
+
+    pcDeck.push(newCardId);
+  });
+  return pcDeck;
+};
+
 export {
   getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards, getCardsId, resetGame,
-  getDeckButtons,
+  getDeckButtons, deckName, getPcDeck,
 };

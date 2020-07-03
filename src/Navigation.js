@@ -9,6 +9,7 @@ import ChooseRules from './container/ChooseRules';
 import GameDrawer from './container/GameDrawer';
 import GameDeck from './container/GameDeck';
 import DeckDrawer from './container/DeckDrawer';
+import ChooseDecksScreen from './container/ChooseDecksScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -42,6 +43,7 @@ class Navigation extends Component {
           <Stack.Screen name="GamePlay" component={GameDrawerContainer} options={{ headerShown: false }} />
           <Stack.Screen name="Choose Rules" component={ChooseRules} />
           <Stack.Screen name="Game Deck" component={DecksDrawerContainer} options={{ headerShown: false }} />
+          <Stack.Screen name="Choose Deck" component={ChooseDecksScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     );

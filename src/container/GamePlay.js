@@ -12,10 +12,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   modifyTable: table => dispatch(modifyTable(table)),
+  resetTable: () => dispatch(resetTable()),
   createCard: data => dispatch(createCard(data)),
   removeCard: data => dispatch(removeCard(data)),
   resetCards: () => dispatch(resetCards()),
-  resetTable: () => dispatch(resetTable()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GamePlay);

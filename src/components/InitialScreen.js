@@ -27,11 +27,18 @@ const InitialScreen = props => {
 
   return (
     <View style={styles.container}>
-      <Button
-        style={{ margin: 20 }}
-        title="Play random game"
-        onPress={() => navigation.navigate('GamePlay')}
-      />
+      <View>
+        <Button
+          style={{ margin: 20 }}
+          title="Play random game"
+          onPress={() => navigation.navigate('GamePlay')}
+        />
+        <Button
+          style={{ margin: 20 }}
+          title="Play quick game"
+          onPress={() => navigation.navigate('Choose Deck', { deck: 'deck1' })}
+        />
+      </View>
       <Button
         style={{ margin: 20 }}
         title="Change game rules"

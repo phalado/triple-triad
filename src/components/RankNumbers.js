@@ -52,8 +52,12 @@ RankNumbers.propTypes = {
     row: PropTypes.number,
     column: PropTypes.number,
     dragable: PropTypes.bool,
-  }).isRequired,
+  }),
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
+};
+
+RankNumbers.defaultProps = {
+  playCard: { row: 0, column: 0, dragable: true },
 };
 
 export default RankNumbers;

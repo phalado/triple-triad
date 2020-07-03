@@ -19,6 +19,11 @@ const GameDeckStyle = StyleSheet.create({
   title: {
     fontSize: 20,
   },
+  title2: {
+    fontSize: 20,
+    color: 'red',
+    fontWeight: 'bold',
+  },
   cardContainer: {
     position: 'relative',
     width: cardWidth,

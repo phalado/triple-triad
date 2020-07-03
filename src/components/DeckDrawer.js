@@ -12,14 +12,13 @@ const GameDrawer = props => {
       <Text style={styles.mainTitle}>Hello Stranger!!!</Text>
       <View style={styles.subContainer}>
         <Text style={styles.title}>Select a deck: </Text>
-        {getDeckButtons(navigation, styles.buttonsContainer)}
+        {getDeckButtons(navigation, styles.buttonsContainer, 'Game Deck')}
       </View>
     </View>
   );
 };
 
 GameDrawer.propTypes = {
-  // decks: PropTypes.objectOf(PropTypes.object).isRequired,
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

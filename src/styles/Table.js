@@ -1,15 +1,17 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const cardWidth = Dimensions.get('window').width * 0.17;
-const cardHeight = Dimensions.get('window').height * 0.28;
+const ScreenWidth = Dimensions.get('window').width;
+const ScreenHeight = Dimensions.get('window').height;
+const cardWidth = ScreenWidth * 0.17;
+const cardHeight = ScreenHeight * 0.28;
 
 const TableStyles = StyleSheet.create({
   container: {
     position: 'absolute',
-    left: -Dimensions.get('window').width / 2,
+    left: -ScreenWidth / 2,
     resizeMode: 'stretch',
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: ScreenWidth,
+    height: ScreenHeight,
   },
   elementalSpot: {
     position: 'absolute',

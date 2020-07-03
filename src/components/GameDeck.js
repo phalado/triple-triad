@@ -52,7 +52,7 @@ const GameDeck = props => {
       <View style={{ height: '50%', alignItems: 'center' }}>
         <Text style={styles.title}>See your cards and change your decks</Text>
         <FlatList
-          data={Cards}
+          data={Cards.sort((a, b) => a > b)}
           renderItem={({ item }) => (
             <DeckAnimatedCard
               card={item}

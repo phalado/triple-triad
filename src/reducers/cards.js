@@ -1,4 +1,5 @@
 const cardReducer = (state = { play1Cards: [], play2Cards: [] }, action) => {
+  let removable = [];
   switch (action.type) {
     case 'CREATE_CARD':
       if (action.player) {
@@ -29,14 +30,13 @@ const cardReducer = (state = { play1Cards: [], play2Cards: [] }, action) => {
       });
     case 'REMOVE_CARD':
       if (action.player) {
-        const removable = state.play1Cards.find(c => c.id === action.id);
+        removable = state.play1Cards.find(c => c.id === action.id);
         return ({
           play1Cards: state.play1Cards.filter(c => c !== removable),
           play2Cards: state.play2Cards,
         });
       }
-      // eslint-disable-next-line no-case-declarations
-      const removable = state.play2Cards.find(c => c.id === action.id);
+      removable = state.play2Cards.find(c => c.id === action.id);
       return ({
         play1Cards: state.play1Cards,
         play2Cards: state.play2Cards.filter(c => c !== removable),

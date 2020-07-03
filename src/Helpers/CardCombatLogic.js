@@ -57,20 +57,16 @@ const checkCombo = (props, crd, showModalWindow) => {
   const column = crd[1];
 
   if (row > 0 && !!table[row - 1][column][0]) {
-    // console.log(row - 1, column, props.card.ranks[0], table[row - 1][column][0].ranks[2]);
-    cardCombat({ ...props, card: table[row][column][0] }, row - 1, column, 0, 2, showModalWindow);
+    cardCombat({ ...props, card: table[row][column][0] }, row - 1, column, 0, 3, showModalWindow);
   }
   if (row < 2 && !!table[row + 1][column][0]) {
-    // console.log(row + 1, column, props.card.ranks[2], table[row + 1][column][0].ranks[0]);
-    cardCombat({ ...props, card: table[row][column][0] }, row + 1, column, 2, 0, showModalWindow);
+    cardCombat({ ...props, card: table[row][column][0] }, row + 1, column, 3, 0, showModalWindow);
   }
   if (column > 0 && !!table[row][column - 1][0]) {
-    // console.log(row, column - 1, props.card.ranks[1], table[row][column - 1][0].ranks[3]);
-    cardCombat({ ...props, card: table[row][column][0] }, row, column - 1, 1, 3, showModalWindow);
+    cardCombat({ ...props, card: table[row][column][0] }, row, column - 1, 1, 2, showModalWindow);
   }
   if (column < 2 && !!table[row][column + 1][0]) {
-    // console.log(row, column + 1, props.card.ranks[3], table[row][column + 1][0].ranks[1]);
-    cardCombat({ ...props, card: table[row][column][0] }, row, column + 1, 3, 1, showModalWindow);
+    cardCombat({ ...props, card: table[row][column][0] }, row, column + 1, 2, 1, showModalWindow);
   }
 };
 
@@ -83,26 +79,26 @@ const checkSame = (props, row, column, showModalWindow) => {
     const sameCards = [];
 
     if (row > 0 && table[row - 1][column][0] !== null) {
-      if (card.ranks[0] === table[row - 1][column][0].ranks[2]) sameCards.push([row - 1, column]);
+      if (card.ranks[0] === table[row - 1][column][0].ranks[3]) sameCards.push([row - 1, column]);
     }
 
     if (row < 2 && table[row + 1][column][0] !== null) {
-      if (card.ranks[2] === table[row + 1][column][0].ranks[0]) sameCards.push([row + 1, column]);
+      if (card.ranks[3] === table[row + 1][column][0].ranks[0]) sameCards.push([row + 1, column]);
     }
 
     if (column > 0 && table[row][column - 1][0] !== null) {
-      if (card.ranks[1] === table[row][column - 1][0].ranks[3]) sameCards.push([row, column - 1]);
+      if (card.ranks[1] === table[row][column - 1][0].ranks[2]) sameCards.push([row, column - 1]);
     }
 
     if (column < 2 && table[row][column + 1][0] !== null) {
-      if (card.ranks[3] === table[row][column + 1][0].ranks[1]) sameCards.push([row, column + 1]);
+      if (card.ranks[2] === table[row][column + 1][0].ranks[1]) sameCards.push([row, column + 1]);
     }
 
     if (sameCards.every(card => table[card[0]][card[1]][1] === player)) return;
     if (sameCards.length < 2) {
       if (!rules.sameWall) return;
-      if ((row !== 0 || card.ranks[0] !== 10) && (row !== 2 || card.ranks[2] !== 10)
-        && (column !== 0 || card.ranks[1] !== 10) && (column !== 0 || card.ranks[4] !== 10)) return;
+      if ((row !== 0 || card.ranks[0] !== 10) && (row !== 2 || card.ranks[3] !== 10)
+        && (column !== 0 || card.ranks[1] !== 10) && (column !== 0 || card.ranks[2] !== 10)) return;
     }
 
     const crds = sameCards.filter(card => table[card[0]][card[1]][1] !== player);
@@ -134,25 +130,25 @@ const checkPlus = (props, row, column, showModalWindow) => {
     const plusCards = {};
 
     if (row > 0 && table[row - 1][column][0] !== null) {
-      const sum = card.ranks[0] + table[row - 1][column][0].ranks[2];
+      const sum = card.ranks[0] + table[row - 1][column][0].ranks[3];
       plusCards[sum] ? plusCards[sum].push([row - 1, column])
         : plusCards[sum] = [[row - 1, column]];
     }
 
     if (row < 2 && table[row + 1][column][0] !== null) {
-      const sum = card.ranks[2] + table[row + 1][column][0].ranks[0];
+      const sum = card.ranks[3] + table[row + 1][column][0].ranks[0];
       plusCards[sum] ? plusCards[sum].push([row + 1, column])
         : plusCards[sum] = [[row + 1, column]];
     }
 
     if (column > 0 && table[row][column - 1][0] !== null) {
-      const sum = card.ranks[1] + table[row][column - 1][0].ranks[3];
+      const sum = card.ranks[1] + table[row][column - 1][0].ranks[2];
       plusCards[sum] ? plusCards[sum].push([row, column - 1])
         : plusCards[sum] = [[row, column - 1]];
     }
 
     if (column < 2 && table[row][column + 1][0] !== null) {
-      const sum = card.ranks[3] + table[row][column + 1][0].ranks[1];
+      const sum = card.ranks[2] + table[row][column + 1][0].ranks[1];
       plusCards[sum] ? plusCards[sum].push([row, column + 1])
         : plusCards[sum] = [[row, column + 1]];
     }

@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, BackHandler } from 'react-native';
-import PropTypes from 'prop-types';
 import { useFocusEffect } from '@react-navigation/native';
+import PropTypes from 'prop-types';
 import Table from './Table';
 import PlayingTexts from './PlayingTexts';
 import AnimatedCard from './AnimatedCard';
+import ModalScreen from '../container/ModalScreen';
 import Cards from '../constants/Cards';
 import { cardCombat, checkSame, checkPlus } from '../Helpers/CardCombatLogic';
 import { getRandomBoolean, cardsOnTheTable, resetGame } from '../Helpers/OtherHelpers';
-import ModalScreen from '../container/ModalScreen';
 import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
@@ -129,17 +129,16 @@ const GamePlay = props => {
     checkSame(newProps, row, column, showModalWindow);
     checkPlus(newProps, row, column, showModalWindow);
 
-    if (row > 0 && !!table[row - 1][column][0]) cardCombat(newProps, row - 1, column, 0, 2);
-    if (row < 2 && !!table[row + 1][column][0]) cardCombat(newProps, row + 1, column, 2, 0);
-    if (column > 0 && !!table[row][column - 1][0]) cardCombat(newProps, row, column - 1, 1, 3);
-    if (column < 2 && !!table[row][column + 1][0]) cardCombat(newProps, row, column + 1, 3, 1);
+    if (row > 0 && !!table[row - 1][column][0]) cardCombat(newProps, row - 1, column, 0, 3);
+    if (row < 2 && !!table[row + 1][column][0]) cardCombat(newProps, row + 1, column, 3, 0);
+    if (column > 0 && !!table[row][column - 1][0]) cardCombat(newProps, row, column - 1, 1, 2);
+    if (column < 2 && !!table[row][column + 1][0]) cardCombat(newProps, row, column + 1, 2, 1);
 
     if (cardsOnTheTable(table) === 9) {
       if (pCards.play1Cards.length > pCards.play2Cards.length) setGameOver('win');
       else if (pCards.play1Cards.length < pCards.play2Cards.length) setGameOver('loose');
       else setGameOver('tie');
     }
-    // handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table);
     showModalWindow();
   };
 
@@ -148,7 +147,6 @@ const GamePlay = props => {
       <Table />
       <PlayingTexts player score={pCards.play1Cards.length} table={table} turn={myTurn} />
       <PlayingTexts score={pCards.play2Cards.length} table={table} turn={myTurn} />
-      {/* {handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table)} */}
       <ModalScreen
         visible={visibleModal}
         turn={myTurn}

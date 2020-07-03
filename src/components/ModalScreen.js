@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
 import { cardsOnTheTable, getRandomCards, getCardsId } from '../Helpers/OtherHelpers';
 import Images from '../constants/Images';
-import styles from '../styles/ChangeTurnModal';
+import styles from '../styles/ModalScreen';
 
 const ModalScreen = props => {
   const {
@@ -29,7 +29,7 @@ const ModalScreen = props => {
   }
 
   if (gameOver) {
-    const newRandomGame = () => {
+    const resetGame = () => {
       resetTable();
       resetCards();
 
@@ -48,7 +48,6 @@ const ModalScreen = props => {
       });
 
       navigation.pop();
-      navigation.push('GamePlay', { screen: 'GamePlay' });
     };
 
     const sudenDeathGame = () => {
@@ -97,10 +96,19 @@ const ModalScreen = props => {
             alt="Cursor"
           />
         </View>
-        <Button
-          title="New random game"
-          onPress={() => newRandomGame()}
-        />
+        <View style={styles.buttonsContainer}>
+          <Button
+            title="New random game"
+            onPress={() => {
+              resetGame();
+              navigation.push('GamePlay', { screen: 'GamePlay' });
+            }}
+          />
+          <Button
+            title="Back to initial screen"
+            onPress={() => resetGame()}
+          />
+        </View>
       </Modal>
     );
   }

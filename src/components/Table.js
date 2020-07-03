@@ -7,11 +7,7 @@ import styles from '../styles/Table';
 
 const Table = () => (
   <View>
-    <Image
-      style={styles.container}
-      source={Images.board}
-      alt="Table"
-    />
+    <Image style={styles.container} source={Images.board} alt="Table" />
     <ElementalBoard />
   </View>
 );

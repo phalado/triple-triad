@@ -19,6 +19,10 @@ const ChangeTurnModalStyles = StyleSheet.create({
     height: '50%',
     resizeMode: 'stretch',
   },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
 });
 
 export default ChangeTurnModalStyles;

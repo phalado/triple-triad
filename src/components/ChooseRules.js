@@ -9,7 +9,7 @@ const ChooseRules = props => {
   const { rules, changeRules } = props;
   const [myState, setMyState] = useState(rules);
 
-  useFocusEffect(() => changeRules(myState));
+  useFocusEffect(() => { changeRules(myState); }, []);
 
   const toggleSwitch = (key, value) => {
     setMyState({ ...myState, [key]: value });

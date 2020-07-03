@@ -11,15 +11,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createCard: data => {
-    dispatch(createCard(data));
-  },
-  resetCards: () => {
-    dispatch(resetCards());
-  },
-  resetTable: () => {
-    dispatch(resetTable());
-  },
+  createCard: data => dispatch(createCard(data)),
+  resetCards: () => dispatch(resetCards()),
+  resetTable: () => dispatch(resetTable()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalScreen);

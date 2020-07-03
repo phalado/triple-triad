@@ -7,9 +7,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeRules: rules => {
-    dispatch(changeRules(rules));
-  },
+  changeRules: rules => dispatch(changeRules(rules)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChooseRules);

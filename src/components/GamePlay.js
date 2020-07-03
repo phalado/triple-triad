@@ -146,8 +146,8 @@ const GamePlay = props => {
   return (
     <View style={styles.container}>
       <Table />
-      <PlayingTexts player score={pCards.play1Cards.length} />
-      <PlayingTexts score={pCards.play2Cards.length} />
+      <PlayingTexts player score={pCards.play1Cards.length} table={table} turn={myTurn} />
+      <PlayingTexts score={pCards.play2Cards.length} table={table} turn={myTurn} />
       {/* {handleEndOfTurn(myTurn, gameOver, pCards.play1Cards.length, table)} */}
       <ModalScreen
         visible={visibleModal}

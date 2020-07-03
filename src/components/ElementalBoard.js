@@ -12,7 +12,7 @@ const ElementalBoard = props => {
 
   const getRandomElement = () => {
     let value = Math.floor(10 * Math.random());
-    if (value < 3) return null;
+    if (value > 6) return null;
     value = Math.floor(8 * Math.random());
     return elements[value];
   };

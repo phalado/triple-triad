@@ -8,9 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeDeck: rules => {
-    dispatch(changeDeck(rules));
-  },
+  changeDeck: rules => dispatch(changeDeck(rules)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameDeck);

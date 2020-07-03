@@ -32,7 +32,7 @@ const changeRules = rules => ({
 });
 
 const changeDeck = data => ({
-  type: 'CHANGE_DECK',
+  type: 'CHANGE_DECKS',
   data,
 });
 

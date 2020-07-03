@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { createCard } from '../actions';
+import { createCard, resetTable } from '../actions';
 import InitialScreen from '../components/InitialScreen';
 
 const mapStateToProps = state => ({
@@ -8,9 +8,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createCard: card => {
-    dispatch(createCard(card));
-  },
+  createCard: card => dispatch(createCard(card)),
+  resetTable: () => dispatch(resetTable()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InitialScreen);

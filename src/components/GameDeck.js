@@ -79,6 +79,7 @@ const GameDeck = props => {
               style={{ margin: 20 }}
               title="Save deck"
               onPress={() => {
+                changeDeck(myDecks);
                 navigation.goBack(null);
                 navigation.navigate('Game Deck', { deck: myDecks.custom.deck1 });
               }}

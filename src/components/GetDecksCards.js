@@ -31,7 +31,7 @@ const GetDecksCards = props => {
             ranks={card.ranks}
             element={card.element}
             table={table}
-            playCard={{ row: 0, column: 0, dragable: false }}
+            playCard={{ row: 0, column: 0, dragable: true }}
           />
           <Text
             style={styles.removeClickable}

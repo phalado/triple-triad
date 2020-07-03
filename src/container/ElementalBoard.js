@@ -8,9 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  modifyTable: table => {
-    dispatch(modifyTable(table));
-  },
+  modifyTable: table => dispatch(modifyTable(table)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ElementalBoard);

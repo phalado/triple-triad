@@ -47,8 +47,8 @@ const ModalScreen = props => {
         });
       });
 
-      navigation.goBack(null);
-      navigation.navigate('GamePlay');
+      navigation.pop();
+      navigation.push('GamePlay', { screen: 'GamePlay' });
     };
 
     const sudenDeathGame = () => {
@@ -68,8 +68,8 @@ const ModalScreen = props => {
         });
       });
 
-      navigation.goBack(null);
-      navigation.navigate('GamePlay');
+      navigation.pop();
+      navigation.push('GamePlay', { screen: 'GamePlay' });
     };
 
     if (rules.sudenDeath && gameOver === 'tie') {

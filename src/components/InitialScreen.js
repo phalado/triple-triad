@@ -6,9 +6,10 @@ import { getRandomCards } from '../Helpers/OtherHelpers';
 import styles from '../styles/App';
 
 const InitialScreen = props => {
-  const { navigation, createCard } = props;
+  const { navigation, createCard, resetTable } = props;
 
   useEffect(() => {
+    resetTable();
     let newCards = getRandomCards();
     newCards.forEach((card, index) => {
       createCard({
@@ -46,9 +47,9 @@ const InitialScreen = props => {
 };
 
 InitialScreen.propTypes = {
-  // decks: PropTypes.objectOf(PropTypes.object).isRequired,
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
   createCard: PropTypes.func.isRequired,
+  resetTable: PropTypes.func.isRequired,
 };
 
 export default InitialScreen;

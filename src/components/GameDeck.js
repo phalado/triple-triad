@@ -12,11 +12,15 @@ import styles from '../styles/GameDeck';
 
 const GameDeck = props => {
   const {
-    decks, table, route, navigation, changeDeck,
+    decks, table, route, navigation, changeDeck, startDeck,
   } = props;
   const { deck } = route.params;
   const [myDecks, setMyDecks] = useState(decks);
   const myCards = Cards.sort((a, b) => a > b);
+
+  if (Object.entries(decks).length === 0) {
+    startDeck();
+  }
 
   const handleRemoveCard = (cardId, deck) => {
     setMyDecks({
@@ -96,6 +100,7 @@ GameDeck.propTypes = {
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
   changeDeck: PropTypes.func.isRequired,
+  startDeck: PropTypes.func.isRequired,
   route: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

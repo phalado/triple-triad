@@ -4,12 +4,7 @@ import { Alert, View, Button } from 'react-native';
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
 const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + min;
 
-const fields = table => [].concat(...table);
-
-const cardsOnTheTable = table => {
-  if (table[0][0]) return fields(table).filter(field => !!field[0]).length;
-  return fields(table).filter(field => !!field).length;
-};
+const cardsOnTheTable = table => table.flat().filter(field => !!field[0]).length;
 
 const getCardContainer = (row, column, player, scrennHeight, styles) => {
   let cardContainer = styles.container;
@@ -155,7 +150,9 @@ const getPcDeck = deck => {
   return pcDeck;
 };
 
+const cloneTable = table => table.map(rows => rows.map(field => field.map(value => value)));
+
 export {
   getRandomBoolean, cardsOnTheTable, getCardContainer, getRandomCards, getCardsId, resetGame,
-  getDeckButtons, deckName, getPcDeck,
+  getDeckButtons, deckName, getPcDeck, getRandomNumber, cloneTable,
 };

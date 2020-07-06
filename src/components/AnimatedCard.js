@@ -102,6 +102,47 @@ const Card = props => {
     );
   }
 
+  // if (move) {
+  //   if (move[0][0] === row && move[0][1] === column) {
+  //     const begX = Dimensions.get('window').width * 0.245;
+  //     const begY = Dimensions.get('window').height * 0.08;
+
+  //     myTable[move[1][0]][move[1][1]] = [card, player, table[move[1][0]][move[1][1]]];
+  //     setMyTable(myTable);
+  //     handlePlaceCard(card, myTable, move[1][0], move[1][1], true);
+  //     console.log(row, column, move);
+
+  //     return (
+  //       <View
+  //         style={{
+  //           ...cardContainer,
+  //           transform: [
+  //             { translateX: begX + (row * cardWidth) },
+  //             { translateY: begY + (column * cardHeight) },
+  //           ],
+  //         }}
+  //       >
+  //         <Image
+  //           style={styles.card}
+  //           source={Images[playerImage]}
+  //           alt="Background"
+  //         />
+  //         <Image
+  //           style={styles.card}
+  //           source={Images[card.id]}
+  //           alt="Table"
+  //         />
+  //         <RankNumbers
+  //           ranks={card.ranks}
+  //           element={card.element}
+  //           table={table}
+  //           playCard={playCard}
+  //         />
+  //       </View>
+  //     );
+  //   }
+  // }
+
   if (dragable && !gameOver) {
     return (
       <Animated.View

@@ -36,6 +36,10 @@ const changeDeck = data => ({
   data,
 });
 
+const startDeck = () => ({
+  type: 'START_DECKS',
+});
+
 export {
-  createCard, removeCard, modifyTable, resetCards, resetTable, changeRules, changeDeck,
+  createCard, removeCard, modifyTable, resetCards, resetTable, changeRules, changeDeck, startDeck,
 };

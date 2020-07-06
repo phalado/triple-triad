@@ -10,6 +10,7 @@ import Cards from '../constants/Cards';
 import { cardCombat, checkSame, checkPlus } from '../Helpers/CardCombatLogic';
 import { getRandomBoolean, cardsOnTheTable, resetGame } from '../Helpers/OtherHelpers';
 import styles from '../styles/GamePlay';
+import PCMovement from '../Helpers/PCMovement';
 
 const GamePlay = props => {
   const {
@@ -17,6 +18,7 @@ const GamePlay = props => {
   } = props;
   const [gameOver, setGameOver] = useState(false);
   const [pCards] = useState(cards);
+  // const [myTurn] = useState(false);
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
@@ -104,8 +106,6 @@ const GamePlay = props => {
     }
   };
 
-  useEffect(() => showModalWindow('none'), []);
-
   const handlePlaceCard = (card, tble, row, column) => {
     modifyTable(tble);
     handleRemoveCard({
@@ -140,7 +140,27 @@ const GamePlay = props => {
       else setGameOver('tie');
     }
     showModalWindow();
+    if (tble[row][column][1] && cardsOnTheTable(table) < 9) {
+      // eslint-disable-next-line no-use-before-define
+      changeMove(PCMovement({ table, cards, rules }));
+    }
   };
+
+  const changeMove = movement => {
+    const { card, row, column } = movement;
+    table[row][column] = [card, false, table[row][column][2]];
+    handlePlaceCard(card, table, row, column);
+  };
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (myTurn) showModalWindow('none');
+
+    if ((!myTurn && cardsOnTheTable(table) % 2 === 0) || (myTurn && cardsOnTheTable % 2 === 1)) {
+      return changeMove(PCMovement({ table, cards, rules }));
+    }
+  }, []);
+
 
   return (
     <View style={styles.container}>

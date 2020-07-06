@@ -22,8 +22,6 @@ const ChooseDecksScreen = props => {
       });
     });
 
-    console.log(getPcDeck(decks.custom[deck]));
-
     getPcDeck(decks.custom[deck]).forEach((card, index) => {
       createCard({
         player: false, id: card, row: 3 + index, column: 3, dragable: true,

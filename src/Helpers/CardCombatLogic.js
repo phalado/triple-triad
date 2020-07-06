@@ -180,4 +180,6 @@ const checkPlus = (props, row, column, showModalWindow) => {
   }
 };
 
-export { cardCombat, checkSame, checkPlus };
+export {
+  cardCombat, checkSame, checkPlus, getRank,
+};

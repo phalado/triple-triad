@@ -141,12 +141,15 @@ const GamePlay = props => {
     }
     showModalWindow();
     if (tble[row][column][1] && cardsOnTheTable(table) < 9) {
-      // eslint-disable-next-line no-use-before-define
-      changeMove(PCMovement({ table, cards, rules }));
+      setTimeout(() => {
+        // eslint-disable-next-line no-use-before-define
+        changeMove(PCMovement({ table, cards, rules }));
+      }, 1000);
     }
   };
 
   const changeMove = movement => {
+    console.log('move', movement);
     const { card, row, column } = movement;
     table[row][column] = [card, false, table[row][column][2]];
     handlePlaceCard(card, table, row, column);

@@ -1,8 +1,10 @@
 /* eslint-disable object-curly-newline */
 import React, { useEffect } from 'react';
-import { View, Button } from 'react-native';
+import { View, Text, Button, Image } from 'react-native';
 import PropTypes from 'prop-types';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getRandomCards } from '../Helpers/OtherHelpers';
+import Images from '../constants/Images';
 import styles from '../styles/App';
 
 const InitialScreen = props => {
@@ -27,28 +29,53 @@ const InitialScreen = props => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Button
-          style={{ margin: 20 }}
-          title="Play random game"
-          onPress={() => navigation.navigate('GamePlay')}
-        />
-        <Button
-          style={{ margin: 20 }}
-          title="Play quick game"
-          onPress={() => navigation.navigate('Choose Deck', { deck: 'deck1' })}
-        />
+      <View style={styles.halfSections}>
+        <TouchableOpacity onPress={() => navigation.navigate('Explore')} style={styles.exploreButton}>
+          <Image
+            style={styles.backgroundImages}
+            source={Images.explore}
+            alt="World Map"
+          />
+          <Text style={styles.buttonText}>Explore Mode</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('GamePlay')} style={styles.exploreButton}>
+          <Image
+            style={styles.backgroundImages}
+            source={Images.randomGame}
+            alt="Random Game"
+          />
+          <Text style={styles.buttonText}>Random Game</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Choose Deck', { deck: 'deck1' })} style={styles.exploreButton}>
+          <Image
+            style={styles.backgroundImages}
+            source={Images.quickGame}
+            alt="Quick Game"
+          />
+          <Text style={styles.buttonText}>Quick Game</Text>
+        </TouchableOpacity>
       </View>
-      <Button
-        style={{ margin: 20 }}
-        title="Change game rules"
-        onPress={() => navigation.navigate('Choose Rules')}
-      />
-      <Button
-        style={{ margin: 20 }}
-        title="All the cards"
-        onPress={() => navigation.navigate('Game Deck', { screen: 'Game Deck', params: { deck: 'none' } })}
-      />
+      <View style={styles.halfSections}>
+        <TouchableOpacity onPress={() => navigation.navigate('Choose Rules')} style={styles.exploreButton2}>
+          <Image
+            style={styles.backgroundImages}
+            source={Images.changeRules}
+            alt="Choose Rules"
+          />
+          <Text style={styles.buttonText}>Choose Rules</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Game Deck', { screen: 'Game Deck', params: { deck: 'none' } })}
+          style={styles.exploreButton2}
+        >
+          <Image
+            style={styles.backgroundImages}
+            source={Images.deckScreen}
+            alt="Edit your decks"
+          />
+          <Text style={styles.buttonText}>Edit your decks</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

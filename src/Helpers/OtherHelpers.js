@@ -64,6 +64,7 @@ const resetGame = props => {
     {
       text: 'Whatever',
       onPress: () => {
+        navigation.pop();
         resetTable();
         resetCards();
 
@@ -80,7 +81,6 @@ const resetGame = props => {
             player: false, id: card, row: 3 + index, column: 3, dragable: true,
           });
         });
-        navigation.goBack(null);
       },
     },
   ]);

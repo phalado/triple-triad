@@ -149,7 +149,6 @@ const GamePlay = props => {
   };
 
   const changeMove = movement => {
-    console.log('move', movement);
     const { card, row, column } = movement;
     table[row][column] = [card, false, table[row][column][2]];
     handlePlaceCard(card, table, row, column);

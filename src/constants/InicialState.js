@@ -33,4 +33,12 @@ export default {
       deck5: Array(5).fill(5),
     },
   },
+  playerCards: {},
+  streak: {
+    wins: 0,
+    looses: 0,
+    ties: 0,
+    abandoned: 0,
+  },
+  npcs: {},
 };

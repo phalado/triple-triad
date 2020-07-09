@@ -36,15 +36,19 @@ const safeMovement = (props, card) => {
   const { table, cards, rules } = props;
   const thisCard = Cards.find(c => c.id === card.id);
 
+  const emptySpots = [];
   for (let i = 0; i < 3; i += 1) {
     for (let j = 0; j < 3; j += 1) {
-      if (testPosition(i, j, thisCard, table, cards, rules)) {
-        return { card: thisCard, row: i, column: j };
-      }
+      if (!table[i][j][0]) emptySpots.push([i, j]);
     }
   }
 
-  return null;
+  emptySpots.forEach(spot => {
+    if (testPosition(spot[0], spot[1], thisCard, table, cards, rules)) {
+      return { card: thisCard, row: spot[0], column: spot[1] };
+    }
+    return null;
+  });
 };
 
 const randomMove = (cards, table) => {

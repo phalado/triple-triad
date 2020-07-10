@@ -34,12 +34,7 @@ export default {
     },
   },
   playerCards: {},
-  streak: {
-    wins: 0,
-    looses: 0,
-    ties: 0,
-    abandoned: 0,
-  },
+  streak: [0, 0, 0, 0],
   npcs: {
     balambGarden: {
       student1: {

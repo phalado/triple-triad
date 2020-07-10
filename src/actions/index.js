@@ -40,6 +40,42 @@ const startDeck = () => ({
   type: 'START_DECKS',
 });
 
+const addCardToExploreDeck = card => ({
+  type: 'ADD_CARD_EXPLORE',
+  card,
+});
+
+const removeCardFromExploreDeck = card => ({
+  type: 'REMOVE_CARD_EXPLORE',
+  card,
+});
+
+const resetPlayerDeckExplore = () => ({
+  type: 'RESET_CARD_EXPLORE',
+});
+
+const changeStreak = streak => ({
+  type: 'CHANGE_STREAK',
+  streak,
+});
+
+const addCardToNPC = data => ({
+  type: 'ADD_CARD_NPC',
+  data,
+});
+
+const removeCardFromNPC = data => ({
+  type: 'REMOVE_CARD_NPC',
+  data,
+});
+
+const changeNPCStreak = data => ({
+  type: 'CHANGE_NPC_STREAK',
+  data,
+});
+
 export {
   createCard, removeCard, modifyTable, resetCards, resetTable, changeRules, changeDeck, startDeck,
+  addCardToExploreDeck, removeCardFromExploreDeck, changeStreak, addCardToNPC, removeCardFromNPC,
+  changeNPCStreak, resetPlayerDeckExplore,
 };

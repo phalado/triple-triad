@@ -57,7 +57,7 @@ const resetGame = props => {
 
   Alert.alert('Wait!', 'If you leave this game will be canceled. Are you sure?', [
     {
-      text: 'Cancel',
+      text: 'I can\'t just run away.',
       onPress: () => null,
       style: 'cancel',
     },

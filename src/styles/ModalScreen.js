@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const ChangeTurnModalStyles = StyleSheet.create({
+const ModalStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -23,6 +23,18 @@ const ChangeTurnModalStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
+  newContainer: {
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    width: '80%',
+    height: '80%',
+    margin: '10%',
+    backgroundColor: 'white',
+  },
+  speakingText: {
+    fontSize: 20,
+    marginHorizontal: '10%',
+  },
 });
 
-export default ChangeTurnModalStyles;
+export default ModalStyles;

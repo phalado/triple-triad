@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 import React, { useEffect } from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getRandomCards } from '../Helpers/OtherHelpers';

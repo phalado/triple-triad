@@ -11,8 +11,8 @@ const ElementalBoard = props => {
   const cardHeight = Dimensions.get('window').height * 0.28;
 
   const getRandomElement = () => {
-    let value = Math.floor(10 * Math.random());
-    if (value > 6) return null;
+    let value = Math.floor((1000000 * Math.random()) % 10);
+    if (value > 3) return null;
     value = Math.floor(8 * Math.random());
     return elements[value];
   };

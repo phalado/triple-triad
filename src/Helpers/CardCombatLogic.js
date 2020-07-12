@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { cardsOnTheTable } from './OtherHelpers';
+import { turnCardPlay } from '../constants/Sounds';
 
 const turnCard = props => {
   const {
@@ -45,6 +46,7 @@ const cardCombat = (props, newRow, newColumn, rank1, rank2, showModalWindow = nu
     handleRemoveCard,
     handleChangeTable,
   });
+  turnCardPlay();
   if (showModalWindow) {
     showModalWindow('combo');
     if (cardsOnTheTable(table) === 9) setTimeout(() => showModalWindow(), 1100);

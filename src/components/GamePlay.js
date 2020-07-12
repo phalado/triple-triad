@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, BackHandler } from 'react-native';
+import { View, BackHandler, Button } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Table from './Table';
@@ -9,8 +9,9 @@ import ModalScreen from '../container/ModalScreen';
 import Cards from '../constants/Cards';
 import { cardCombat, checkSame, checkPlus } from '../Helpers/CardCombatLogic';
 import { getRandomBoolean, cardsOnTheTable, resetGame } from '../Helpers/OtherHelpers';
-import styles from '../styles/GamePlay';
 import PCMovement from '../Helpers/PCMovement';
+import styles from '../styles/GamePlay';
+import { gameMusicPlay, gameMusicStop } from '../constants/Sounds';
 
 const GamePlay = props => {
   const {
@@ -22,8 +23,8 @@ const GamePlay = props => {
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
-  // const gameMusic = new Sound('gameSound.mp3', Sound.MAIN_BUNDLE);
-  // gameMusic.setNumberOfLoops(-1);
+
+  // Sound.setCategory('Playback');
 
   useFocusEffect(
     useCallback(() => {
@@ -35,8 +36,13 @@ const GamePlay = props => {
       };
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      gameMusicPlay();
 
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        gameMusicStop();
+      };
     }, []),
   );
 
@@ -176,7 +182,14 @@ const GamePlay = props => {
         navigation={navigation}
         value={modalValue}
       />
-      {/* {gameMusic.play()} */}
+      <Button
+        title="Play Music"
+        onPress={gameMusicPlay}
+      />
+      <Button
+        title="Stop Music"
+        onPress={gameMusicStop}
+      />
       {pCards.play1Cards.map(playCard => (
         <AnimatedCard
           card={Cards.find(card => card.id === playCard.id)}

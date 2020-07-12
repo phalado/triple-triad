@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 export default {
   player0: require('../contents/img/player0.png'),
   player1: require('../contents/img/player1.png'),

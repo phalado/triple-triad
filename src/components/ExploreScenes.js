@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { getRandomCards } from '../Helpers/OtherHelpers';
 import Images from '../constants/Images';
 import styles from '../styles/ExploreScenes';
 

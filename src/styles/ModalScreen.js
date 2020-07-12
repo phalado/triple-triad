@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const cardWidth = Dimensions.get('window').width * 0.17;
+const cardHeight = Dimensions.get('window').height * 0.28;
 
 const ModalStyles = StyleSheet.create({
   container: {
@@ -34,6 +37,18 @@ const ModalStyles = StyleSheet.create({
   speakingText: {
     fontSize: 20,
     marginHorizontal: '10%',
+  },
+  cardContainer: {
+    position: 'relative',
+    width: cardWidth * 2,
+    height: cardHeight * 2,
+    zIndex: 10,
+  },
+  cardImage: {
+    width: cardWidth * 2,
+    height: cardHeight * 2,
+    resizeMode: 'stretch',
+    position: 'absolute',
   },
 });
 

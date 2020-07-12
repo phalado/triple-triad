@@ -28,6 +28,7 @@ const GameDeckStyle = StyleSheet.create({
     position: 'relative',
     width: cardWidth,
     height: cardHeight,
+    zIndex: 10,
   },
   image: {
     width: cardWidth,

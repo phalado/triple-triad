@@ -10,6 +10,7 @@ import GameDrawer from './container/GameDrawer';
 import GameDeck from './container/GameDeck';
 import DeckDrawer from './container/DeckDrawer';
 import ChooseDecksScreen from './container/ChooseDecksScreen';
+import ExploreScenes from './container/ExploreScenes';
 import ExploreInitialScreen from './components/ExploreInitialScreen';
 
 const Stack = createStackNavigator();
@@ -46,6 +47,7 @@ class Navigation extends Component {
           <Stack.Screen name="Game Deck" component={DecksDrawerContainer} options={{ headerShown: false }} />
           <Stack.Screen name="Choose Deck" component={ChooseDecksScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Explore" component={ExploreInitialScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Explore Scenes" component={ExploreScenes} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     );

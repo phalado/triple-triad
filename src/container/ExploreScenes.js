@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ExploreModal from '../components/ExploreModal';
+import ExploreScenes from '../components/ExploreScenes';
 import { addCardToExploreDeck, removeCardFromExploreDeck } from '../actions';
 
 const mapStateToProps = state => ({
@@ -12,4 +12,4 @@ const mapDispatchToProps = dispatch => ({
   removeCardFromExploreDeck: card => dispatch(removeCardFromExploreDeck(card)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExploreModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ExploreScenes);

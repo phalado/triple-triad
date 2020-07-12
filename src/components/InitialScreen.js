@@ -8,7 +8,7 @@ import Images from '../constants/Images';
 import styles from '../styles/App';
 
 const InitialScreen = props => {
-  const { navigation, createCard, resetTable } = props;
+  const { navigation, createCard, resetTable, resetPlayerDeckExplore } = props;
 
   useEffect(() => {
     resetTable();
@@ -27,10 +27,14 @@ const InitialScreen = props => {
     });
   }, []);
 
+  const handleResetDeck = () => {
+    resetPlayerDeckExplore();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.halfSections}>
-        <TouchableOpacity onPress={() => navigation.navigate('Explore')} style={styles.exploreButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('Explore', { handleResetDeck })} style={styles.exploreButton}>
           <Image
             style={styles.backgroundImages}
             source={Images.explore}
@@ -84,6 +88,7 @@ InitialScreen.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
   createCard: PropTypes.func.isRequired,
   resetTable: PropTypes.func.isRequired,
+  resetPlayerDeckExplore: PropTypes.func.isRequired,
 };
 
 export default InitialScreen;

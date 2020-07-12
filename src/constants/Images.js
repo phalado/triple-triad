@@ -39,6 +39,7 @@ export default {
   quickGame: require('../contents/img/scenes/quickGame.png'),
   changeRules: require('../contents/img/scenes/rulesScreen.png'),
   deckScreen: require('../contents/img/scenes/deckScreen.jpg'),
+  balambGarden: require('../contents/img/scenes/balambGarden.jpg'),
   1: require('../contents/img/cards/001.png'),
   2: require('../contents/img/cards/002.png'),
   3: require('../contents/img/cards/003.png'),

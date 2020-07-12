@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
 import {
-  View, Text, Button, Alert,
+  View, Text, Button, Alert, YellowBox,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import ExploreModal from '../container/ExploreModal';
 import styles from '../styles/ExploreInitial';
 
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
+
 const ExploreInitialScreen = props => {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const [visible, setVisible] = useState(false);
+
+  const startScene = () => {
+    navigation.pop();
+    navigation.navigate('Explore Scenes');
+  };
 
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 25 }}>Coming Soon!</Text>
-      <ExploreModal
-        visible={visible}
-      />
+      <ExploreModal visible={visible} startScene={startScene} />
       <Button
         title="New Game"
         onPress={() => {
-          Alert.alert('Wait!', 'This will erase your game and start a new one. Are you sure?', [
+          Alert.alert('Wait!', 'If you have a saved game this will erase your data and start a new one. Are you sure?', [
             {
               text: 'I can\'t just run away.',
               onPress: () => null,
@@ -27,7 +34,10 @@ const ExploreInitialScreen = props => {
             },
             {
               text: 'Whatever',
-              onPress: () => setVisible(true),
+              onPress: () => {
+                route.params.handleResetDeck();
+                setVisible(true);
+              },
             },
           ]);
         }}
@@ -40,6 +50,7 @@ const ExploreInitialScreen = props => {
 
 ExploreInitialScreen.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+  route: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ExploreInitialScreen;

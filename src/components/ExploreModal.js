@@ -1,21 +1,33 @@
-import React from 'react';
-import {
-  View, Text, Button,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button } from 'react-native';
 import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
+import CardModal from './CardModal';
 import styles from '../styles/ModalScreen';
-
 
 const ExploreModal = props => {
   const {
-    visible, playerCards, addCardToExploreDeck, resetPlayerDeckExplore,
+    visible, table, addCardToExploreDeck, startScene,
   } = props;
-  // if (Object.entries(playerCards).length === 0) resetPlayerDeckExplore();
-  console.log(playerCards);
+  const [newVisible, setNewVisible] = useState(false);
+  const [modalCard, setModalCard] = useState(1);
+
+  const addFirstCardsToDeck = cards => {
+    addCardToExploreDeck(cards[0]);
+    setNewVisible(true);
+    setModalCard(cards[0]);
+    setTimeout(() => {
+      setNewVisible(false);
+      cards.shift();
+      if (cards.length > 0) {
+        setTimeout(() => addFirstCardsToDeck(cards), 100);
+      } else startScene();
+    }, 1000);
+  };
 
   return (
     <Modal isVisible={visible}>
+      <CardModal visible={newVisible} card={modalCard} table={table} />
       <View style={styles.newContainer}>
         <Text style={styles.speakingText}>
           Oh, hey, would you like to have these?
@@ -24,7 +36,7 @@ const ExploreModal = props => {
         </Text>
         <Button
           title="Whatever."
-          onPress={() => addCardToExploreDeck(1)}
+          onPress={() => addFirstCardsToDeck([1, 2, 4, 6, 7, 8, 10, 85])}
         />
       </View>
     </Modal>
@@ -33,9 +45,9 @@ const ExploreModal = props => {
 
 ExploreModal.propTypes = {
   visible: PropTypes.bool.isRequired,
-  playerCards: PropTypes.objectOf(PropTypes.object).isRequired,
+  table: PropTypes.arrayOf(PropTypes.array).isRequired,
   addCardToExploreDeck: PropTypes.func.isRequired,
-  resetPlayerDeckExplore: PropTypes.func.isRequired,
+  startScene: PropTypes.func.isRequired,
 };
 
 export default ExploreModal;

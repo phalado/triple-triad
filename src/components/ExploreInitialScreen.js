@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import ExploreModal from '../container/ExploreModal';
+import Images from '../constants/Images';
+import { balambGardenPlay, balambGardenStop } from '../constants/Sounds';
 import styles from '../styles/ExploreInitial';
 
 YellowBox.ignoreWarnings([
@@ -42,7 +44,17 @@ const ExploreInitialScreen = props => {
           ]);
         }}
       />
-      <Button title="Continue" onPress={() => navigation.pop()} />
+      <Button
+        title="Continue"
+        onPress={() => {
+          navigation.pop();
+          navigation.push('Explore Scenes', {
+            place: Images.balambGarden,
+            play: balambGardenPlay,
+            stop: balambGardenStop,
+          });
+        }}
+      />
       <Button title="Go Back" onPress={() => navigation.pop()} />
     </View>
   );

@@ -1,25 +1,35 @@
 import Sound from 'react-native-sound';
 
-const Sounds = {
+const imports = {
   gameTheme: require('../contents/sounds/gameSound.mp3'),
   cardTurn: require('../contents/sounds/sound-turn.wav'),
+  balambGarden: require('../contents/sounds/balambGarden.mp3'),
+  balambTown: require('../contents/sounds/balambTown.mp3'),
+  fishermansHorizon: require('../contents/sounds/fishermansHorizon.mp3'),
 };
 
-const gameMusic = new Sound(Sounds.gameTheme, Sound.MAIN_BUNDLE);
-gameMusic.setVolume(0.2);
-gameMusic.setPan(1);
-gameMusic.setNumberOfLoops(-1);
+const gameMusic = new Sound(imports.gameTheme, Sound.MAIN_BUNDLE);
 const gameMusicPlay = () => gameMusic.play();
 const gameMusicStop = () => gameMusic.stop();
 
+const balambGarden = new Sound(imports.balambGarden, Sound.MAIN_BUNDLE);
+const balambGardenPlay = () => balambGarden.play();
+const balambGardenStop = () => balambGarden.stop();
 
-const turnCard = new Sound(Sounds.cardTurn, Sound.MAIN_BUNDLE);
-turnCard.setVolume(1);
-turnCard.setPan(1);
-turnCard.setNumberOfLoops(-1);
+const balambTown = new Sound(imports.balambTown, Sound.MAIN_BUNDLE);
+const balambTownPlay = () => balambTown.play();
+const balambTownStop = () => balambTown.stop();
+
+const fishermansHorizon = new Sound(imports.fishermansHorizon, Sound.MAIN_BUNDLE);
+const fishermansHorizonPlay = () => fishermansHorizon.play();
+const fishermansHorizonStop = () => fishermansHorizon.stop();
+
+const turnCard = new Sound(imports.cardTurn, Sound.MAIN_BUNDLE);
 const turnCardPlay = () => turnCard.play();
-const turnCardStop = () => turnCard.stop();
 
 export {
-  gameMusicPlay, gameMusicStop, turnCardPlay, turnCardStop,
+  gameMusicPlay, gameMusicStop, turnCardPlay,
+  balambGardenPlay, balambGardenStop,
+  balambTownPlay, balambTownStop,
+  fishermansHorizonPlay, fishermansHorizonStop,
 };

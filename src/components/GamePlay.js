@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, BackHandler, Button } from 'react-native';
+import { View, BackHandler } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Table from './Table';
@@ -7,11 +7,11 @@ import PlayingTexts from './PlayingTexts';
 import AnimatedCard from './AnimatedCard';
 import ModalScreen from '../container/ModalScreen';
 import Cards from '../constants/Cards';
+import { gameMusicPlay, gameMusicStop } from '../constants/Sounds';
 import { cardCombat, checkSame, checkPlus } from '../Helpers/CardCombatLogic';
 import { getRandomBoolean, cardsOnTheTable, resetGame } from '../Helpers/OtherHelpers';
 import PCMovement from '../Helpers/PCMovement';
 import styles from '../styles/GamePlay';
-import { gameMusicPlay, gameMusicStop } from '../constants/Sounds';
 
 const GamePlay = props => {
   const {
@@ -23,8 +23,6 @@ const GamePlay = props => {
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
-
-  // Sound.setCategory('Playback');
 
   useFocusEffect(
     useCallback(() => {
@@ -181,14 +179,6 @@ const GamePlay = props => {
         gameOver={gameOver}
         navigation={navigation}
         value={modalValue}
-      />
-      <Button
-        title="Play Music"
-        onPress={gameMusicPlay}
-      />
-      <Button
-        title="Stop Music"
-        onPress={gameMusicStop}
       />
       {pCards.play1Cards.map(playCard => (
         <AnimatedCard

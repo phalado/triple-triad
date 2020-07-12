@@ -7,6 +7,12 @@ const ScreenHeight = Dimensions.get('window').height;
 
 const ExploreScenesStyles = StyleSheet.create({
   container: {
+    width: ScreenWidth,
+    height: ScreenHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backgroundImage: {
     position: 'absolute',
     resizeMode: 'stretch',
     width: ScreenWidth,

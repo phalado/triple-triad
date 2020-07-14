@@ -14,7 +14,7 @@ const GameDeck = props => {
   const {
     decks, table, route, navigation, changeDeck, startDeck,
   } = props;
-  const { deck } = route.params;
+  const { deck, type } = route.params;
   const [myDecks, setMyDecks] = useState(decks);
   const myCards = Cards.sort((a, b) => a > b);
 
@@ -24,31 +24,31 @@ const GameDeck = props => {
 
   const handleRemoveCard = (cardId, deck) => {
     setMyDecks({
-      player: myDecks.player,
-      custom: {
-        ...myDecks.custom,
-        [deck]: myDecks.custom[deck].splice(myDecks.custom[deck].indexOf(cardId), 1, null)
+      ...myDecks,
+      [type]: {
+        ...myDecks[type],
+        [deck]: myDecks[type][deck].splice(myDecks[type][deck].indexOf(cardId), 1, null)
           .sort(),
       },
     });
     changeDeck(myDecks);
     navigation.pop();
-    navigation.push('Game Deck', { screen: 'Game Deck', params: { deck } });
+    navigation.push('Game Deck', { screen: 'Game Deck', params: { deck, type } });
   };
 
   const handleAddCard = (cardId, deck) => {
-    if (myDecks.custom[deck].some(value => value === null)) {
+    if (myDecks[type][deck].some(value => value === null)) {
       setMyDecks({
-        player: myDecks.player,
-        custom: {
-          ...myDecks.custom,
-          [deck]: myDecks.custom[deck].splice(myDecks.custom[deck].indexOf(null), 1, cardId)
+        ...myDecks,
+        [type]: {
+          ...myDecks[type],
+          [deck]: myDecks[type][deck].splice(myDecks[type][deck].indexOf(null), 1, cardId)
             .sort(),
         },
       });
       changeDeck(myDecks);
       navigation.pop();
-      navigation.push('Game Deck', { screen: 'Game Deck', params: { deck } });
+      navigation.push('Game Deck', { screen: 'Game Deck', params: { deck, type } });
     }
   };
 
@@ -73,7 +73,7 @@ const GameDeck = props => {
       <View>
         <View style={deck === 'none' ? styles.buttons : styles.dropZone}>
           {deck !== 'none'
-            ? myDecks.custom[deck].map((cardId, index) => GetDecksCards({
+            ? myDecks[type][deck].map((cardId, index) => GetDecksCards({
               cardId, table, index, handleRemoveCard, deck,
             }))
             : getDeckButtons(navigation, styles.buttons, 'Game Deck')}
@@ -86,7 +86,7 @@ const GameDeck = props => {
               onPress={() => {
                 changeDeck(myDecks);
                 navigation.goBack(null);
-                navigation.navigate('Game Deck', { deck: myDecks.custom.deck1 });
+                navigation.navigate('Game Deck', { deck: myDecks[type].deck1, type });
               }}
             />
           )}

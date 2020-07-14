@@ -86,41 +86,41 @@ const resetGame = props => {
   ]);
 };
 
-const getDeckButtons = (navigation, style, screen) => (
+const getDeckButtons = (navigation, style, screen, type = 'custom') => (
   <View style={style}>
     <Button
       title="Deck 1"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck1' } });
+        navigation.push(screen, { screen, params: { deck: 'deck1', type } });
       }}
     />
     <Button
       title="Deck 2"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck2' } });
+        navigation.push(screen, { screen, params: { deck: 'deck2', type } });
       }}
     />
     <Button
       title="Deck 3"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck3' } });
+        navigation.push(screen, { screen, params: { deck: 'deck3', type } });
       }}
     />
     <Button
       title="Deck 4"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck4' } });
+        navigation.push(screen, { screen, params: { deck: 'deck4', type } });
       }}
     />
     <Button
       title="Deck 5"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck5' } });
+        navigation.push(screen, { screen, params: { deck: 'deck5', type } });
       }}
     />
   </View>

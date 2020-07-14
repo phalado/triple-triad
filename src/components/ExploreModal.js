@@ -7,12 +7,13 @@ import styles from '../styles/ModalScreen';
 
 const ExploreModal = props => {
   const {
-    visible, table, addCardToExploreDeck, startScene,
+    visible, table, addCardToExploreDeck, startScene, createNPCList,
   } = props;
   const [newVisible, setNewVisible] = useState(false);
   const [modalCard, setModalCard] = useState(1);
 
   const addFirstCardsToDeck = cards => {
+    createNPCList();
     addCardToExploreDeck(cards[0]);
     setNewVisible(true);
     setModalCard(cards[0]);
@@ -48,6 +49,7 @@ ExploreModal.propTypes = {
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   addCardToExploreDeck: PropTypes.func.isRequired,
   startScene: PropTypes.func.isRequired,
+  createNPCList: PropTypes.func.isRequired,
 };
 
 export default ExploreModal;

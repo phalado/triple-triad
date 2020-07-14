@@ -50,6 +50,13 @@ const ModalStyles = StyleSheet.create({
     resizeMode: 'stretch',
     position: 'absolute',
   },
+  placeContainer: {
+    margin: '10%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
 });
 
 export default ModalStyles;

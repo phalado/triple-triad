@@ -69,7 +69,7 @@ const InitialScreen = props => {
           <Text style={styles.buttonText}>Choose Rules</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Game Deck', { screen: 'Game Deck', params: { deck: 'none' } })}
+          onPress={() => navigation.navigate('Game Deck', { screen: 'Game Deck', params: { deck: 'none', type: 'custom' } })}
           style={styles.exploreButton2}
         >
           <Image
@@ -78,6 +78,17 @@ const InitialScreen = props => {
             alt="Edit your decks"
           />
           <Text style={styles.buttonText}>Edit your decks</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => null} style={styles.exploreButton2}>
+          <Image
+            style={styles.backgroundImages}
+            source={Images.classroom}
+            alt="How to Play"
+          />
+          <Text style={styles.buttonText}>How to play</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => null} style={styles.exploreButton2}>
+          <Text style={styles.buttonText}>About this game</Text>
         </TouchableOpacity>
       </View>
     </View>

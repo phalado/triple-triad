@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { cardsOnTheTable } from './OtherHelpers';
-import { turnCardPlay } from '../constants/Sounds';
+import { turnCardPlay, specialSoundPlay } from '../constants/Sounds';
 
 const turnCard = props => {
   const {
@@ -49,6 +49,7 @@ const cardCombat = (props, newRow, newColumn, rank1, rank2, showModalWindow = nu
   turnCardPlay();
   if (showModalWindow) {
     showModalWindow('combo');
+    specialSoundPlay();
     if (cardsOnTheTable(table) === 9) setTimeout(() => showModalWindow(), 1100);
   }
 };
@@ -118,6 +119,7 @@ const checkSame = (props, row, column, showModalWindow) => {
         handleChangeTable,
       });
       showModalWindow('same');
+      specialSoundPlay();
       setTimeout(() => checkCombo(props, crd, showModalWindow), 1500);
     });
   }
@@ -172,6 +174,7 @@ const checkPlus = (props, row, column, showModalWindow) => {
               handleChangeTable,
             });
             showModalWindow('plusSp');
+            specialSoundPlay();
             setTimeout(() => {
               checkCombo(props, crd, showModalWindow);
             }, 1500);

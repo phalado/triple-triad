@@ -74,8 +74,12 @@ const changeNPCStreak = data => ({
   data,
 });
 
+const createNPCList = () => ({
+  type: 'CREATE_NPC_LIST',
+});
+
 export {
   createCard, removeCard, modifyTable, resetCards, resetTable, changeRules, changeDeck, startDeck,
   addCardToExploreDeck, removeCardFromExploreDeck, changeStreak, addCardToNPC, removeCardFromNPC,
-  changeNPCStreak, resetPlayerDeckExplore,
+  changeNPCStreak, resetPlayerDeckExplore, createNPCList,
 };

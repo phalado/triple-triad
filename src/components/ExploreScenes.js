@@ -1,14 +1,28 @@
 import React, { useCallback, useState } from 'react';
-import { View, Image, Button } from 'react-native';
+import {
+  View, Image, Button, Text,
+} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 import PlacesModal from './PlacesModal';
+import NPCsTable from './NPCsTable';
+import { getTableData } from '../Helpers/ExploreModeHelper';
 import styles from '../styles/ExploreScenes';
 
 const ExploreScenes = props => {
-  const { navigation, route } = props;
-  const { place, play, stop } = route.params;
+  const {
+    navigation, route, npcs, createNPCList,
+  } = props;
+  const {
+    place, image, play, stop,
+  } = route.params;
   const [visible, setVisible] = useState(false);
+
+  const [tableHead] = useState(['Name', 'Wins', 'Looses', 'Ties', 'Chalenge']);
+  const [tableData] = useState(getTableData(npcs, place));
+
+  if (Object.entries(npcs).length === 0) createNPCList();
 
   useFocusEffect(
     useCallback(() => {
@@ -18,27 +32,29 @@ const ExploreScenes = props => {
     }, []),
   );
 
-  const handleTravel = (place, play, stop) => {
+  const handleTravel = (place, image, play, stop) => {
     navigation.pop();
-    navigation.push('Explore Scenes', { place, play, stop });
+    navigation.push('Explore Scenes', {
+      place, image, play, stop,
+    });
   };
+
 
   return (
     <View style={styles.container}>
-      <Image style={styles.backgroundImage} source={place} alt="Table" />
-      <PlacesModal visible={visible} handleTravel={handleTravel} />
-      <Button
-        title="Travel"
-        onPress={() => setVisible(true)}
-      />
-      <Button
-        title="Edit Deck"
-        onPress={() => null}
-      />
-      <Button
-        title="Go Back"
-        onPress={() => navigation.pop()}
-      />
+      <Image style={styles.backgroundImage} source={image} alt="Table" />
+      <View style={styles.subContainerLeft}>
+        <PlacesModal visible={visible} handleTravel={handleTravel} />
+        <Button title="Travel" onPress={() => setVisible(true)} />
+        <Button title="Edit Deck" onPress={() => null} />
+        <Button title="Go Back" onPress={() => navigation.pop()} />
+      </View>
+      <View style={styles.subContainerRight}>
+        <Text style={styles.text}>List of players</Text>
+        <ScrollView style={{ width: '90%', height: '50%' }}>
+          <NPCsTable tableHead={tableHead} tableData={tableData} />
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -46,6 +62,8 @@ const ExploreScenes = props => {
 ExploreScenes.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
   route: PropTypes.objectOf(PropTypes.any).isRequired,
+  npcs: PropTypes.objectOf(PropTypes.object).isRequired,
+  createNPCList: PropTypes.func.isRequired,
 };
 
 export default ExploreScenes;

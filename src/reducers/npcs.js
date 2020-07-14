@@ -1,3 +1,5 @@
+import InitialState from '../constants/InicialState';
+
 const npcsReducer = (state = {}, action) => {
   const { location, npc } = action;
   switch (action.type) {
@@ -33,6 +35,10 @@ const npcsReducer = (state = {}, action) => {
             [action.streak]: action.streak + action.value,
           },
         },
+      });
+    case 'CREATE_NPC_LIST':
+      return ({
+        ...InitialState.npcs,
       });
     default:
       return state;

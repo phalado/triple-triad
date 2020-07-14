@@ -134,7 +134,7 @@ export default {
         tie: 0,
       },
       waitressSon: {
-        name: 'Waitress',
+        name: 'Waitress Son',
         cards: [1, 3, 5, 6],
         special: [],
         win: 0,
@@ -174,7 +174,7 @@ export default {
         tie: 0,
       },
       runningBoy: {
-        name: 'Nida',
+        name: 'Runinng Boy',
         cards: [1, 2, 3, 5],
         special: [81],
         win: 0,
@@ -248,15 +248,7 @@ export default {
         tie: 0,
       },
     },
-    balamb: {
-      cardQueen: {
-        name: 'Queen of Cards',
-        cards: [1, 2],
-        special: [],
-        win: 0,
-        loose: 0,
-        tie: 0,
-      },
+    balambTown: {
       girl: {
         name: 'Girl in  entrance',
         cards: [1, 3, 4],
@@ -322,5 +314,24 @@ export default {
         tie: 0,
       },
     },
+    cardQueen: {
+      name: 'Queen of Cards',
+      cards: [1, 2],
+      special: [],
+      win: 0,
+      loose: 0,
+      tie: 0,
+      place: 'balambTown',
+    },
+    dollet: {},
+    delingCity: {},
+    galbadiaGarden: {},
+    timber: {},
+    fishermansHorizon: {},
+    shumiVillage: {},
+    trabiaGarden: {},
+    winhill: {},
+    edeasHouse: {},
+    esthar: {},
   },
 };

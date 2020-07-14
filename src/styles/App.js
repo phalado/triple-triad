@@ -24,7 +24,7 @@ const AppStyles = StyleSheet.create({
     alignContent: 'center',
   },
   exploreButton2: {
-    width: screenWidth / 2,
+    width: screenWidth / 4,
     height: '100%',
     justifyContent: 'center',
     alignContent: 'center',
@@ -37,6 +37,7 @@ const AppStyles = StyleSheet.create({
   buttonText: {
     fontSize: 35,
     color: 'white',
+    alignSelf: 'center',
   },
 });
 

@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { cardsOnTheTable, getRandomCards, getCardsId } from '../Helpers/OtherHelpers';
 import Images from '../constants/Images';
 import styles from '../styles/ModalScreen';
+import { winThemePlay, looseThemePlay } from '../constants/Sounds';
 
 const ModalScreen = props => {
   const {
@@ -86,6 +87,10 @@ const ModalScreen = props => {
         </Modal>
       );
     }
+
+    if (gameOver === 'win') {
+      winThemePlay();
+    } else looseThemePlay();
 
     return (
       <Modal isVisible={visible}>

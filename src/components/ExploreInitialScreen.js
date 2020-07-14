@@ -49,7 +49,8 @@ const ExploreInitialScreen = props => {
         onPress={() => {
           navigation.pop();
           navigation.push('Explore Scenes', {
-            place: Images.balambGarden,
+            place: 'balambGarden',
+            image: Images.balambGarden,
             play: balambGardenPlay,
             stop: balambGardenStop,
           });

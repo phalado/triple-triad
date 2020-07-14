@@ -9,6 +9,7 @@ import Images from '../constants/Images';
 import RankNumbers from './RankNumbers';
 import { cardsOnTheTable, getCardContainer } from '../Helpers/OtherHelpers';
 import styles from '../styles/AnimatedCard';
+import { cardSoundPlay } from '../constants/Sounds';
 
 const Card = props => {
   const {
@@ -63,6 +64,7 @@ const Card = props => {
           friction: 5,
           useNativeDriver: false,
         }).start();
+        cardSoundPlay();
       } else {
         for (let i = 0; i <= 2; i += 1) {
           for (let j = 0; j <= 2; j += 1) {
@@ -75,6 +77,7 @@ const Card = props => {
               myTable[i][j] = [card, player, table[i][j][2]];
               setMyTable(myTable);
               // console.log(table);
+              cardSoundPlay();
               handlePlaceCard(card, myTable, i, j);
             }
           }
@@ -86,6 +89,7 @@ const Card = props => {
           friction: 5,
           useNativeDriver: false,
         }).start();
+        cardSoundPlay();
       }
     },
   })).current;
@@ -101,47 +105,6 @@ const Card = props => {
       </View>
     );
   }
-
-  // if (move) {
-  //   if (move[0][0] === row && move[0][1] === column) {
-  //     const begX = Dimensions.get('window').width * 0.245;
-  //     const begY = Dimensions.get('window').height * 0.08;
-
-  //     myTable[move[1][0]][move[1][1]] = [card, player, table[move[1][0]][move[1][1]]];
-  //     setMyTable(myTable);
-  //     handlePlaceCard(card, myTable, move[1][0], move[1][1], true);
-  //     console.log(row, column, move);
-
-  //     return (
-  //       <View
-  //         style={{
-  //           ...cardContainer,
-  //           transform: [
-  //             { translateX: begX + (row * cardWidth) },
-  //             { translateY: begY + (column * cardHeight) },
-  //           ],
-  //         }}
-  //       >
-  //         <Image
-  //           style={styles.card}
-  //           source={Images[playerImage]}
-  //           alt="Background"
-  //         />
-  //         <Image
-  //           style={styles.card}
-  //           source={Images[card.id]}
-  //           alt="Table"
-  //         />
-  //         <RankNumbers
-  //           ranks={card.ranks}
-  //           element={card.element}
-  //           table={table}
-  //           playCard={playCard}
-  //         />
-  //       </View>
-  //     );
-  //   }
-  // }
 
   if (dragable && !gameOver) {
     return (

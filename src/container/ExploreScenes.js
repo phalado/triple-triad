@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import ExploreScenes from '../components/ExploreScenes';
-import { addCardToExploreDeck, removeCardFromExploreDeck, createNPCList } from '../actions';
+import {
+  addCardToExploreDeck, removeCardFromExploreDeck, createNPCList,
+} from '../actions';
 
 const mapStateToProps = state => ({
   playerCards: state.playerCards,

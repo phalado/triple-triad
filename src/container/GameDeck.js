@@ -5,6 +5,7 @@ import { changeDeck, startDeck } from '../actions';
 const mapStateToProps = state => ({
   table: state.table,
   decks: state.decks,
+  playerCards: state.playerCards,
 });
 
 const mapDispatchToProps = dispatch => ({

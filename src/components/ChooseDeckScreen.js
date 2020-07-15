@@ -12,33 +12,41 @@ const ChooseDecksScreen = props => {
   const {
     decks, table, createCard, resetCards, navigation, route,
   } = props;
-  const { deck } = route.params.params || route.params;
+  const { deck, type, npcDeck } = route.params.params || route.params;
 
   const addCardsToStore = () => {
     resetCards();
-    decks.custom[deck].forEach((card, index) => {
+    decks[type][deck].forEach((card, index) => {
       createCard({
         player: true, id: card, row: 3 + index, column: 3, dragable: true,
       });
     });
 
-    getPcDeck(decks.custom[deck]).forEach((card, index) => {
-      createCard({
-        player: false, id: card, row: 3 + index, column: 3, dragable: true,
+    if (npcDeck) {
+      npcDeck.forEach((card, index) => {
+        createCard({
+          player: false, id: card, row: 3 + index, column: 3, dragable: true,
+        });
       });
-    });
+    } else {
+      getPcDeck(decks[type][deck]).forEach((card, index) => {
+        createCard({
+          player: false, id: card, row: 3 + index, column: 3, dragable: true,
+        });
+      });
+    }
   };
 
   return (
     <View>
       <View style={styles.topContainer}>
         <Text style={styles.title}>Choose a deck to play</Text>
-        {getDeckButtons(navigation, styles.buttons, 'Choose Deck')}
+        {getDeckButtons(navigation, styles.buttons, 'Choose Deck', type, npcDeck)}
       </View>
       <View style={styles.bottomContainer}>
         <Text style={styles.title}>{deckName(deck)}</Text>
         <View style={styles.cardsContainer}>
-          {decks.custom[deck].map((cardId, index) => GetDecksCards({
+          {decks[type][deck].map((cardId, index) => GetDecksCards({
             cardId, table, index, handleRemoveCard: null, deck,
           }))}
         </View>

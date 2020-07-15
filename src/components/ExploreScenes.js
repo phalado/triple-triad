@@ -39,6 +39,9 @@ const ExploreScenes = props => {
     });
   };
 
+  const startGame = npcDeck => {
+    navigation.navigate('Choose Deck', { deck: 'deck1', type: 'player', npcDeck });
+  };
 
   return (
     <View style={styles.container}>
@@ -46,13 +49,16 @@ const ExploreScenes = props => {
       <View style={styles.subContainerLeft}>
         <PlacesModal visible={visible} handleTravel={handleTravel} />
         <Button title="Travel" onPress={() => setVisible(true)} />
-        <Button title="Edit Deck" onPress={() => null} />
+        <Button
+          title="Edit Deck"
+          onPress={() => navigation.navigate('Game Deck', { screen: 'Game Deck', params: { deck: 'none', type: 'player' } })}
+        />
         <Button title="Go Back" onPress={() => navigation.pop()} />
       </View>
       <View style={styles.subContainerRight}>
         <Text style={styles.text}>List of players</Text>
         <ScrollView style={{ width: '90%', height: '50%' }}>
-          <NPCsTable tableHead={tableHead} tableData={tableData} />
+          <NPCsTable tableHead={tableHead} tableData={tableData} startGame={startGame} />
         </ScrollView>
       </View>
     </View>

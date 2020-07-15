@@ -1,12 +1,11 @@
 import React from 'react';
-import {
-  View, Text,
-} from 'react-native';
+import { View, Text, Button } from 'react-native';
 import PropTypes from 'prop-types';
+import { getNPCsCards } from '../Helpers/ExploreModeHelper';
 import styles from '../styles/ExploreScenes';
 
 const NPCsTable = props => {
-  const { tableHead, tableData } = props;
+  const { tableHead, tableData, startGame } = props;
 
   return (
     <View style={styles.tableContainer}>
@@ -16,9 +15,18 @@ const NPCsTable = props => {
       <View>
         {tableData.map(row => (
           <View style={styles.tableHead} key={row}>
-            {row.map((value, index) => (
-              <Text style={styles.tableText} key={[index, value]}>{value}</Text>
-            ))}
+            {row.map((value, index) => {
+              if (index < 4) {
+                return <Text style={styles.tableText} key={[index, value]}>{value}</Text>;
+              }
+              return (
+                <Button
+                  title="Challenge"
+                  onPress={() => startGame(getNPCsCards(value.cards, value.special))}
+                  key={[value, index]}
+                />
+              );
+            })}
           </View>
         ))}
       </View>
@@ -29,6 +37,7 @@ const NPCsTable = props => {
 NPCsTable.propTypes = {
   tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
   tableData: PropTypes.arrayOf(PropTypes.array).isRequired,
+  startGame: PropTypes.func.isRequired,
 };
 
 export default NPCsTable;

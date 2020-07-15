@@ -50,7 +50,7 @@ const InitialScreen = props => {
           />
           <Text style={styles.buttonText}>Random Game</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Choose Deck', { deck: 'deck1' })} style={styles.exploreButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('Choose Deck', { deck: 'deck1', type: 'custom' })} style={styles.exploreButton}>
           <Image
             style={styles.backgroundImages}
             source={Images.quickGame}

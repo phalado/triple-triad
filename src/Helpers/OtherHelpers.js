@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, View, Button } from 'react-native';
 
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
-const getRandomNumber = (min, max) => Math.floor((max - min) * Math.random()) + min;
+const getRandomNumber = (min, max) => (Math.floor(1000000 * Math.random()) % (max - min)) + min;
 
 const cardsOnTheTable = table => table.flat().filter(field => !!field[0]).length;
 
@@ -86,41 +86,41 @@ const resetGame = props => {
   ]);
 };
 
-const getDeckButtons = (navigation, style, screen, type = 'custom') => (
+const getDeckButtons = (navigation, style, screen, type = 'custom', npcDeck = null) => (
   <View style={style}>
     <Button
       title="Deck 1"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck1', type } });
+        navigation.push(screen, { screen, params: { deck: 'deck1', type, npcDeck } });
       }}
     />
     <Button
       title="Deck 2"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck2', type } });
+        navigation.push(screen, { screen, params: { deck: 'deck2', type, npcDeck } });
       }}
     />
     <Button
       title="Deck 3"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck3', type } });
+        navigation.push(screen, { screen, params: { deck: 'deck3', type, npcDeck } });
       }}
     />
     <Button
       title="Deck 4"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck4', type } });
+        navigation.push(screen, { screen, params: { deck: 'deck4', type, npcDeck } });
       }}
     />
     <Button
       title="Deck 5"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck5', type } });
+        navigation.push(screen, { screen, params: { deck: 'deck5', type, npcDeck } });
       }}
     />
   </View>

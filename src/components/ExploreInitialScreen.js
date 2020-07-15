@@ -18,7 +18,12 @@ const ExploreInitialScreen = props => {
 
   const startScene = () => {
     navigation.pop();
-    navigation.navigate('Explore Scenes');
+    navigation.push('Explore Scenes', {
+      place: 'balambGarden',
+      image: Images.balambGarden,
+      play: balambGardenPlay,
+      stop: balambGardenStop,
+    });
   };
 
   return (

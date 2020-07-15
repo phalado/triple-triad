@@ -19,11 +19,11 @@ export default {
   },
   decks: {
     player: {
-      deck1: Array(5).fill(6),
-      deck2: Array(5).fill(7),
-      deck3: Array(5).fill(8),
-      deck4: Array(5).fill(9),
-      deck5: Array(5).fill(10),
+      deck1: [1, 2, 4, 6, 7],
+      deck2: [1, 2, 4, 6, 7],
+      deck3: [1, 2, 4, 6, 7],
+      deck4: [1, 2, 4, 6, 7],
+      deck5: [1, 2, 4, 6, 7],
     },
     custom: {
       deck1: Array(5).fill(1),

@@ -167,7 +167,7 @@ const GamePlay = props => {
     if (myTurn) showModalWindow('none');
 
     if ((!myTurn && cardsOnTheTable(table) % 2 === 0) || (myTurn && cardsOnTheTable % 2 === 1)) {
-      return changeMove(PCMovement({ table, cards, rules }));
+      return setTimeout(() => changeMove(PCMovement({ table, cards, rules })), 2000);
     }
   }, []);
 

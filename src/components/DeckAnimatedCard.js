@@ -45,7 +45,7 @@ const DeckAnimatedCard = props => {
       <Animated.View
         style={{
           ...styles.cardContainer,
-          zIndex: 30,
+          zIndex: 10,
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
         }}
         {...panResponder.panHandlers}

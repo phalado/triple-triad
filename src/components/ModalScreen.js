@@ -1,9 +1,8 @@
 import React from 'react';
 import {
-  View, Image, Text, Button,
+  View, Image, Text, Button, TouchableOpacity,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 import RankNumbers from './RankNumbers';
 import { cardsOnTheTable, getRandomCards, getCardsId } from '../Helpers/OtherHelpers';
@@ -110,7 +109,7 @@ const ModalScreen = props => {
         if (cardId === 84 || cardId > 77) removeCardFromNPC({ location, npc, card: cardId });
         changeNPCStreak({ location, npc, streak: 'win' });
         addCardToExploreDeck(cardId);
-        // navigation.pop();
+        navigation.pop();
       };
 
       const looseCard = cardId => {

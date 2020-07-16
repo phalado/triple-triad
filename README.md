@@ -14,9 +14,19 @@ This is a personal project where we create our own Android Triple Triad version.
 
 ## About
 
+Triple Triad is a mini-game inside Final Fantasy VIII. It consists in a card game, which the cards are based in the main game's monsters, summons and characters. The cards contains 4 numbers, called ranks, and, some of them, an element. These ranks are used to make the cards "battle" each other and the elements make the ranks get bigger or smaller.
+
+Here we try to implement an android version of Triple Triad, bringing all the original cards, locations, rules and NPCs from the original game.
+
+You have three objectives in this game:
+
+- Collect all the cards;
+- Defeat all the Card Club members;
+- Have fun!!!
 
 ## How to play
 
+Right now you can download this repository, install the packages and play it using an emulator. Soon we will publish an APK for local installation in your mobile.
 
 ## Technologies used
 
@@ -44,7 +54,7 @@ Jonathan Arroyo: [Github][johny-github]
 
 A special thanks to [myst6re](https://github.com/myst6re) for providing the list of NPC's cards and [Jeffrey Han](https://github.com/itdelatrisu) that created a [Triple Triad HTML5](https://github.com/itdelatrisu/triple-triad-html5) where I got the cards' and table's images;
 
-I have no business rights about the characters used in this API. This is only for learning purposes. All characters and musics belong to [Square-Enix][square].
+I have no business rights about the characters used in this API. This is only for learning purposes. All characters and songs belong to [Square-Enix][square].
 
 
 <!-- Links -->

@@ -16,13 +16,14 @@ const NPCsTable = props => {
         {tableData.map(row => (
           <View style={styles.tableHead} key={row}>
             {row.map((value, index) => {
+              if (index === 5) return null;
               if (index < 4) {
                 return <Text style={styles.tableText} key={[index, value]}>{value}</Text>;
               }
               return (
                 <Button
                   title="Challenge"
-                  onPress={() => startGame(getNPCsCards(value.cards, value.special))}
+                  onPress={() => startGame(getNPCsCards(value.cards, value.special), row[5])}
                   key={[value, index]}
                 />
               );

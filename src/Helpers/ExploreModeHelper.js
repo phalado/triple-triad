@@ -37,8 +37,10 @@ const getTableData = (npcs, place) => {
     const {
       name, win, loose, tie, cards, special,
     } = value;
-    tableData.push([name, win, loose, tie, { cards, special }]);
+    tableData.push([name, win, loose, tie, { cards, special }, key]);
   });
+
+  tableData.sort((a, b) => a[0] > b[0]);
 
   return tableData;
 };

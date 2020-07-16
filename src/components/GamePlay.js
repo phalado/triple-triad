@@ -15,7 +15,8 @@ import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
   const {
-    cards, table, rules, modifyTable, createCard, removeCard, resetCards, resetTable, navigation,
+    cards, table, rules, modifyTable, createCard, removeCard, resetCards, resetTable,
+    navigation, route,
   } = props;
   const [gameOver, setGameOver] = useState(false);
   const [pCards] = useState(cards);
@@ -23,6 +24,9 @@ const GamePlay = props => {
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
+  const [initialCards] = useState({ ...cards });
+  const { npcDeck, location, npc } = route.params ? route.params
+    : { npcDeck: null, location: null, npc: null };
 
   useFocusEffect(
     useCallback(() => {
@@ -179,6 +183,10 @@ const GamePlay = props => {
         gameOver={gameOver}
         navigation={navigation}
         value={modalValue}
+        npcDeck={!!npcDeck}
+        location={location}
+        npc={npc}
+        initialCards={initialCards}
       />
       {pCards.play1Cards.map(playCard => (
         <AnimatedCard
@@ -222,6 +230,7 @@ GamePlay.propTypes = {
   resetCards: PropTypes.func.isRequired,
   resetTable: PropTypes.func.isRequired,
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+  route: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default GamePlay;

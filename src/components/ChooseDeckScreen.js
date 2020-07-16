@@ -12,7 +12,9 @@ const ChooseDecksScreen = props => {
   const {
     decks, table, createCard, resetCards, navigation, route,
   } = props;
-  const { deck, type, npcDeck } = route.params.params || route.params;
+  const {
+    deck, type, npcDeck, location, npc,
+  } = route.params.params || route.params;
 
   const addCardsToStore = () => {
     resetCards();
@@ -41,7 +43,7 @@ const ChooseDecksScreen = props => {
     <View>
       <View style={styles.topContainer}>
         <Text style={styles.title}>Choose a deck to play</Text>
-        {getDeckButtons(navigation, styles.buttons, 'Choose Deck', type, npcDeck)}
+        {getDeckButtons(navigation, styles.buttons, 'Choose Deck', type, npcDeck, location, npc)}
       </View>
       <View style={styles.bottomContainer}>
         <Text style={styles.title}>{deckName(deck)}</Text>
@@ -55,7 +57,7 @@ const ChooseDecksScreen = props => {
           onPress={() => {
             addCardsToStore();
             navigation.pop();
-            navigation.push('GamePlay', { screen: 'GamePlay' });
+            navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location, npc } });
           }}
         />
       </View>

@@ -19,7 +19,7 @@ const ModalStyles = StyleSheet.create({
   },
   gameOverImage: {
     width: '50%',
-    height: '50%',
+    height: '40%',
     resizeMode: 'stretch',
   },
   buttonsContainer: {
@@ -56,6 +56,44 @@ const ModalStyles = StyleSheet.create({
     justifyContent: 'space-evenly',
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  chooseCardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  chooseCardText: {
+    fontSize: 30,
+    alignSelf: 'center',
+    color: 'white',
+  },
+  chooseCardNameWhite: {
+    marginTop: 20,
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'white',
+  },
+  chooseCardNameBlue: {
+    marginTop: 20,
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'blue',
+  },
+  chooseCardNameYellow: {
+    marginTop: 20,
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'yellow',
+  },
+  chooseCardImage: {
+    width: cardWidth,
+    height: cardHeight,
+    justifyContent: 'space-evenly',
+  },
+  insideChooseCard: {
+    width: cardWidth,
+    height: cardHeight,
+    resizeMode: 'stretch',
+    position: 'absolute',
   },
 });
 

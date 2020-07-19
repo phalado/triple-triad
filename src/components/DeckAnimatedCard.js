@@ -75,7 +75,7 @@ DeckAnimatedCard.propTypes = {
   card: PropTypes.objectOf(PropTypes.any).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   handleAddCard: PropTypes.func.isRequired,
-  deck: PropTypes.string.isRequired,
+  deck: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
 };
 
 export default DeckAnimatedCard;

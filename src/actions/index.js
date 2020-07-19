@@ -10,7 +10,8 @@ const createCard = card => ({
 const removeCard = card => ({
   type: 'REMOVE_CARD',
   player: card.player,
-  id: card.id,
+  row: card.row,
+  column: card.column,
 });
 
 const resetCards = () => ({

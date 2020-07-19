@@ -1,5 +1,4 @@
 const cardReducer = (state = { play1Cards: [], play2Cards: [] }, action) => {
-  let removable = [];
   switch (action.type) {
     case 'CREATE_CARD':
       if (action.player) {
@@ -29,17 +28,20 @@ const cardReducer = (state = { play1Cards: [], play2Cards: [] }, action) => {
         ],
       });
     case 'REMOVE_CARD':
+      console.log(action);
+      console.log(state.play1Cards);
+      console.log(state.play1Cards.filter(c => c.row !== action.row || c.column !== action.column));
       if (action.player) {
-        removable = state.play1Cards.find(c => c.id === action.id);
         return ({
-          play1Cards: state.play1Cards.filter(c => c !== removable),
+          play1Cards: state.play1Cards
+            .filter(c => c.row !== action.row || c.column !== action.column),
           play2Cards: state.play2Cards,
         });
       }
-      removable = state.play2Cards.find(c => c.id === action.id);
       return ({
         play1Cards: state.play1Cards,
-        play2Cards: state.play2Cards.filter(c => c !== removable),
+        play2Cards: state.play2Cards
+          .filter(c => c.row !== action.row || c.column !== action.column),
       });
     case 'RESET_CARDS':
       return ({

@@ -86,41 +86,66 @@ const resetGame = props => {
   ]);
 };
 
-const getDeckButtons = (navigation, style, screen, type = 'custom', npcDeck = null) => (
+const getDeckButtons = (navigation, style, screen, type = 'custom', npcDeck = null, location = null, npc = null) => (
   <View style={style}>
     <Button
       title="Deck 1"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck1', type, npcDeck } });
+        navigation.push(screen, {
+          screen,
+          params: {
+            deck: 'deck1', type, npcDeck, location, npc,
+          },
+        });
       }}
     />
     <Button
       title="Deck 2"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck2', type, npcDeck } });
+        navigation.push(screen, {
+          screen,
+          params: {
+            deck: 'deck2', type, npcDeck, location, npc,
+          },
+        });
       }}
     />
     <Button
       title="Deck 3"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck3', type, npcDeck } });
+        navigation.push(screen, {
+          screen,
+          params: {
+            deck: 'deck3', type, npcDeck, location, npc,
+          },
+        });
       }}
     />
     <Button
       title="Deck 4"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck4', type, npcDeck } });
+        navigation.push(screen, {
+          screen,
+          params: {
+            deck: 'deck4', type, npcDeck, location, npc,
+          },
+        });
       }}
     />
     <Button
       title="Deck 5"
       onPress={() => {
         navigation.pop();
-        navigation.push(screen, { screen, params: { deck: 'deck5', type, npcDeck } });
+        navigation.push(screen, {
+          screen,
+          params: {
+            deck: 'deck5', type, npcDeck, location, npc,
+          },
+        });
       }}
     />
   </View>

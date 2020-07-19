@@ -40,9 +40,7 @@ const ExploreScenes = props => {
   };
 
   const startGame = (npcDeck, npc) => {
-    navigation.navigate('Choose Deck', {
-      deck: 'deck1', type: 'player', npcDeck, location: place, npc,
-    });
+    navigation.navigate('Choose Cards', { npcDeck, location: place, npc });
   };
 
   return (

@@ -24,7 +24,6 @@ const GamePlay = props => {
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
-  const [initialCards] = useState({ ...cards });
   const { npcDeck, location, npc } = route.params ? route.params
     : { npcDeck: null, location: null, npc: null };
 
@@ -74,21 +73,11 @@ const GamePlay = props => {
   };
 
   const handleRemoveCard = data => {
-    const { id, row, column } = data;
-    if (row) {
-      if (data.player) {
-        const removable = pCards.play1Cards.find(c => c.row === row && c.column === column);
-        pCards.play1Cards = pCards.play1Cards.filter(c => c !== removable);
-      } else {
-        const removable = pCards.play2Cards.find(c => c.row === row && c.column === column);
-        pCards.play2Cards = pCards.play2Cards.filter(c => c !== removable);
-      }
-    } else if (data.player) {
-      const removable = pCards.play1Cards.find(c => c.id === id);
-      pCards.play1Cards = pCards.play1Cards.filter(c => c !== removable);
+    const { row, column } = data;
+    if (data.player) {
+      pCards.play1Cards = pCards.play1Cards.filter(c => c.row !== row || c.column !== column);
     } else {
-      const removable = pCards.play2Cards.find(c => c.id === id);
-      pCards.play2Cards = pCards.play2Cards.filter(c => c !== removable);
+      pCards.play2Cards = pCards.play2Cards.filter(c => c.row !== row || c.column !== column);
     }
     removeCard(data);
   };
@@ -114,10 +103,10 @@ const GamePlay = props => {
     }
   };
 
-  const handlePlaceCard = (card, tble, row, column) => {
+  const handlePlaceCard = (card, oldRow, oldColumn, tble, row, column) => {
     modifyTable(tble);
     handleRemoveCard({
-      player: tble[row][column][1], id: card.id, row: card.row, column: card.column,
+      player: tble[row][column][1], row: oldRow, column: oldColumn,
     });
     handleAddCard({
       player: tble[row][column][1], id: card.id, row, column, dragable: false,
@@ -157,9 +146,11 @@ const GamePlay = props => {
   };
 
   const changeMove = movement => {
-    const { card, row, column } = movement;
+    const {
+      oldRow, oldColumn, card, row, column,
+    } = movement;
     table[row][column] = [card, false, table[row][column][2]];
-    handlePlaceCard(card, table, row, column);
+    handlePlaceCard(card, oldRow, oldColumn, table, row, column);
   };
 
   // eslint-disable-next-line consistent-return
@@ -167,7 +158,7 @@ const GamePlay = props => {
     if (myTurn) showModalWindow('none');
 
     if ((!myTurn && cardsOnTheTable(table) % 2 === 0) || (myTurn && cardsOnTheTable % 2 === 1)) {
-      return setTimeout(() => changeMove(PCMovement({ table, cards, rules })), 2000);
+      return changeMove(PCMovement({ table, cards, rules }));
     }
   }, []);
 
@@ -186,7 +177,6 @@ const GamePlay = props => {
         npcDeck={!!npcDeck}
         location={location}
         npc={npc}
-        initialCards={initialCards}
       />
       {pCards.play1Cards.map(playCard => (
         <AnimatedCard

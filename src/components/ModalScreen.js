@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View, Image, Text, Button, TouchableOpacity,
 } from 'react-native';
@@ -6,7 +6,9 @@ import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
 import RankNumbers from './RankNumbers';
 import { cardsOnTheTable, getRandomCards, getCardsId } from '../Helpers/OtherHelpers';
-import { winThemePlay, looseThemePlay, gameMusicStop } from '../constants/Sounds';
+import {
+  gameMusicStop, winThemeStop, looseThemeStop,
+} from '../constants/Sounds';
 import Images from '../constants/Images';
 import Cards from '../constants/Cards';
 import styles from '../styles/ModalScreen';
@@ -14,10 +16,14 @@ import styles from '../styles/ModalScreen';
 const ModalScreen = props => {
   const {
     cards, table, rules, createCard, resetCards, resetTable, playerCards,
-    visible, turn, gameOver, navigation, value, npcDeck, initialCards, location, npc,
+    visible, turn, gameOver, navigation, value, npcDeck, location, npc,
     addCardToNPC, removeCardFromNPC, addCardToExploreDeck, removeCardFromExploreDeck,
     changeNPCStreak,
   } = props;
+  const [initialCards] = useState({
+    play1Cards: [...cards.play1Cards],
+    play2Cards: [...cards.play2Cards],
+  });
 
   if (value !== 'none') {
     return (
@@ -95,15 +101,15 @@ const ModalScreen = props => {
     if (gameOver === 'win') {
       console.log('win');
       gameMusicStop();
-      winThemePlay();
-    } else {
+      // winThemePlay();
+    } else if (gameOver === 'loose') {
       console.log('loose');
       gameMusicStop();
-      looseThemePlay();
-    }
+      // looseThemePlay();
+    } else console.log('tie');
 
     if (npcDeck) {
-      console.log(visible, gameOver);
+      console.log(visible, gameOver, location, npc);
 
       const winCard = cardId => {
         if (cardId === 84 || cardId > 77) removeCardFromNPC({ location, npc, card: cardId });
@@ -130,6 +136,24 @@ const ModalScreen = props => {
         const newCard = Cards.find(crd => crd.id === thisCard.id);
         const thisPlayer = player ? 'player1' : 'player2';
         // console.log(newCard.name, player);
+        if (player) {
+          return (
+            <View key={[thisCard, player, index]}>
+              {getCardName(newCard.name, newCard.id)}
+              <View style={styles.chooseCardImage}>
+                <Image style={styles.insideChooseCard} source={Images[thisPlayer]} alt="Background" />
+                <Image style={styles.insideChooseCard} source={Images[newCard.id]} alt="Card" />
+                <RankNumbers
+                  ranks={newCard.ranks}
+                  element={newCard.element}
+                  table={table}
+                  playCard={{ row: 0, column: 0, dragable: false }}
+                />
+              </View>
+            </View>
+          );
+        }
+
         return (
           <View key={[thisCard, player, index]}>
             {getCardName(newCard.name, newCard.id)}
@@ -238,7 +262,12 @@ const ModalScreen = props => {
           />
           <Button
             title="Back to initial screen"
-            onPress={() => resetGame()}
+            onPress={() => {
+              resetGame();
+              gameMusicStop();
+              winThemeStop();
+              looseThemeStop();
+            }}
           />
         </View>
       </Modal>
@@ -297,10 +326,6 @@ ModalScreen.propTypes = {
   npcDeck: PropTypes.bool,
   location: PropTypes.string,
   npc: PropTypes.string,
-  initialCards: PropTypes.shape({
-    play1Cards: PropTypes.arrayOf(PropTypes.object),
-    play2Cards: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
   playerCards: PropTypes.objectOf(PropTypes.any).isRequired,
   addCardToNPC: PropTypes.func.isRequired,
   removeCardFromNPC: PropTypes.func.isRequired,

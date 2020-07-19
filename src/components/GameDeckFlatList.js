@@ -6,13 +6,21 @@ import styles from '../styles/GameDeck';
 
 const GameDeckFlatList = props => {
   const {
-    getFlatListData, table, handleAddCard, deck, cards,
+    table, handleAddCard, deck, cards, getFlatListData, flatListData,
   } = props;
+  const keys = [];
+  // const [myDeck] = useState(deck);
+
+  const getKey = cardName => {
+    keys.push(cardName);
+    return `${cardName}${keys.length}`;
+  };
+
   return (
     <View style={{ height: '50%', alignItems: 'center' }}>
       <Text style={styles.title}>See your cards and change your decks</Text>
       <FlatList
-        data={getFlatListData(cards)}
+        data={flatListData || getFlatListData(cards)}
         renderItem={({ item }) => (
           <DeckAnimatedCard
             card={item}
@@ -22,18 +30,24 @@ const GameDeckFlatList = props => {
           />
         )}
         horizontal
-        keyExtractor={card => card.name}
+        keyExtractor={card => getKey(card.name)}
       />
     </View>
   );
 };
 
 GameDeckFlatList.propTypes = {
-  getFlatListData: PropTypes.func.isRequired,
-  deck: PropTypes.string.isRequired,
+  deck: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   handleAddCard: PropTypes.func.isRequired,
   cards: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getFlatListData: PropTypes.func,
+  flatListData: PropTypes.arrayOf(PropTypes.any),
+};
+
+GameDeckFlatList.defaultProps = {
+  getFlatListData: null,
+  flatListData: null,
 };
 
 export default GameDeckFlatList;

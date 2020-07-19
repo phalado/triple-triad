@@ -20,19 +20,20 @@ const npcsReducer = (state = {}, action) => {
           ...state[action.data.location],
           [action.data.npc]: {
             ...state[action.data.location][action.data.npc],
-            special: state[action.data.location][action.data.npc].special.filter(v => v !== action.data.card),
+            special: state[action.data.location][action.data.npc].special
+              .filter(v => v !== action.data.card),
           },
         },
       });
     case 'CHANGE_NPC_STREAK':
-      console.log(state[action.data.location][action.data.npc][action.data.streak]);
       return ({
         ...state,
         [action.data.location]: {
           ...state[action.data.location],
           [action.data.npc]: {
             ...state[action.data.location][action.data.npc],
-            [action.data.streak]: state[action.data.location][action.data.npc][action.data.streak] + 1,
+            [action.data.streak]:
+              state[action.data.location][action.data.npc][action.data.streak] + 1,
           },
         },
       });

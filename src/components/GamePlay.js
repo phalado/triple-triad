@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Table from './Table';
 import PlayingTexts from './PlayingTexts';
 import AnimatedCard from './AnimatedCard';
-import ModalScreen from '../container/ModalScreen';
+import ModalScreen from './ModalScreen';
 import Cards from '../constants/Cards';
 import { gameMusicPlay, gameMusicStop } from '../constants/Sounds';
 import { cardCombat, checkSame, checkPlus } from '../Helpers/CardCombatLogic';
@@ -18,7 +18,7 @@ const GamePlay = props => {
     cards, table, rules, modifyTable, createCard, removeCard, resetCards, resetTable,
     navigation, route,
   } = props;
-  const [gameOver, setGameOver] = useState(false);
+  let [gameOver] = useState(false);
   const [pCards] = useState(cards);
   // const [myTurn] = useState(false);
   const [myTurn] = useState(getRandomBoolean());
@@ -26,6 +26,7 @@ const GamePlay = props => {
   const [modalValue, setModalValue] = useState('none');
   const { npcDeck, location, npc } = route.params ? route.params
     : { npcDeck: null, location: null, npc: null };
+  const [p1InitialCards] = useState(cards.play1Cards.map(card => card.id));
 
   useFocusEffect(
     useCallback(() => {
@@ -46,6 +47,13 @@ const GamePlay = props => {
       };
     }, []),
   );
+
+  const callGameOverWindow = gameOver => {
+    navigation.pop();
+    navigation.navigate('Game over', {
+      gameOver, npcDeck, location, npc, p1InitialCards,
+    });
+  };
 
   const handleAddCard = data => {
     if (data.player) {
@@ -87,20 +95,24 @@ const GamePlay = props => {
   };
 
   const showModalWindow = value => {
-    if (cardsOnTheTable(table) < 9) setGameOver(false);
+    // console.log(cardsOnTheTable(table), gameOver, value, visibleModal);
+    // if (cardsOnTheTable(table) < 9) setGameOver(false);
     setVisibleModal(true);
     if (value) setModalValue(value);
-    if (cardsOnTheTable(table) < 9) {
-      setTimeout(() => {
-        setVisibleModal(false);
-        setModalValue('none');
-      }, 1000);
-    } else if (value) {
-      setTimeout(() => {
-        setVisibleModal(false);
-        setModalValue('none');
-      }, 1000);
-    }
+    // if (cardsOnTheTable(table) < 9) {
+    //   setTimeout(() => {
+    //     setVisibleModal(false);
+    //     setModalValue('none');
+    //   }, 1000);
+    // } else if (value) {
+    setTimeout(() => setVisibleModal(false), 1000);
+    // }
+    // if (cardsOnTheTable(table) === 9 && !visibleModal) {
+    //   console.log(1, visibleModal);
+    //   visibleModal = true;
+    //   setVisibleModal(true);
+    //   console.log(2, visibleModal);
+    // }
   };
 
   const handlePlaceCard = (card, oldRow, oldColumn, tble, row, column) => {
@@ -131,17 +143,18 @@ const GamePlay = props => {
     if (column > 0 && !!table[row][column - 1][0]) cardCombat(newProps, row, column - 1, 1, 2);
     if (column < 2 && !!table[row][column + 1][0]) cardCombat(newProps, row, column + 1, 2, 1);
 
-    if (cardsOnTheTable(table) === 9) {
-      if (pCards.play1Cards.length > pCards.play2Cards.length) setGameOver('win');
-      else if (pCards.play1Cards.length < pCards.play2Cards.length) setGameOver('loose');
-      else setGameOver('tie');
-    }
-    showModalWindow();
+    if (cardsOnTheTable(table) < 9) showModalWindow();
     if (tble[row][column][1] && cardsOnTheTable(table) < 9) {
       setTimeout(() => {
         // eslint-disable-next-line no-use-before-define
         changeMove(PCMovement({ table, cards, rules }));
       }, 1000);
+    }
+    if (cardsOnTheTable(table) === 9) {
+      if (pCards.play1Cards.length > pCards.play2Cards.length) gameOver = 'win';
+      else if (pCards.play1Cards.length < pCards.play2Cards.length) gameOver = 'loose';
+      else gameOver = 'tie';
+      callGameOverWindow(gameOver);
     }
   };
 
@@ -169,14 +182,15 @@ const GamePlay = props => {
       <PlayingTexts player score={pCards.play1Cards.length} table={table} turn={myTurn} />
       <PlayingTexts score={pCards.play2Cards.length} table={table} turn={myTurn} />
       <ModalScreen
+        table={table}
         visible={visibleModal}
         turn={myTurn}
-        gameOver={gameOver}
-        navigation={navigation}
         value={modalValue}
-        npcDeck={!!npcDeck}
-        location={location}
-        npc={npc}
+        // gameOver={gameOver}
+        // navigation={navigation}
+        // npcDeck={!!npcDeck}
+        // location={location}
+        // npc={npc}
       />
       {pCards.play1Cards.map(playCard => (
         <AnimatedCard

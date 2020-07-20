@@ -28,9 +28,6 @@ const cardReducer = (state = { play1Cards: [], play2Cards: [] }, action) => {
         ],
       });
     case 'REMOVE_CARD':
-      console.log(action);
-      console.log(state.play1Cards);
-      console.log(state.play1Cards.filter(c => c.row !== action.row || c.column !== action.column));
       if (action.player) {
         return ({
           play1Cards: state.play1Cards

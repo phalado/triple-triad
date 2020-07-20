@@ -16,8 +16,8 @@ const ChooseCardsDropZone = props => {
   };
 
   return (
-    <View style={{ zIndex: -10 }}>
-      <View style={styles.dropZone}>
+    <View>
+      <View style={{ ...styles.dropZone, zIndex: 0 }}>
         {deck.map((cardId, index) => (
           <GetDecksCards
             cardId={cardId}

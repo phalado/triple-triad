@@ -7,7 +7,6 @@ const turnCard = props => {
     table, player, id, row, column, handleAddCard, handleRemoveCard, handleChangeTable,
   } = props;
   handleChangeTable(table);
-  console.log('tuen', player, row, column);
   handleRemoveCard({
     player: !player, id, row, column,
   });

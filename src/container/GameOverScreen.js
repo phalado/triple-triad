@@ -3,7 +3,7 @@ import {
   createCard, resetCards, resetTable,
   addCardToNPC, removeCardFromNPC, addCardToExploreDeck, removeCardFromExploreDeck, changeNPCStreak,
 } from '../actions';
-import ModalScreen from '../components/ModalScreen';
+import GameOverScreen from '../components/GameOverScreen';
 
 const mapStateToProps = state => ({
   cards: state.cards,
@@ -23,4 +23,4 @@ const mapDispatchToProps = dispatch => ({
   changeNPCStreak: data => dispatch(changeNPCStreak(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(GameOverScreen);

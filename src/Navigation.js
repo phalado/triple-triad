@@ -13,6 +13,7 @@ import ChooseDecksScreen from './container/ChooseDecksScreen';
 import ExploreScenes from './container/ExploreScenes';
 import ExploreInitialScreen from './components/ExploreInitialScreen';
 import ChooseCardsScreen from './container/ChooseCardsScreen';
+import GameOverScreen from './container/GameOverScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -50,6 +51,7 @@ class Navigation extends Component {
           <Stack.Screen name="Explore" component={ExploreInitialScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Explore Scenes" component={ExploreScenes} options={{ headerShown: false }} />
           <Stack.Screen name="Choose Cards" component={ChooseCardsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Game over" component={GameOverScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     );

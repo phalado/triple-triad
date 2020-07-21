@@ -9,6 +9,11 @@ const GameOverScreenStyles = StyleSheet.create({
     justifyContent: 'center',
     height: Dimensions.get('window').height,
   },
+  topContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '50%',
+  },
   backgroundImage: {
     position: 'absolute',
     resizeMode: 'stretch',
@@ -82,8 +87,18 @@ const GameOverScreenStyles = StyleSheet.create({
     position: 'absolute',
   },
   buttonsContainer: {
+    width: '80%',
+    marginTop: '5%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+  suddenDeathText: {
+    fontSize: 30,
+    alignSelf: 'center',
+    color: 'white',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 10,
+    marginTop: '5%',
   },
 });
 

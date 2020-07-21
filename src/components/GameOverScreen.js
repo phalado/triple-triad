@@ -5,7 +5,7 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import RankNumbers from './RankNumbers';
-import { getRandomCards, getCardsId } from '../Helpers/OtherHelpers';
+import { getRandomCards, getCardsId, cardsOnTheTable } from '../Helpers/OtherHelpers';
 import {
   gameMusicStop, winThemeStop, looseThemeStop, winThemePlay, looseThemePlay, turnCardPlay,
 } from '../constants/Sounds';
@@ -14,13 +14,14 @@ import Cards from '../constants/Cards';
 import CardModal from './CardModal';
 import places from '../constants/Places';
 import styles from '../styles/GameOverScreen';
+import { rareCardsQuest } from '../Helpers/ExploreModeHelper';
 
 const GameOverScreen = props => {
   const {
     navigation, route,
     cards, table, rules, createCard, resetCards, resetTable, playerCards,
     addCardToNPC, removeCardFromNPC, addCardToExploreDeck, removeCardFromExploreDeck,
-    changeNPCStreak,
+    changeNPCStreak, changeCardQueenLocation,
   } = props;
   const {
     gameOver, npcDeck, location, npc, p1InitialCards,
@@ -41,26 +42,26 @@ const GameOverScreen = props => {
     }, []),
   );
 
-  // const resetGame = () => {
-  //   resetTable();
-  //   resetCards();
+  const resetGame = () => {
+    resetTable();
+    resetCards();
 
-  //   let newCards = getRandomCards();
-  //   newCards.forEach((card, index) => {
-  //     createCard({
-  //       player: true, id: card, row: 3 + index, column: 3, dragable: true,
-  //     });
-  //   });
+    let newCards = getRandomCards();
+    newCards.forEach((card, index) => {
+      createCard({
+        player: true, id: card, row: 3 + index, column: 3, dragable: true,
+      });
+    });
 
-  //   newCards = getRandomCards();
-  //   newCards.forEach((card, index) => {
-  //     createCard({
-  //       player: false, id: card, row: 3 + index, column: 3, dragable: true,
-  //     });
-  //   });
+    newCards = getRandomCards();
+    newCards.forEach((card, index) => {
+      createCard({
+        player: false, id: card, row: 3 + index, column: 3, dragable: true,
+      });
+    });
 
-  //   navigation.pop();
-  // };
+    navigation.pop();
+  };
 
   const sudenDeathGame = () => {
     resetTable();
@@ -79,20 +80,18 @@ const GameOverScreen = props => {
       });
     });
 
-    navigation.pop();
+    navigation.goBack(null);
     navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location, npc } });
   };
 
-  if (rules.sudenDeath && gameOver === 'tie') {
+  if (rules.sudenDeath && gameOver === 'tie' && cardsOnTheTable(table) === 9) {
     setTimeout(() => sudenDeathGame(), 2000);
     // sudenDeathGame();
     return (
       <View style={styles.container}>
-        <Image
-          style={styles.gameOverImage}
-          source={Images[gameOver]}
-          alt="Cursor"
-        />
+        <Image style={styles.backgroundImage} source={Images.board} alt="Table" />
+        <Image style={styles.gameOverImage} source={Images[gameOver]} alt="Cursor" />
+        <Text style={styles.suddenDeathText}>SUDDEN DEATH!!!</Text>
       </View>
     );
   }
@@ -121,7 +120,11 @@ const GameOverScreen = props => {
     };
 
     const looseCard = cardId => {
-      if (cardId === 84 || cardId > 77) addCardToNPC({ location, npc, card: cardId });
+      if (cardId === 84 || cardId > 77) {
+        rareCardsQuest(
+          removeCardFromNPC, addCardToNPC, location, npc, cardId, changeCardQueenLocation,
+        );
+      }
       changeNPCStreak({ location, npc, streak: 'loose' });
       removeCardFromExploreDeck(cardId);
       setCardOwner('player1');
@@ -261,18 +264,14 @@ const GameOverScreen = props => {
   }
 
   return (
-    <View>
-      <View style={styles.container}>
-        <Image
-          style={styles.gameOverImage}
-          source={Images[gameOver]}
-          alt="Cursor"
-        />
-      </View>
+    <View style={styles.container}>
+      <Image style={styles.backgroundImage} source={Images.board} alt="Table" />
+      <Image style={styles.gameOverImage} source={Images[gameOver]} alt="Cursor" />
       <View style={styles.buttonsContainer}>
         <Button
           title="New random game"
           onPress={() => {
+            resetGame();
             navigation.push('GamePlay', { screen: 'GamePlay' });
           }}
         />
@@ -306,6 +305,7 @@ GameOverScreen.propTypes = {
   addCardToExploreDeck: PropTypes.func.isRequired,
   removeCardFromExploreDeck: PropTypes.func.isRequired,
   changeNPCStreak: PropTypes.func.isRequired,
+  changeCardQueenLocation: PropTypes.func.isRequired,
   route: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

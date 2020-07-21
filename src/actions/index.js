@@ -79,8 +79,13 @@ const createNPCList = () => ({
   type: 'CREATE_NPC_LIST',
 });
 
+const changeCardQueenLocation = location => ({
+  type: 'CHANGE_CARD_QUEEN_LOCATION',
+  location,
+});
+
 export {
   createCard, removeCard, modifyTable, resetCards, resetTable, changeRules, changeDeck, startDeck,
   addCardToExploreDeck, removeCardFromExploreDeck, changeStreak, addCardToNPC, removeCardFromNPC,
-  changeNPCStreak, resetPlayerDeckExplore, createNPCList,
+  changeNPCStreak, resetPlayerDeckExplore, createNPCList, changeCardQueenLocation,
 };

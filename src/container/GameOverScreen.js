@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import {
   createCard, resetCards, resetTable,
-  addCardToNPC, removeCardFromNPC, addCardToExploreDeck, removeCardFromExploreDeck, changeNPCStreak,
+  addCardToNPC, removeCardFromNPC, addCardToExploreDeck, removeCardFromExploreDeck,
+  changeNPCStreak, changeCardQueenLocation,
 } from '../actions';
 import GameOverScreen from '../components/GameOverScreen';
 
@@ -21,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
   addCardToExploreDeck: cardId => dispatch(addCardToExploreDeck(cardId)),
   removeCardFromExploreDeck: cardId => dispatch(removeCardFromExploreDeck(cardId)),
   changeNPCStreak: data => dispatch(changeNPCStreak(data)),
+  changeCardQueenLocation: location => dispatch(changeCardQueenLocation(location)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameOverScreen);

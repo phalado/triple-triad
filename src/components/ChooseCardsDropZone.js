@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import GetDecksCards from './GetDecksCards';
 import styles from '../styles/GameDeck';
@@ -33,9 +33,19 @@ const ChooseCardsDropZone = props => {
         style={{ margin: 20 }}
         title="Start Game"
         onPress={() => {
-          addCardsToStore();
-          navigation.goBack(null);
-          navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location, npc } });
+          if (deck.some(card => card === null)) {
+            Alert.alert('Wait!', 'You need a full deck to enter in a game!', [
+              {
+                text: 'Whatever.',
+                onPress: () => null,
+                style: 'cancel',
+              },
+            ]);
+          } else {
+            addCardsToStore();
+            navigation.goBack(null);
+            navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location, npc } });
+          }
         }}
       />
     </View>

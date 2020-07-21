@@ -32,6 +32,98 @@ const getNPCsCards = (cards, special) => {
 const getTableData = (npcs, place) => {
   const tableData = [];
 
+  if (npcs.cardQueen.place === place) {
+    tableData.push([
+      npcs.cardQueen.name,
+      npcs.cardQueen.win,
+      npcs.cardQueen.loose,
+      npcs.cardQueen.tie,
+      { cards: npcs.cardQueen[place], special: [] },
+      'Card Queen',
+    ]);
+  }
+
+  if (place === 'balambGarden') {
+    // eslint-disable-next-line no-unused-vars
+    const victories = Object.entries(npcs[place]).filter(([key, value]) => value.win > 0).length;
+    if (victories >= 9) {
+      tableData.push([
+        npcs.cardClub.jack.name,
+        npcs.cardClub.jack.win,
+        npcs.cardClub.jack.loose,
+        npcs.cardClub.jack.tie,
+        { cards: npcs.cardClub.jack.cards, special: npcs.cardClub.jack.special },
+        'CC Jack',
+      ]);
+
+      if (npcs.cardClub.jack.win > 0) {
+        tableData.push([
+          npcs.cardClub.joker.name,
+          npcs.cardClub.joker.win,
+          npcs.cardClub.joker.loose,
+          npcs.cardClub.joker.tie,
+          { cards: npcs.cardClub.joker.cards, special: npcs.cardClub.joker.special },
+          'CC Magician Joker',
+        ]);
+
+        if (npcs.cardClub.joker.win > 0) {
+          tableData.push([
+            npcs.cardClub.club.name,
+            npcs.cardClub.club.win,
+            npcs.cardClub.club.loose,
+            npcs.cardClub.club.tie,
+            { cards: npcs.cardClub.club.cards, special: npcs.cardClub.club.special },
+            'CC Knight Club',
+          ]);
+
+          if (npcs.cardClub.club.win > 0) {
+            tableData.push([
+              npcs.cardClub.diamond.name,
+              npcs.cardClub.diamond.win,
+              npcs.cardClub.diamond.loose,
+              npcs.cardClub.diamond.tie,
+              { cards: npcs.cardClub.diamond.cards, special: npcs.cardClub.diamond.special },
+              'CC Princess Diamond',
+            ]);
+
+            if (npcs.cardClub.diamond.win > 0) {
+              tableData.push([
+                npcs.cardClub.spade.name,
+                npcs.cardClub.spade.win,
+                npcs.cardClub.spade.loose,
+                npcs.cardClub.spade.tie,
+                { cards: npcs.cardClub.spade.cards, special: npcs.cardClub.spade.special },
+                'CC Prince Spade',
+              ]);
+
+              if (npcs.cardClub.spade.win > 0) {
+                tableData.push([
+                  npcs.cardClub.heart.name,
+                  npcs.cardClub.heart.win,
+                  npcs.cardClub.heart.loose,
+                  npcs.cardClub.heart.tie,
+                  { cards: npcs.cardClub.heart.cards, special: npcs.cardClub.heart.special },
+                  'CC Queen of Heart - Xu',
+                ]);
+
+                if (npcs.cardClub.heart.win > 0 && npcs.balambGarden.kadowaki.win > 0) {
+                  tableData.push([
+                    npcs.cardClub.king.name,
+                    npcs.cardClub.king.win,
+                    npcs.cardClub.king.loose,
+                    npcs.cardClub.king.tie,
+                    { cards: npcs.cardClub.king.cards, special: npcs.cardClub.king.special },
+                    'CC Master King - Quistis',
+                  ]);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   // eslint-disable-next-line no-unused-vars
   Object.entries(npcs[place]).forEach(([key, value]) => {
     const {
@@ -45,4 +137,58 @@ const getTableData = (npcs, place) => {
   return tableData;
 };
 
-export { getTableData, getNPCsCards, getCardsFromPlayerDeck };
+const getNewLocation = location => {
+  const value = getRandomNumber(1, 1000);
+  switch (location) {
+    case 'balambTown':
+      if (value < 375) return 'dollet';
+      return 'delingCity';
+    case 'dollet':
+      if (value < 375) return 'balambTown';
+      return 'delingCity';
+    case 'delingCity':
+      if (value < 125) return 'balambTown';
+      if (value < 250) return 'dollet';
+      if (value < 375) return 'winhill';
+      return 'fishermansHorizon';
+    case 'fishermansHorizon':
+      if (value < 125) return 'dollet';
+      if (value < 375) return 'winhill';
+      return 'esthar';
+    case 'winhill':
+      if (value < 375) return 'delingCity';
+      if (value < 750) return 'dollet';
+      return 'fishermansHorizon';
+    case 'esthar':
+      if (value < 125) return 'dollet';
+      if (value < 500) return 'shumiVillage';
+      return 'fishermansHorizon';
+    case 'shumiVillage':
+      if (value < 250) return 'balambTown';
+      if (value < 500) return 'dollet';
+      if (value < 750) return 'winhill';
+      return 'esthar';
+    default:
+      return 'balambTown';
+  }
+};
+
+const rareCardsQuest = (changeCardQueenLocation, addCardToNPC, location, npc, cardId) => {
+  if (npc === 'caraway' && cardId === 85) {
+    addCardToNPC({ location, npc, card: 107 });
+    addCardToNPC({ location: 'fishermansHorizon', npc: 'martine', card: 85 });
+  } else if (npc === 'cardQueen') {
+    if (cardId === 81) addCardToNPC({ location: 'delingCity', npc: 'manInBlack', card: 101 });
+    if (cardId === 87) addCardToNPC({ location: 'fishermansHorizon', npc: 'flo', card: 105 });
+    if (cardId === 82) addCardToNPC({ location: 'balambGarden', npc: 'sittingStudent', card: 78 });
+    if (cardId === 95) addCardToNPC({ location: 'timber', npc: 'barOwner', card: 98 });
+    if (cardId === 98) addCardToNPC({ location: 'esthar', npc: 'presidentialAide', card: 96 });
+
+    addCardToNPC({ location: 'dollet', npc: 'cardQueenSon', card: cardId });
+    changeCardQueenLocation(getNewLocation(location));
+  } else addCardToNPC({ location, npc, card: cardId });
+};
+
+export {
+  getTableData, getNPCsCards, getCardsFromPlayerDeck, rareCardsQuest,
+};

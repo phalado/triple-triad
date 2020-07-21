@@ -157,7 +157,7 @@ const GamePlay = props => {
       else gameOver = 'tie';
       setTimeout(() => {
         callGameOverWindow(gameOver);
-      }, 2500);
+      }, 1500);
     }
   };
 

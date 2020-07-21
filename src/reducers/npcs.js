@@ -41,6 +41,14 @@ const npcsReducer = (state = {}, action) => {
       return ({
         ...InitialState.npcs,
       });
+    case 'CHANGE_CARD_QUEEN_LOCATION':
+      return ({
+        ...state,
+        cardQueen: {
+          ...state.cardQueen,
+          location: action.location,
+        },
+      });
     default:
       return state;
   }

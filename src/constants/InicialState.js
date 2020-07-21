@@ -109,8 +109,8 @@ export default {
         loose: 0,
         tie: 0,
       },
-      student6: {
-        name: 'Student 6',
+      sittingStudent: {
+        name: 'Sitting student',
         cards: [1, 2, 3, 5],
         special: [],
         win: 0,
@@ -177,6 +177,14 @@ export default {
         name: 'Runinng Boy',
         cards: [1, 2, 3, 5],
         special: [81],
+        win: 0,
+        loose: 0,
+        tie: 0,
+      },
+      cid: {
+        name: 'Cid',
+        cards: [1, 2, 3, 5],
+        special: [90],
         win: 0,
         loose: 0,
         tie: 0,
@@ -317,11 +325,17 @@ export default {
     cardQueen: {
       place: 'balambTown',
       name: 'Queen of Cards',
-      cards: [1, 2],
       special: [],
       win: 0,
       loose: 0,
       tie: 0,
+      balambTown: [1, 2],
+      dollet: [1, 2, 3, 4],
+      delingCity: [1, 2, 3, 4, 5],
+      fishermansHorizon: [1, 2, 3, 4, 5],
+      shumiVillage: [1, 2],
+      winhill: [1, 2, 3, 4, 5, 6],
+      esthar: [1, 2, 3, 4, 5, 6, 7],
     },
     dollet: {
       oldMan1: {
@@ -462,9 +476,17 @@ export default {
         loose: 0,
         tie: 0,
       },
+      carawayGuard: {
+        name: 'Caraway mansion guard',
+        cards: [1, 2, 3, 4],
+        special: [87, 88],
+        win: 0,
+        loose: 0,
+        tie: 0,
+      },
       caraway: {
         name: 'General Caraway',
-        cards: [1],
+        cards: [1, 2, 3, 4],
         special: [],
         win: 0,
         loose: 0,
@@ -942,8 +964,8 @@ export default {
       },
     },
     esthar: {
-      lagunasAssistant: {
-        name: 'Laguna\'s assistant',
+      presidentialAide: {
+        name: 'Presidential aide',
         cards: [3, 4, 5, 6],
         special: [],
         win: 0,

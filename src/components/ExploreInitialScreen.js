@@ -5,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import ExploreModal from '../container/ExploreModal';
 import Images from '../constants/Images';
+import places from '../constants/Places';
 import { balambGardenPlay, balambGardenStop } from '../constants/Sounds';
 import styles from '../styles/ExploreInitial';
 
@@ -19,10 +20,10 @@ const ExploreInitialScreen = props => {
   const startScene = () => {
     navigation.pop();
     navigation.push('Explore Scenes', {
-      place: 'balambGarden',
-      image: Images.balambGarden,
-      play: balambGardenPlay,
-      stop: balambGardenStop,
+      place: places[0][1],
+      image: places[0][2],
+      play: places[0][3],
+      stop: places[0][4],
     });
   };
 

@@ -205,7 +205,7 @@ const fakeCheckSame = (props, card, oldRow, oldColumn, row, column) => {
 
   return ([
     cards.play2Cards.length - cards.play1Cards.length,
-    oldRow, oldColumn, card, row, column,
+    card, oldRow, oldColumn, row, column,
   ]);
 };
 
@@ -287,7 +287,7 @@ const fakeCheckPlus = (props, card, oldRow, oldColumn, row, column) => {
 
   return ([
     cards.play2Cards.length - cards.play1Cards.length,
-    oldRow, oldColumn, card, row, column,
+    card, oldRow, oldColumn, row, column,
   ]);
 };
 
@@ -308,6 +308,7 @@ const checkTurningCard = (props, card, type) => {
       }
     }
   }
+  // console.log('here', result);
   return result;
 };
 

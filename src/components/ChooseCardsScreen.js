@@ -15,6 +15,7 @@ const ChooseCardsScreen = props => {
   const [myCards] = useState(getCardsFromPlayerDeck(playerCards));
   const [myDeck, setMyDeck] = useState([null, null, null, null, null]);
   const [flatListData, setFlatListData] = useState([...myCards]);
+  // console.log(playerCards);
 
   const addCardsToStore = () => {
     resetCards();

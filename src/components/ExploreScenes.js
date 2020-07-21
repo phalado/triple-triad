@@ -12,7 +12,7 @@ import styles from '../styles/ExploreScenes';
 
 const ExploreScenes = props => {
   const {
-    navigation, route, npcs, createNPCList,
+    navigation, route, npcs, createNPCList, resetTable,
   } = props;
   const {
     place, image, play, stop,
@@ -40,6 +40,7 @@ const ExploreScenes = props => {
   };
 
   const startGame = (npcDeck, npc) => {
+    resetTable();
     navigation.navigate('Choose Cards', { npcDeck, location: place, npc });
   };
 
@@ -70,6 +71,7 @@ ExploreScenes.propTypes = {
   route: PropTypes.objectOf(PropTypes.any).isRequired,
   npcs: PropTypes.objectOf(PropTypes.object).isRequired,
   createNPCList: PropTypes.func.isRequired,
+  resetTable: PropTypes.func.isRequired,
 };
 
 export default ExploreScenes;

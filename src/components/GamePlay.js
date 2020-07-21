@@ -27,6 +27,7 @@ const GamePlay = props => {
   const { npcDeck, location, npc } = route.params ? route.params
     : { npcDeck: null, location: null, npc: null };
   const [p1InitialCards] = useState(cards.play1Cards.map(card => card.id));
+  // console.log(pCards);
 
   useFocusEffect(
     useCallback(() => {
@@ -154,7 +155,9 @@ const GamePlay = props => {
       if (pCards.play1Cards.length > pCards.play2Cards.length) gameOver = 'win';
       else if (pCards.play1Cards.length < pCards.play2Cards.length) gameOver = 'loose';
       else gameOver = 'tie';
-      callGameOverWindow(gameOver);
+      setTimeout(() => {
+        callGameOverWindow(gameOver);
+      }, 2500);
     }
   };
 
@@ -162,6 +165,7 @@ const GamePlay = props => {
     const {
       oldRow, oldColumn, card, row, column,
     } = movement;
+    // console.log(oldRow, oldColumn, card, row, column);
     table[row][column] = [card, false, table[row][column][2]];
     handlePlaceCard(card, oldRow, oldColumn, table, row, column);
   };

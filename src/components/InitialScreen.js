@@ -89,7 +89,7 @@ const InitialScreen = props => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('Game over', {
-            gameOver: 'win', npcDeck: [1, 2, 3, 4, 6], location: 'balambGarden', npc: 'player1', p1InitialCards: [1, 2, 3, 4, 6],
+            gameOver: 'loose', npcDeck: [1, 2, 3, 4, 6], location: 'balambGarden', npc: 'player1', p1InitialCards: [1, 2, 3, 4, 6],
           })}
           style={styles.exploreButton2}
         >

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ExploreScenes from '../components/ExploreScenes';
 import {
-  addCardToExploreDeck, removeCardFromExploreDeck, createNPCList,
+  addCardToExploreDeck, removeCardFromExploreDeck, createNPCList, resetTable,
 } from '../actions';
 
 const mapStateToProps = state => ({
@@ -14,6 +14,7 @@ const mapDispatchToProps = dispatch => ({
   addCardToExploreDeck: card => dispatch(addCardToExploreDeck(card)),
   removeCardFromExploreDeck: card => dispatch(removeCardFromExploreDeck(card)),
   createNPCList: () => dispatch(createNPCList()),
+  resetTable: () => dispatch(resetTable()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExploreScenes);

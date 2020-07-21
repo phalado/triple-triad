@@ -8,12 +8,14 @@ import Cards from '../constants/Cards';
 import styles from '../styles/ModalScreen';
 
 const CardModal = props => {
-  const { visible, card, table } = props;
+  const {
+    visible, card, table, cardOwner,
+  } = props;
   const thisCard = Cards.find(c => c.id === card);
   return (
     <Modal isVisible={visible} style={{ alignItems: 'center' }}>
       <View style={styles.cardContainer}>
-        <Image style={styles.cardImage} source={Images.player0} alt="Background" />
+        <Image style={styles.cardImage} source={Images[cardOwner]} alt="Background" />
         <Image style={styles.cardImage} source={Images[thisCard.id]} alt="Card" />
         <RankNumbers
           ranks={thisCard.ranks}
@@ -30,6 +32,7 @@ CardModal.propTypes = {
   visible: PropTypes.bool.isRequired,
   card: PropTypes.number.isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  cardOwner: PropTypes.string.isRequired,
 };
 
 export default CardModal;

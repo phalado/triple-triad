@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View, Image, Text, Button, TouchableOpacity,
 } from 'react-native';
@@ -7,11 +7,13 @@ import PropTypes from 'prop-types';
 import RankNumbers from './RankNumbers';
 import { getRandomCards, getCardsId } from '../Helpers/OtherHelpers';
 import {
-  gameMusicStop, winThemeStop, looseThemeStop, winThemePlay, looseThemePlay,
+  gameMusicStop, winThemeStop, looseThemeStop, winThemePlay, looseThemePlay, turnCardPlay,
 } from '../constants/Sounds';
 import Images from '../constants/Images';
 import Cards from '../constants/Cards';
-import styles from '../styles/ModalScreen';
+import CardModal from './CardModal';
+import places from '../constants/Places';
+import styles from '../styles/GameOverScreen';
 
 const GameOverScreen = props => {
   const {
@@ -23,7 +25,9 @@ const GameOverScreen = props => {
   const {
     gameOver, npcDeck, location, npc, p1InitialCards,
   } = route.params;
-  console.log(route.params);
+  const [visible, setVisible] = useState(false);
+  const [modalCard, setModalCard] = useState(1);
+  const [cardOwner, setCardOwner] = useState('player0');
 
   useFocusEffect(
     useCallback(() => {
@@ -97,14 +101,44 @@ const GameOverScreen = props => {
     const winCard = cardId => {
       if (cardId === 84 || cardId > 77) removeCardFromNPC({ location, npc, card: cardId });
       changeNPCStreak({ location, npc, streak: 'win' });
+      setModalCard(cardId);
       addCardToExploreDeck(cardId);
-      navigation.pop();
+      setCardOwner('player2');
+      setVisible(true);
+      const myPlace = places.find(p => p[1] === location);
+      setTimeout(() => {
+        setCardOwner('player1');
+        turnCardPlay();
+        setTimeout(() => {
+          setVisible(false);
+          navigation.pop();
+          navigation.pop();
+          navigation.push('Explore Scenes', {
+            place: myPlace[1], image: myPlace[2], play: myPlace[3], stop: myPlace[4],
+          });
+        }, 1000);
+      }, 1000);
     };
 
     const looseCard = cardId => {
       if (cardId === 84 || cardId > 77) addCardToNPC({ location, npc, card: cardId });
       changeNPCStreak({ location, npc, streak: 'loose' });
       removeCardFromExploreDeck(cardId);
+      setCardOwner('player1');
+      setVisible(true);
+      const myPlace = places.find(p => p[1] === location);
+      setTimeout(() => {
+        setCardOwner('player2');
+        turnCardPlay();
+        setTimeout(() => {
+          setVisible(false);
+          navigation.pop();
+          navigation.pop();
+          navigation.push('Explore Scenes', {
+            place: myPlace[1], image: myPlace[2], play: myPlace[3], stop: myPlace[4],
+          });
+        }, 1000);
+      }, 1000);
     };
 
     const getCardName = (name, cardId) => {
@@ -116,10 +150,10 @@ const GameOverScreen = props => {
     };
 
     const loadCard = (thisCard, player, index) => {
-      const newCard = Cards.find(crd => crd.id === thisCard.id || thisCard);
+      const newCard = Cards.find(crd => crd.id === thisCard);
       const thisPlayer = player ? 'player1' : 'player2';
+      const thisCardId = thisCard.id || thisCard;
       // resetTable();
-      console.log('here');
       if (player) {
         return (
           <View key={[thisCard, player, index]}>
@@ -141,7 +175,7 @@ const GameOverScreen = props => {
       return (
         <View key={[thisCard, player, index]}>
           {getCardName(newCard.name, newCard.id)}
-          <TouchableOpacity style={styles.chooseCardImage} onPress={() => winCard(thisCard.id)}>
+          <TouchableOpacity style={styles.chooseCardImage} onPress={() => winCard(thisCardId)}>
             <Image style={styles.insideChooseCard} source={Images[thisPlayer]} alt="Background" />
             <Image style={styles.insideChooseCard} source={Images[newCard.id]} alt="Card" />
             <RankNumbers
@@ -158,13 +192,15 @@ const GameOverScreen = props => {
     if (gameOver === 'win') {
       return (
         <View style={styles.container}>
+          <CardModal visible={visible} card={modalCard} table={table} cardOwner={cardOwner} />
+          <Image style={styles.backgroundImage} source={Images.board} alt="Table" />
           <Image
             style={styles.gameOverImage}
             source={Images[gameOver]}
             alt="Win image"
           />
           <Text style={styles.text}>Choose one card</Text>
-          <View>
+          <View style={styles.chooseCardContainer}>
             {npcDeck.map((thisCard, index) => loadCard(thisCard, false, index))}
           </View>
         </View>
@@ -174,22 +210,21 @@ const GameOverScreen = props => {
     if (gameOver === 'loose') {
       return (
         <View style={styles.container}>
+          <CardModal visible={visible} card={modalCard} table={table} cardOwner={cardOwner} />
+          <Image style={styles.backgroundImage} source={Images.board} alt="Table" />
           <Image
             style={styles.gameOverImage}
             source={Images[gameOver]}
             alt="Loose image"
           />
-          <Text style={styles.chooseCardText}>One card will be choosen</Text>
+          <Text style={styles.text}>One card will be choosen</Text>
           <View style={styles.chooseCardContainer}>
             {p1InitialCards.map((thisCard, index) => loadCard(thisCard, true, index))}
           </View>
           <Button
             title="Go back"
             onPress={() => {
-              console.log(p1InitialCards[0].id);
-              resetGame();
-              looseCard(p1InitialCards[0].id);
-              navigation.pop();
+              looseCard(p1InitialCards[0].id || p1InitialCards[0]);
             }}
           />
         </View>
@@ -198,7 +233,8 @@ const GameOverScreen = props => {
 
     if (gameOver === 'tie') {
       return (
-        <View>
+        <View style={styles.container}>
+          <Image style={styles.backgroundImage} source={Images.board} alt="Table" />
           <View style={styles.container}>
             <Image
               style={styles.gameOverImage}
@@ -210,9 +246,12 @@ const GameOverScreen = props => {
             <Button
               title="Go back"
               onPress={() => {
-                resetGame();
+                const myPlace = places.find(p => p[1] === location);
                 changeNPCStreak({ location, npc, streak: 'tie' });
                 navigation.pop();
+                navigation.push('Explore Scenes', {
+                  place: myPlace[1], image: myPlace[2], play: myPlace[3], stop: myPlace[4],
+                });
               }}
             />
           </View>
@@ -234,14 +273,12 @@ const GameOverScreen = props => {
         <Button
           title="New random game"
           onPress={() => {
-            resetGame();
             navigation.push('GamePlay', { screen: 'GamePlay' });
           }}
         />
         <Button
           title="Back to initial screen"
           onPress={() => {
-            resetGame();
             gameMusicStop();
             winThemeStop();
             looseThemeStop();

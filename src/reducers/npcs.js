@@ -9,7 +9,7 @@ const npcsReducer = (state = {}, action) => {
           ...state[action.data.location],
           [action.data.npc]: {
             ...state[action.data.location][action.data.npc],
-            special: [...state[action.data.location][action.data.npc].special, action.card],
+            special: [...state[action.data.location][action.data.npc].special, action.data.card],
           },
         },
       });

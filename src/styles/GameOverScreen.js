@@ -1,22 +1,89 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
+const cardWidth = Dimensions.get('window').width * 0.17;
+const cardHeight = Dimensions.get('window').height * 0.28;
+
 const GameOverScreenStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     height: Dimensions.get('window').height,
+  },
+  backgroundImage: {
+    position: 'absolute',
+    resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
+  },
+  gameOverImage: {
+    width: '50%',
+    height: '40%',
+    resizeMode: 'stretch',
   },
   images: {
     height: '50%',
   },
   text: {
+    color: 'white',
     fontSize: 20,
-    fontWeight: 'bold',
-    alignSelf: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 10,
   },
-  title: {
-    fontSize: 15,
-    fontWeight: 'bold',
+  cardImage: {
+    width: cardWidth * 2,
+    height: cardHeight * 2,
+    resizeMode: 'stretch',
+    position: 'absolute',
+  },
+  placeContainer: {
+    margin: '10%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  chooseCardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  chooseCardNameWhite: {
+    marginTop: 20,
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'white',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 10,
+  },
+  chooseCardNameBlue: {
+    marginTop: 20,
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'blue',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 10,
+  },
+  chooseCardNameYellow: {
+    marginTop: 20,
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'yellow',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 10,
+  },
+  chooseCardImage: {
+    width: cardWidth,
+    height: cardHeight,
+    justifyContent: 'space-evenly',
+  },
+  insideChooseCard: {
+    width: cardWidth,
+    height: cardHeight,
+    resizeMode: 'stretch',
+    position: 'absolute',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
 });
 

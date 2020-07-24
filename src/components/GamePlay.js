@@ -15,7 +15,7 @@ import styles from '../styles/GamePlay';
 
 const GamePlay = props => {
   const {
-    cards, table, rules, modifyTable, createCard, removeCard, resetCards, resetTable,
+    cards, table, rules, npcs, modifyTable, createCard, removeCard, resetCards, resetTable,
     navigation, route,
   } = props;
   let [gameOver] = useState(false);
@@ -96,24 +96,9 @@ const GamePlay = props => {
   };
 
   const showModalWindow = value => {
-    // console.log(cardsOnTheTable(table), gameOver, value, visibleModal);
-    // if (cardsOnTheTable(table) < 9) setGameOver(false);
     setVisibleModal(true);
     if (value) setModalValue(value);
-    // if (cardsOnTheTable(table) < 9) {
-    //   setTimeout(() => {
-    //     setVisibleModal(false);
-    //     setModalValue('none');
-    //   }, 1000);
-    // } else if (value) {
     setTimeout(() => setVisibleModal(false), 1000);
-    // }
-    // if (cardsOnTheTable(table) === 9 && !visibleModal) {
-    //   console.log(1, visibleModal);
-    //   visibleModal = true;
-    //   setVisibleModal(true);
-    //   console.log(2, visibleModal);
-    // }
   };
 
   const handlePlaceCard = (card, oldRow, oldColumn, tble, row, column) => {
@@ -179,22 +164,24 @@ const GamePlay = props => {
     }
   }, []);
 
+  const cc = ['jack', 'joker', 'club', 'diamond', 'spade', 'heart', 'king'];
+  const newLocation = cc.includes(npc) ? 'cardClub' : location;
 
   return (
     <View style={styles.container}>
       <Table />
       <PlayingTexts player score={pCards.play1Cards.length} table={table} turn={myTurn} />
-      <PlayingTexts score={pCards.play2Cards.length} table={table} turn={myTurn} />
+      <PlayingTexts
+        NPCName={npcs[newLocation][npc].name}
+        score={pCards.play2Cards.length}
+        table={table}
+        turn={myTurn}
+      />
       <ModalScreen
         table={table}
         visible={visibleModal}
         turn={myTurn}
         value={modalValue}
-        // gameOver={gameOver}
-        // navigation={navigation}
-        // npcDeck={!!npcDeck}
-        // location={location}
-        // npc={npc}
       />
       {pCards.play1Cards.map(playCard => (
         <AnimatedCard
@@ -232,6 +219,7 @@ GamePlay.propTypes = {
   }).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   rules: PropTypes.objectOf(PropTypes.bool).isRequired,
+  npcs: PropTypes.objectOf(PropTypes.object).isRequired,
   modifyTable: PropTypes.func.isRequired,
   createCard: PropTypes.func.isRequired,
   removeCard: PropTypes.func.isRequired,

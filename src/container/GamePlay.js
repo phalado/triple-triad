@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
   cards: state.cards,
   table: state.table,
   rules: state.rules,
+  npcs: state.npcs,
 });
 
 const mapDispatchToProps = dispatch => ({

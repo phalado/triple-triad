@@ -88,9 +88,7 @@ const InitialScreen = props => {
           <Text style={styles.buttonText}>How to play</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Game over', {
-            gameOver: 'loose', npcDeck: [1, 2, 3, 4, 6], location: 'balambGarden', npc: 'player1', p1InitialCards: [1, 2, 3, 4, 6],
-          })}
+          onPress={() => null}
           style={styles.exploreButton2}
         >
           <Text style={styles.buttonText}>About this game</Text>

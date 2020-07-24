@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Image } from 'react-native';
 import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
@@ -12,6 +12,10 @@ const CardModal = props => {
     visible, card, table, cardOwner,
   } = props;
   const thisCard = Cards.find(c => c.id === card);
+
+  const isMountedComponent = useRef(true);
+  useEffect(() => () => { isMountedComponent.current = false; });
+
   return (
     <Modal isVisible={visible} style={{ alignItems: 'center' }}>
       <View style={styles.cardContainer}>

@@ -60,20 +60,47 @@ const changeStreak = streak => ({
   streak,
 });
 
-const addCardToNPC = data => ({
-  type: 'ADD_CARD_NPC',
-  data,
-});
+const addCardToNPC = data => {
+  const cc = ['jack', 'joker', 'club', 'diamond', 'spade', 'heart', 'king'];
+  if (cc.includes(data.npc)) {
+    return ({
+      type: 'ADD_CARD_NPC',
+      data: { ...data, location: 'cardClub' },
+    });
+  }
+  return ({
+    type: 'ADD_CARD_NPC',
+    data,
+  });
+};
 
-const removeCardFromNPC = data => ({
-  type: 'REMOVE_CARD_NPC',
-  data,
-});
+const removeCardFromNPC = data => {
+  const cc = ['jack', 'joker', 'club', 'diamond', 'spade', 'heart', 'king'];
+  if (cc.includes(data.npc)) {
+    return ({
+      type: 'REMOVE_CARD_NPC',
+      data: { ...data, location: 'cardClub' },
+    });
+  }
+  return ({
+    type: 'REMOVE_CARD_NPC',
+    data,
+  });
+};
 
-const changeNPCStreak = data => ({
-  type: 'CHANGE_NPC_STREAK',
-  data,
-});
+const changeNPCStreak = data => {
+  const cc = ['jack', 'joker', 'club', 'diamond', 'spade', 'heart', 'king'];
+  if (cc.includes(data.npc)) {
+    return ({
+      type: 'CHANGE_NPC_STREAK',
+      data: { ...data, location: 'cardClub' },
+    });
+  }
+  return ({
+    type: 'CHANGE_NPC_STREAK',
+    data,
+  });
+};
 
 const createNPCList = () => ({
   type: 'CREATE_NPC_LIST',

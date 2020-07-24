@@ -86,7 +86,6 @@ const GameOverScreen = props => {
 
   if (rules.sudenDeath && gameOver === 'tie' && cardsOnTheTable(table) === 9) {
     setTimeout(() => sudenDeathGame(), 2000);
-    // sudenDeathGame();
     return (
       <View style={styles.container}>
         <Image style={styles.backgroundImage} source={Images.board} alt="Table" />
@@ -120,13 +119,14 @@ const GameOverScreen = props => {
     };
 
     const looseCard = cardId => {
-      if (cardId === 84 || cardId > 77) {
+      if (cardId === 48 || cardId > 77) {
         rareCardsQuest(
           removeCardFromNPC, addCardToNPC, location, npc, cardId, changeCardQueenLocation,
         );
       }
       changeNPCStreak({ location, npc, streak: 'loose' });
       removeCardFromExploreDeck(cardId);
+      setModalCard(cardId);
       setCardOwner('player1');
       setVisible(true);
       const myPlace = places.find(p => p[1] === location);
@@ -238,7 +238,7 @@ const GameOverScreen = props => {
       return (
         <View style={styles.container}>
           <Image style={styles.backgroundImage} source={Images.board} alt="Table" />
-          <View style={styles.container}>
+          <View style={styles.topContainer}>
             <Image
               style={styles.gameOverImage}
               source={Images[gameOver]}

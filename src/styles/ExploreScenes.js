@@ -51,17 +51,20 @@ const ExploreScenesStyles = StyleSheet.create({
     borderColor: '#c8e1ff',
     backgroundColor: '#rgba(241, 248, 255, 0.7)',
     alignSelf: 'stretch',
+    alignContent: 'center',
     justifyContent: 'center',
   },
   tableText: {
     margin: 6,
     alignSelf: 'center',
-    width: '11%',
+    justifyContent: 'center',
+    flex: 1,
   },
   tableText0: {
     margin: 6,
+    textAlign: 'center',
     alignSelf: 'center',
-    width: '22%',
+    flex: 2,
   },
 });
 

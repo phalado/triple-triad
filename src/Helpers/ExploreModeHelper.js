@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { getRandomBoolean, getRandomNumber } from './OtherHelpers';
 import Cards from '../constants/Cards';
 
@@ -21,8 +22,9 @@ const getNPCsCards = (cards, special) => {
     }
 
     const cardLevel = cards[getRandomNumber(0, cards.length)];
-    const randomCard = getRandomNumber(1, 11);
-    const card = randomCard + (11 * cardLevel);
+    const randomCard = getRandomNumber(1, 12);
+    const card = randomCard + (11 * (cardLevel - 1));
+    // console.log(cards, cardLevel, randomCard, card);
     if (card !== 48) deck.push(card);
   }
 
@@ -53,7 +55,7 @@ const getTableData = (npcs, place) => {
         npcs.cardClub.jack.loose,
         npcs.cardClub.jack.tie,
         { cards: npcs.cardClub.jack.cards, special: npcs.cardClub.jack.special },
-        'CC Jack',
+        'jack',
       ]);
 
       if (npcs.cardClub.jack.win > 0) {
@@ -63,7 +65,7 @@ const getTableData = (npcs, place) => {
           npcs.cardClub.joker.loose,
           npcs.cardClub.joker.tie,
           { cards: npcs.cardClub.joker.cards, special: npcs.cardClub.joker.special },
-          'CC Magician Joker',
+          'joker',
         ]);
 
         if (npcs.cardClub.joker.win > 0) {
@@ -73,7 +75,7 @@ const getTableData = (npcs, place) => {
             npcs.cardClub.club.loose,
             npcs.cardClub.club.tie,
             { cards: npcs.cardClub.club.cards, special: npcs.cardClub.club.special },
-            'CC Knight Club',
+            'club',
           ]);
 
           if (npcs.cardClub.club.win > 0) {
@@ -83,7 +85,7 @@ const getTableData = (npcs, place) => {
               npcs.cardClub.diamond.loose,
               npcs.cardClub.diamond.tie,
               { cards: npcs.cardClub.diamond.cards, special: npcs.cardClub.diamond.special },
-              'CC Princess Diamond',
+              'diamond',
             ]);
 
             if (npcs.cardClub.diamond.win > 0) {
@@ -93,7 +95,7 @@ const getTableData = (npcs, place) => {
                 npcs.cardClub.spade.loose,
                 npcs.cardClub.spade.tie,
                 { cards: npcs.cardClub.spade.cards, special: npcs.cardClub.spade.special },
-                'CC Prince Spade',
+                'spade',
               ]);
 
               if (npcs.cardClub.spade.win > 0) {
@@ -103,7 +105,7 @@ const getTableData = (npcs, place) => {
                   npcs.cardClub.heart.loose,
                   npcs.cardClub.heart.tie,
                   { cards: npcs.cardClub.heart.cards, special: npcs.cardClub.heart.special },
-                  'CC Queen of Heart - Xu',
+                  'heart',
                 ]);
 
                 if (npcs.cardClub.heart.win > 0 && npcs.balambGarden.kadowaki.win > 0) {
@@ -113,7 +115,7 @@ const getTableData = (npcs, place) => {
                     npcs.cardClub.king.loose,
                     npcs.cardClub.king.tie,
                     { cards: npcs.cardClub.king.cards, special: npcs.cardClub.king.special },
-                    'CC Master King - Quistis',
+                    'king',
                   ]);
                 }
               }
@@ -177,6 +179,17 @@ const rareCardsQuest = (changeCardQueenLocation, addCardToNPC, location, npc, ca
   if (npc === 'caraway' && cardId === 85) {
     addCardToNPC({ location, npc, card: 107 });
     addCardToNPC({ location: 'fishermansHorizon', npc: 'martine', card: 85 });
+    Alert.alert('Caraway', 'Thank you for your Ifrit card. Now I might use my daughter\'s to play.', [{
+      text: 'Whatever',
+      onPress: () => Alert.alert(
+        'Caraway', 'Are you asking me about the Ifrit card you lost other day (today)? Well, I lost it to my friend Martine.', [{
+          text: 'Whatever',
+          onPress: () => null,
+          style: 'cancel',
+        }],
+      ),
+      style: 'cancel',
+    }]);
   } else if (npc === 'cardQueen') {
     if (cardId === 81) addCardToNPC({ location: 'delingCity', npc: 'manInBlack', card: 101 });
     if (cardId === 87) addCardToNPC({ location: 'fishermansHorizon', npc: 'flo', card: 105 });
@@ -185,7 +198,15 @@ const rareCardsQuest = (changeCardQueenLocation, addCardToNPC, location, npc, ca
     if (cardId === 98) addCardToNPC({ location: 'esthar', npc: 'presidentialAide', card: 96 });
 
     addCardToNPC({ location: 'dollet', npc: 'cardQueenSon', card: cardId });
-    changeCardQueenLocation(getNewLocation(location));
+    const newLocation = getNewLocation(location);
+    Alert.alert(
+      'Card Queen', `This place is boring me. I'm moving ro ${sd}`, [{
+        text: 'Whatever',
+        onPress: () => null,
+        style: 'cancel',
+      }],
+    );
+    changeCardQueenLocation(newLocation);
   } else addCardToNPC({ location, npc, card: cardId });
 };
 

@@ -7,7 +7,7 @@ const GameOverScreenStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: Dimensions.get('window').height,
+    height: '100%',
   },
   topContainer: {
     alignItems: 'center',
@@ -22,6 +22,7 @@ const GameOverScreenStyles = StyleSheet.create({
   },
   gameOverImage: {
     width: '50%',
+    margin: 0,
     height: '40%',
     resizeMode: 'stretch',
   },

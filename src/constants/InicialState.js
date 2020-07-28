@@ -1205,5 +1205,11 @@ export default {
     heart: true,
     kadowaki: true,
     king: true,
+    ccEnd: true,
+    minimog: true,
+    sacred: true,
+    chicobo: true,
+    alexander: true,
+    doomtrain: true,
   },
 };

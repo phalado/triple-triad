@@ -26,6 +26,11 @@ const GameOverScreenStyles = StyleSheet.create({
     height: '40%',
     resizeMode: 'stretch',
   },
+  tieImage: {
+    margin: 0,
+    height: '40%',
+    resizeMode: 'stretch',
+  },
   images: {
     height: '50%',
   },

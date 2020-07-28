@@ -13,15 +13,15 @@ import Images from '../constants/Images';
 import Cards from '../constants/Cards';
 import CardModal from './CardModal';
 import places from '../constants/Places';
+import { rareCardsQuest, cardClubEvents } from '../Helpers/ExploreModeHelper';
 import styles from '../styles/GameOverScreen';
-import { rareCardsQuest } from '../Helpers/ExploreModeHelper';
 
 const GameOverScreen = props => {
   const {
     navigation, route,
-    cards, table, rules, createCard, resetCards, resetTable, playerCards,
+    cards, table, rules, createCard, resetCards, resetTable, playerCards, events, npcs,
     addCardToNPC, removeCardFromNPC, addCardToExploreDeck, removeCardFromExploreDeck,
-    changeNPCStreak, changeCardQueenLocation,
+    changeNPCStreak, changeCardQueenLocation, changeEvent,
   } = props;
   const {
     gameOver, npcDeck, location, npc, p1InitialCards,
@@ -114,6 +114,7 @@ const GameOverScreen = props => {
           navigation.push('Explore Scenes', {
             place: myPlace[1], image: myPlace[2], play: myPlace[3], stop: myPlace[4],
           });
+          cardClubEvents(events, changeEvent, npc, npcs);
         }, 1000);
       }, 1000);
     };
@@ -121,7 +122,8 @@ const GameOverScreen = props => {
     const looseCard = cardId => {
       if (cardId === 48 || cardId > 77) {
         rareCardsQuest(
-          removeCardFromNPC, addCardToNPC, location, npc, cardId, changeCardQueenLocation,
+          removeCardFromNPC, addCardToNPC, location, npc,
+          cardId, changeCardQueenLocation, events, changeEvent,
         );
       }
       changeNPCStreak({ location, npc, streak: 'loose' });
@@ -156,7 +158,6 @@ const GameOverScreen = props => {
       const newCard = Cards.find(crd => crd.id === thisCard);
       const thisPlayer = player ? 'player1' : 'player2';
       const thisCardId = thisCard.id || thisCard;
-      // resetTable();
       if (player) {
         return (
           <View key={[thisCard, player, index]}>
@@ -227,7 +228,7 @@ const GameOverScreen = props => {
           <Button
             title="Go back"
             onPress={() => {
-              looseCard(p1InitialCards[0].id || p1InitialCards[0]);
+              looseCard(Math.max(...p1InitialCards));
             }}
           />
         </View>
@@ -240,7 +241,7 @@ const GameOverScreen = props => {
           <Image style={styles.backgroundImage} source={Images.board} alt="Table" />
           <View style={styles.topContainer}>
             <Image
-              style={styles.gameOverImage}
+              style={styles.tieImage}
               source={Images[gameOver]}
               alt="Cursor"
             />
@@ -307,6 +308,9 @@ GameOverScreen.propTypes = {
   changeNPCStreak: PropTypes.func.isRequired,
   changeCardQueenLocation: PropTypes.func.isRequired,
   route: PropTypes.objectOf(PropTypes.any).isRequired,
+  events: PropTypes.objectOf(PropTypes.any).isRequired,
+  changeEvent: PropTypes.func.isRequired,
+  npcs: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default GameOverScreen;

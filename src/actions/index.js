@@ -111,8 +111,18 @@ const changeCardQueenLocation = location => ({
   location,
 });
 
+const changeEvent = event => ({
+  type: 'CHANGE_EVENT',
+  event,
+});
+
+const restartEvents = () => ({
+  type: 'RESTART_EVENTS',
+});
+
 export {
   createCard, removeCard, modifyTable, resetCards, resetTable, changeRules, changeDeck, startDeck,
   addCardToExploreDeck, removeCardFromExploreDeck, changeStreak, addCardToNPC, removeCardFromNPC,
-  changeNPCStreak, resetPlayerDeckExplore, createNPCList, changeCardQueenLocation,
+  changeNPCStreak, resetPlayerDeckExplore, createNPCList, changeCardQueenLocation, changeEvent,
+  restartEvents,
 };

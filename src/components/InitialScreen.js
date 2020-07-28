@@ -8,7 +8,7 @@ import Images from '../constants/Images';
 import styles from '../styles/App';
 
 const InitialScreen = props => {
-  const { navigation, createCard, resetTable, resetPlayerDeckExplore } = props;
+  const { navigation, createCard, resetTable, resetPlayerDeckExplore, restartEvents } = props;
 
   useEffect(() => {
     resetTable();
@@ -29,6 +29,7 @@ const InitialScreen = props => {
 
   const handleResetDeck = () => {
     resetPlayerDeckExplore();
+    restartEvents();
   };
 
   return (
@@ -103,6 +104,7 @@ InitialScreen.propTypes = {
   createCard: PropTypes.func.isRequired,
   resetTable: PropTypes.func.isRequired,
   resetPlayerDeckExplore: PropTypes.func.isRequired,
+  restartEvents: PropTypes.func.isRequired,
 };
 
 export default InitialScreen;

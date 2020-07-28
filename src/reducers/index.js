@@ -6,6 +6,7 @@ import decks from './decks';
 import playerCards from './playerCards';
 import streak from './streak';
 import npcs from './npcs';
+import events from './events';
 
 const rootReducer = combineReducers({
   cards,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   playerCards,
   streak,
   npcs,
+  events,
 });
 
 export default rootReducer;

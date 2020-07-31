@@ -5,20 +5,10 @@ import Images from '../constants/Images';
 import styles from '../styles/PupuEvents';
 
 const PupuEvent = props => {
-  const { events, changeEvent, addCardToExploreDeck } = props;
-
-  const checkForPupuEvents = () => {
-    if (events.pupu1) changeEvent('pupu1');
-    else if (events.pupu2) changeEvent('pupu2');
-    else if (events.pupu3) changeEvent('pupu3');
-    else {
-      changeEvent('pupu4');
-      addCardToExploreDeck(48);
-    }
-  };
+  const { getPupuEvent } = props;
 
   return (
-    <TouchableOpacity onPress={() => checkForPupuEvents()} style={styles.container}>
+    <TouchableOpacity onPress={() => getPupuEvent()} style={styles.container}>
       <Image
         style={styles.image}
         source={Images.ufo}
@@ -29,9 +19,7 @@ const PupuEvent = props => {
 };
 
 PupuEvent.propTypes = {
-  events: PropTypes.objectOf(PropTypes.any).isRequired,
-  changeEvent: PropTypes.func.isRequired,
-  addCardToExploreDeck: PropTypes.func.isRequired,
+  getPupuEvent: PropTypes.func.isRequired,
 };
 
 export default PupuEvent;

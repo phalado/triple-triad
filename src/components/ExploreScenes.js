@@ -11,10 +11,12 @@ import PupuEvent from './PupuEvent';
 import { getTableData } from '../Helpers/ExploreModeHelper';
 import { getRandomNumber } from '../Helpers/OtherHelpers';
 import styles from '../styles/ExploreScenes';
+import CardModal from './CardModal';
 
 const ExploreScenes = props => {
   const {
-    navigation, route, npcs, createNPCList, resetTable, events, changeEvent,
+    navigation, route, table, npcs, createNPCList, resetTable, events,
+    changeEvent, addCardToExploreDeck,
   } = props;
   const {
     place, image, play, stop,
@@ -22,6 +24,9 @@ const ExploreScenes = props => {
   const [visible, setVisible] = useState(false);
   const [tableHead] = useState(['Name', 'Wins', 'Looses', 'Ties', 'Chalenge']);
   const [tableData] = useState(getTableData(npcs, place));
+  const [cardVisible, setCardVisible] = useState(false);
+  const [cardOwner, setCardOwner] = useState('player0');
+
 
   if (Object.entries(npcs).length === 0) createNPCList();
 
@@ -45,11 +50,30 @@ const ExploreScenes = props => {
     navigation.navigate('Choose Cards', { npcDeck, location: place, npc });
   };
 
+  const getPupuEvent = () => {
+    if (events.pupu1) changeEvent('pupu1');
+    else if (events.pupu2) changeEvent('pupu2');
+    else if (events.pupu3) changeEvent('pupu3');
+    else {
+      changeEvent('pupu4');
+      addCardToExploreDeck(48);
+      setCardVisible(true);
+      setCardOwner('player0');
+      setTimeout(() => {
+        setCardOwner('player1');
+        setTimeout(() => {
+          setCardVisible(false);
+        }, 1000);
+      }, 1000);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.backgroundImage} source={image} alt="Background image" />
       <View style={styles.subContainerLeft}>
         <PlacesModal visible={visible} handleTravel={handleTravel} />
+        <CardModal visible={cardVisible} card={48} table={table} cardOwner={cardOwner} />
         <Button title="Travel" onPress={() => setVisible(true)} />
         <Button
           title="Edit Deck"
@@ -63,8 +87,8 @@ const ExploreScenes = props => {
           <NPCsTable tableHead={tableHead} tableData={tableData} startGame={startGame} />
         </ScrollView>
       </View>
-      {(getRandomNumber(0, 10) <= 1 && events.pupu4)
-        ? <PupuEvent events={events} changeEvent={changeEvent} /> : null}
+      {(getRandomNumber(0, 10) <= 2 && events.pupu4)
+        ? <PupuEvent getPupuEvent={getPupuEvent} /> : null}
     </View>
   );
 };
@@ -77,6 +101,8 @@ ExploreScenes.propTypes = {
   resetTable: PropTypes.func.isRequired,
   events: PropTypes.objectOf(PropTypes.any).isRequired,
   changeEvent: PropTypes.func.isRequired,
+  addCardToExploreDeck: PropTypes.func.isRequired,
+  table: PropTypes.arrayOf(PropTypes.array).isRequired,
 };
 
 export default ExploreScenes;

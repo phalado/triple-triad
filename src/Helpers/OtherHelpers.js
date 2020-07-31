@@ -2,7 +2,10 @@ import React from 'react';
 import { Alert, View, Button } from 'react-native';
 
 const getRandomBoolean = () => (Math.floor(100 * Math.random()) % 2 === 0);
-const getRandomNumber = (min, max) => (Math.floor(1000000 * Math.random()) % (max - min)) + min;
+const getRandomNumber = (min, max) => {
+  const variable = (Math.floor(1000000 * Math.random()) % (max - min)) + min;
+  return variable;
+};
 
 const cardsOnTheTable = table => table.flat().filter(field => !!field[0]).length;
 

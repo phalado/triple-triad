@@ -172,7 +172,7 @@ const GamePlay = props => {
       <Table />
       <PlayingTexts player score={pCards.play1Cards.length} table={table} turn={myTurn} />
       <PlayingTexts
-        NPCName={npcs[newLocation][npc].name}
+        NPCName={npc === 'Card Queen' ? npc : npcs[newLocation][npc].name}
         score={pCards.play2Cards.length}
         table={table}
         turn={myTurn}

@@ -114,7 +114,7 @@ const GameOverScreen = props => {
           navigation.push('Explore Scenes', {
             place: myPlace[1], image: myPlace[2], play: myPlace[3], stop: myPlace[4],
           });
-          cardClubEvents(events, changeEvent, npc, npcs);
+          cardClubEvents(events, changeEvent, npc, npcs, addCardToNPC);
         }, 1000);
       }, 1000);
     };

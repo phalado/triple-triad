@@ -194,7 +194,7 @@ const rareCardsQuest = (
       style: 'cancel',
     }]);
     changeEvent('caraway');
-  } else if (npc === 'cardQueen') {
+  } else if (npc === 'Card Queen') {
     if (cardId === 81 && events.minimog) {
       addCardToNPC({ location: 'delingCity', npc: 'manInBlack', card: 101 });
       changeEvent('minimog');
@@ -233,7 +233,7 @@ const rareCardsQuest = (
   } else addCardToNPC({ location, npc, card: cardId });
 };
 
-const cardClubEvents = (events, changeEvent, npc, npcs) => {
+const cardClubEvents = (events, changeEvent, npc, npcs, addCardToNPC) => {
   // eslint-disable-next-line no-unused-vars
   const vics = Object.entries(npcs.balambGarden).filter(([key, value]) => value.win > 0).length;
   if (vics >= 9 && events.jack) {
@@ -354,6 +354,7 @@ const cardClubEvents = (events, changeEvent, npc, npcs) => {
               style: 'cancel',
             }],
           );
+          addCardToNPC({ location: 'balambGarden', npc: 'kadowaki', card: 97 });
           changeEvent('kadowaki');
         },
         style: 'cancel',

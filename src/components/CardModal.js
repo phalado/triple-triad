@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import { View, Image } from 'react-native';
+import React from 'react';
+import { View, Image, YellowBox } from 'react-native';
 import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
 import Images from '../constants/Images';
@@ -13,8 +13,9 @@ const CardModal = props => {
   } = props;
   const thisCard = Cards.find(c => c.id === card);
 
-  const isMountedComponent = useRef(true);
-  useEffect(() => () => { isMountedComponent.current = false; });
+  YellowBox.ignoreWarnings([
+    'Can\'t perform a React state update on an unmounted component.',
+  ]);
 
   return (
     <Modal isVisible={visible} style={{ alignItems: 'center' }}>

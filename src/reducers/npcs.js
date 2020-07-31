@@ -3,6 +3,15 @@ import InitialState from '../constants/InicialState';
 const npcsReducer = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_CARD_NPC':
+      if (action.data.npc === 'Card Queen') {
+        return ({
+          ...state,
+          cardQueen: {
+            ...state.cardQueen,
+            special: [...state.cardQueen.special, action.data.card],
+          },
+        });
+      }
       return ({
         ...state,
         [action.data.location]: {
@@ -14,6 +23,15 @@ const npcsReducer = (state = {}, action) => {
         },
       });
     case 'REMOVE_CARD_NPC':
+      if (action.data.npc === 'Card Queen') {
+        return ({
+          ...state,
+          cardQueen: {
+            ...state.cardQueen,
+            special: state.cardQueen.special.filter(v => v !== action.data.card),
+          },
+        });
+      }
       return ({
         ...state,
         [action.data.location]: {
@@ -26,6 +44,16 @@ const npcsReducer = (state = {}, action) => {
         },
       });
     case 'CHANGE_NPC_STREAK':
+      if (action.data.npc === 'Card Queen') {
+        return ({
+          ...state,
+          cardQueen: {
+            ...state.cardQueen,
+            [action.data.streak]:
+              state.cardQueen[action.data.streak] + 1,
+          },
+        });
+      }
       return ({
         ...state,
         [action.data.location]: {
@@ -46,7 +74,7 @@ const npcsReducer = (state = {}, action) => {
         ...state,
         cardQueen: {
           ...state.cardQueen,
-          location: action.location,
+          place: action.location,
         },
       });
     default:

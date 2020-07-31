@@ -1211,5 +1211,9 @@ export default {
     chicobo: true,
     alexander: true,
     doomtrain: true,
+    pupu1: true,
+    pupu2: true,
+    pupu3: true,
+    pupu4: true,
   },
 };

@@ -27,9 +27,13 @@ const resetTable = () => ({
   type: 'RESET_TABLE',
 });
 
-const changeRules = rules => ({
+const changeRules = data => ({
   type: 'CHANGE_RULES',
-  rules,
+  data,
+});
+
+const restartRules = () => ({
+  type: 'RESTART_RULES',
 });
 
 const changeDeck = data => ({
@@ -121,8 +125,8 @@ const restartEvents = () => ({
 });
 
 export {
-  createCard, removeCard, modifyTable, resetCards, resetTable, changeRules, changeDeck, startDeck,
-  addCardToExploreDeck, removeCardFromExploreDeck, changeStreak, addCardToNPC, removeCardFromNPC,
-  changeNPCStreak, resetPlayerDeckExplore, createNPCList, changeCardQueenLocation, changeEvent,
-  restartEvents,
+  createCard, removeCard, modifyTable, resetCards, resetTable, changeRules, restartRules,
+  changeDeck, startDeck, addCardToExploreDeck, removeCardFromExploreDeck, changeStreak,
+  addCardToNPC, removeCardFromNPC, changeNPCStreak, resetPlayerDeckExplore, createNPCList,
+  changeCardQueenLocation, changeEvent, restartEvents,
 };

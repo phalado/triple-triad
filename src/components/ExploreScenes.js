@@ -7,18 +7,19 @@ import { ScrollView } from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 import PlacesModal from './PlacesModal';
 import NPCsTable from './NPCsTable';
+import PupuEvent from './PupuEvent';
 import { getTableData } from '../Helpers/ExploreModeHelper';
+import { getRandomNumber } from '../Helpers/OtherHelpers';
 import styles from '../styles/ExploreScenes';
 
 const ExploreScenes = props => {
   const {
-    navigation, route, npcs, createNPCList, resetTable,
+    navigation, route, npcs, createNPCList, resetTable, events, changeEvent,
   } = props;
   const {
     place, image, play, stop,
   } = route.params;
   const [visible, setVisible] = useState(false);
-
   const [tableHead] = useState(['Name', 'Wins', 'Looses', 'Ties', 'Chalenge']);
   const [tableData] = useState(getTableData(npcs, place));
 
@@ -46,7 +47,7 @@ const ExploreScenes = props => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.backgroundImage} source={image} alt="Table" />
+      <Image style={styles.backgroundImage} source={image} alt="Background image" />
       <View style={styles.subContainerLeft}>
         <PlacesModal visible={visible} handleTravel={handleTravel} />
         <Button title="Travel" onPress={() => setVisible(true)} />
@@ -62,6 +63,8 @@ const ExploreScenes = props => {
           <NPCsTable tableHead={tableHead} tableData={tableData} startGame={startGame} />
         </ScrollView>
       </View>
+      {(getRandomNumber(0, 10) <= 1 && events.pupu4)
+        ? <PupuEvent events={events} changeEvent={changeEvent} /> : null}
     </View>
   );
 };
@@ -72,6 +75,8 @@ ExploreScenes.propTypes = {
   npcs: PropTypes.objectOf(PropTypes.object).isRequired,
   createNPCList: PropTypes.func.isRequired,
   resetTable: PropTypes.func.isRequired,
+  events: PropTypes.objectOf(PropTypes.any).isRequired,
+  changeEvent: PropTypes.func.isRequired,
 };
 
 export default ExploreScenes;

@@ -46,8 +46,7 @@ const getTableData = (npcs, place) => {
   }
 
   if (place === 'balambGarden') {
-    // eslint-disable-next-line no-unused-vars
-    const victories = Object.entries(npcs[place]).filter(([key, value]) => value.win > 0).length;
+    const victories = Object.values(npcs[place]).filter(value => value.win > 0).length;
     if (victories >= 9) {
       tableData.push([
         npcs.cardClub.jack.name,
@@ -126,7 +125,6 @@ const getTableData = (npcs, place) => {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
   Object.entries(npcs[place]).forEach(([key, value]) => {
     const {
       name, win, loose, tie, cards, special,
@@ -234,8 +232,7 @@ const rareCardsQuest = (
 };
 
 const cardClubEvents = (events, changeEvent, npc, npcs, addCardToNPC) => {
-  // eslint-disable-next-line no-unused-vars
-  const vics = Object.entries(npcs.balambGarden).filter(([key, value]) => value.win > 0).length;
+  const vics = Object.values(npcs.balambGarden).filter(value => value.win > 0).length;
   if (vics >= 9 && events.jack) {
     Alert.alert(
       'Card Club Jack', 'Yo! Looks like you\'re doing pretty hood qith the card games. It\'s almost time... Oh, all right. I challenge you! I\'m CC Group\'s Jack. You appear to be a worthy opponent.', [{
@@ -393,6 +390,24 @@ const cardClubEvents = (events, changeEvent, npc, npcs, addCardToNPC) => {
   }
 };
 
+const getRandonPlayerCards = playerCards => {
+  const cards = [];
+  Object.keys(playerCards).forEach(key => {
+    if (playerCards[key] > 0) {
+      for (let i = 0; i < playerCards[key]; i += 1) cards.push(parseInt(key, 10));
+    }
+  });
+
+  const playerDeck = [];
+  for (let i = 0; i < 5; i += 1) {
+    const randonNumber = getRandomNumber(0, cards.length + 1);
+    playerDeck.push(Cards.find(card => card.id === cards[randonNumber]));
+    cards.splice(randonNumber, 1);
+  }
+  return playerDeck;
+};
+
 export {
-  getTableData, getNPCsCards, getCardsFromPlayerDeck, rareCardsQuest, cardClubEvents,
+  getTableData, getNPCsCards, getCardsFromPlayerDeck, rareCardsQuest,
+  cardClubEvents, getRandonPlayerCards,
 };

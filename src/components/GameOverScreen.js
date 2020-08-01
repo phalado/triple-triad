@@ -148,7 +148,7 @@ const GameOverScreen = props => {
 
     const getCardName = (name, cardId) => {
       let nameStyle = styles.chooseCardNameWhite;
-      if (playerCards[cardId]) {
+      if (playerCards[cardId] !== undefined) {
         if (playerCards[cardId] === 0) nameStyle = styles.chooseCardNameYellow;
       } else nameStyle = styles.chooseCardNameBlue;
       return <Text style={nameStyle}>{name}</Text>;
@@ -295,7 +295,7 @@ GameOverScreen.propTypes = {
     play2Cards: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
-  rules: PropTypes.objectOf(PropTypes.bool).isRequired,
+  rules: PropTypes.objectOf(PropTypes.any).isRequired,
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
   createCard: PropTypes.func.isRequired,
   resetCards: PropTypes.func.isRequired,

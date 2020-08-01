@@ -157,8 +157,7 @@ const checkPlus = (props, row, column, showModalWindow) => {
         : plusCards[sum] = [[row, column + 1]];
     }
 
-    // eslint-disable-next-line no-unused-vars
-    Object.entries(plusCards).forEach(([key, value]) => {
+    Object.values(plusCards).forEach(value => {
       if (value.length > 1 && value.some(v => table[v[0]][v[1]][1] !== player)) {
         value.forEach(crd => {
           if (table[crd[0]][crd[1]][1] !== player) {

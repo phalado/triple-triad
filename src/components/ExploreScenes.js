@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import PlacesModal from './PlacesModal';
 import NPCsTable from './NPCsTable';
 import PupuEvent from './PupuEvent';
-import { getTableData } from '../Helpers/ExploreModeHelper';
+import { getTableData, getRandonPlayerCards } from '../Helpers/ExploreModeHelper';
 import { getRandomNumber } from '../Helpers/OtherHelpers';
 import styles from '../styles/ExploreScenes';
 import CardModal from './CardModal';
@@ -16,7 +16,7 @@ import CardModal from './CardModal';
 const ExploreScenes = props => {
   const {
     navigation, route, table, npcs, createNPCList, resetTable, events,
-    changeEvent, addCardToExploreDeck,
+    changeEvent, addCardToExploreDeck, rules, playerCards,
   } = props;
   const {
     place, image, play, stop,
@@ -47,6 +47,7 @@ const ExploreScenes = props => {
 
   const startGame = (npcDeck, npc) => {
     resetTable();
+    if (rules[place].random) getRandonPlayerCards(playerCards);
     navigation.navigate('Choose Cards', { npcDeck, location: place, npc });
   };
 
@@ -103,6 +104,8 @@ ExploreScenes.propTypes = {
   changeEvent: PropTypes.func.isRequired,
   addCardToExploreDeck: PropTypes.func.isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
+  rules: PropTypes.objectOf(PropTypes.any).isRequired,
+  playerCards: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ExploreScenes;

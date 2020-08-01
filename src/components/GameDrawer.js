@@ -8,8 +8,9 @@ import styles from '../styles/GameDrawer';
 
 const GameDrawer = props => {
   const {
-    rules, createCard, resetCards, resetTable, navigation,
+    rules, createCard, resetCards, resetTable, navigation, state,
   } = props;
+  const { location } = state.routes[0].params;
 
   const giveUpButton = () => resetGame({
     resetCards, resetTable, createCard, navigation,
@@ -20,7 +21,7 @@ const GameDrawer = props => {
       <Text style={styles.mainTitle}>Hello Stranger!!!</Text>
       <View>
         <Text style={styles.title}>Rules enabled: </Text>
-        {Object.entries(rules).map(([key, value]) => {
+        {Object.entries(rules[location]).map(([key, value]) => {
           if (value) return <Text key={key}>{key}</Text>;
           return null;
         })}
@@ -35,11 +36,12 @@ const GameDrawer = props => {
 };
 
 GameDrawer.propTypes = {
-  rules: PropTypes.objectOf(PropTypes.bool).isRequired,
+  rules: PropTypes.objectOf(PropTypes.any).isRequired,
   createCard: PropTypes.func.isRequired,
   resetCards: PropTypes.func.isRequired,
   resetTable: PropTypes.func.isRequired,
   navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+  state: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default GameDrawer;

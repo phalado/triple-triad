@@ -20,14 +20,12 @@ const GamePlay = props => {
   } = props;
   let [gameOver] = useState(false);
   const [pCards] = useState(cards);
-  // const [myTurn] = useState(false);
   const [myTurn] = useState(getRandomBoolean());
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
   const { npcDeck, location, npc } = route.params ? route.params
     : { npcDeck: null, location: null, npc: null };
   const [p1InitialCards] = useState(cards.play1Cards.map(card => card.id));
-  // console.log(pCards);
 
   useFocusEffect(
     useCallback(() => {
@@ -115,7 +113,7 @@ const GamePlay = props => {
       table: tble,
       element: table[row][column][2],
       player: tble[row][column][1],
-      rules,
+      rules: rules[location],
       handleAddCard,
       handleRemoveCard,
       handleChangeTable,
@@ -133,7 +131,7 @@ const GamePlay = props => {
     if (tble[row][column][1] && cardsOnTheTable(table) < 9) {
       setTimeout(() => {
         // eslint-disable-next-line no-use-before-define
-        changeMove(PCMovement({ table, cards, rules }));
+        changeMove(PCMovement({ table, cards, rules: rules[location] }));
       }, 1000);
     }
     if (cardsOnTheTable(table) === 9) {
@@ -160,7 +158,7 @@ const GamePlay = props => {
     if (myTurn) showModalWindow('none');
 
     if ((!myTurn && cardsOnTheTable(table) % 2 === 0) || (myTurn && cardsOnTheTable % 2 === 1)) {
-      return changeMove(PCMovement({ table, cards, rules }));
+      return changeMove(PCMovement({ table, cards, rules: rules[location] }));
     }
   }, []);
 
@@ -169,7 +167,7 @@ const GamePlay = props => {
 
   return (
     <View style={styles.container}>
-      <Table />
+      <Table elemental={rules[location].elemental} />
       <PlayingTexts player score={pCards.play1Cards.length} table={table} turn={myTurn} />
       <PlayingTexts
         NPCName={npc === 'Card Queen' ? npc : npcs[newLocation][npc].name}
@@ -192,7 +190,7 @@ const GamePlay = props => {
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
           turn={myTurn}
-          rules={rules}
+          rules={rules[location]}
           key={[playCard.id, playCard.row, playCard.column, true]}
         />
       ))}
@@ -204,7 +202,7 @@ const GamePlay = props => {
           handlePlaceCard={handlePlaceCard}
           gameOver={gameOver}
           turn={myTurn}
-          rules={rules}
+          rules={rules[location]}
           key={[playCard.id, playCard.row, playCard.column, false]}
         />
       ))}

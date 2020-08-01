@@ -16,7 +16,7 @@ import CardModal from './CardModal';
 const ExploreScenes = props => {
   const {
     navigation, route, table, npcs, createNPCList, resetTable, events,
-    changeEvent, addCardToExploreDeck, rules, playerCards,
+    changeEvent, addCardToExploreDeck, rules, playerCards, resetCards, createCard,
   } = props;
   const {
     place, image, play, stop,
@@ -38,6 +38,21 @@ const ExploreScenes = props => {
     }, []),
   );
 
+  const addCardsToStore = (myDeck, npcDeck) => {
+    resetCards();
+    myDeck.forEach((card, index) => {
+      createCard({
+        player: true, id: card, row: 3 + index, column: 3, dragable: true,
+      });
+    });
+
+    npcDeck.forEach((card, index) => {
+      createCard({
+        player: false, id: card, row: 3 + index, column: 3, dragable: true,
+      });
+    });
+  };
+
   const handleTravel = (place, image, play, stop) => {
     navigation.pop();
     navigation.push('Explore Scenes', {
@@ -47,8 +62,10 @@ const ExploreScenes = props => {
 
   const startGame = (npcDeck, npc) => {
     resetTable();
-    if (rules[place].random) getRandonPlayerCards(playerCards);
-    navigation.navigate('Choose Cards', { npcDeck, location: place, npc });
+    if (rules[place].random) {
+      addCardsToStore(getRandonPlayerCards(playerCards), npcDeck);
+      navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location: place, npc } });
+    } else navigation.navigate('Choose Cards', { npcDeck, location: place, npc });
   };
 
   const getPupuEvent = () => {
@@ -106,6 +123,8 @@ ExploreScenes.propTypes = {
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   rules: PropTypes.objectOf(PropTypes.any).isRequired,
   playerCards: PropTypes.objectOf(PropTypes.any).isRequired,
+  resetCards: PropTypes.func.isRequired,
+  createCard: PropTypes.func.isRequired,
 };
 
 export default ExploreScenes;

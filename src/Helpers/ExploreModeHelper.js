@@ -401,7 +401,7 @@ const getRandonPlayerCards = playerCards => {
   const playerDeck = [];
   for (let i = 0; i < 5; i += 1) {
     const randonNumber = getRandomNumber(0, cards.length + 1);
-    playerDeck.push(Cards.find(card => card.id === cards[randonNumber]));
+    playerDeck.push(cards[randonNumber]);
     cards.splice(randonNumber, 1);
   }
   return playerDeck;

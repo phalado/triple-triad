@@ -45,7 +45,9 @@ const safeMovement = (props, card) => {
 
   emptySpots.forEach(spot => {
     if (testPosition(spot[0], spot[1], thisCard, table, cards, rules)) {
-      return { card: thisCard, row: spot[0], column: spot[1] };
+      return {
+        card: thisCard, oldRow: card.row, oldColumn: card.column, row: spot[0], column: spot[1],
+      };
     }
     return null;
   });
@@ -54,7 +56,7 @@ const safeMovement = (props, card) => {
 const randomMove = (cards, table) => {
   const dragableCards = [];
   cards.play2Cards.forEach(card => {
-    if (card.dragable) dragableCards.push(card.id);
+    if (card.dragable) dragableCards.push([card.id, card.row, card.column]);
   });
   const emptySpots = [];
   for (let i = 0; i < 3; i += 1) {
@@ -64,9 +66,15 @@ const randomMove = (cards, table) => {
   }
   const spot = getRandomNumber(0, emptySpots.length);
   const index = getRandomNumber(0, dragableCards.length);
-  const card = Cards.find(c => c.id === dragableCards[index]);
-  // console.log('Random', emptySpots[spot], card);
-  return ({ card, row: emptySpots[spot][0], column: emptySpots[spot][1] });
+  const card = cards.play2Cards.find(c => c.id === dragableCards[index][0]);
+
+  return ({
+    card: Cards.find(c => c.id === dragableCards[index][0]),
+    oldRow: card.row,
+    oldColumn: card.column,
+    row: emptySpots[spot][0],
+    column: emptySpots[spot][1],
+  });
 };
 
 const fakeRemoveCard = (cards, row, column) => {
@@ -87,7 +95,7 @@ const fakeAddCard = (cards, id, row, column) => {
   return newCards;
 };
 
-const nCardsTurned = (props, card, row, column) => {
+const nCardsTurned = (props, card, oldRow, oldColumn, row, column) => {
   let { cards } = props;
   const { table, rules } = props;
   const newTable = cloneTable(table);
@@ -111,10 +119,13 @@ const nCardsTurned = (props, card, row, column) => {
   if (column > 0 && !!newTable[row][column - 1][0]) fakeCardCombat(row, column - 1, 1, 2);
   if (column < 2 && !!newTable[row][column + 1][0]) fakeCardCombat(row, column + 1, 2, 1);
 
-  return ([cards.play2Cards.length - cards.play1Cards.length, card, row, column]);
+  return ([
+    cards.play2Cards.length - cards.play1Cards.length,
+    card, oldRow, oldColumn, row, column,
+  ]);
 };
 
-const fakeCheckSame = (props, card, row, column) => {
+const fakeCheckSame = (props, card, oldRow, oldColumn, row, column) => {
   let { cards } = props;
   const { table, rules } = props;
   const newTable = cloneTable(table);
@@ -192,10 +203,13 @@ const fakeCheckSame = (props, card, row, column) => {
   if (column > 0 && !!newTable[row][column - 1][0]) fakeCardCombat(row, column - 1, 1, 2);
   if (column < 2 && !!newTable[row][column + 1][0]) fakeCardCombat(row, column + 1, 2, 1);
 
-  return ([cards.play2Cards.length - cards.play1Cards.length, card, row, column]);
+  return ([
+    cards.play2Cards.length - cards.play1Cards.length,
+    card, oldRow, oldColumn, row, column,
+  ]);
 };
 
-const fakeCheckPlus = (props, card, row, column) => {
+const fakeCheckPlus = (props, card, oldRow, oldColumn, row, column) => {
   let { cards } = props;
   const { table, rules } = props;
   const newTable = cloneTable(table);
@@ -271,7 +285,10 @@ const fakeCheckPlus = (props, card, row, column) => {
   if (column > 0 && !!newTable[row][column - 1][0]) fakeCardCombat(row, column - 1, 1, 2);
   if (column < 2 && !!newTable[row][column + 1][0]) fakeCardCombat(row, column + 1, 2, 1);
 
-  return ([cards.play2Cards.length - cards.play1Cards.length, card, row, column]);
+  return ([
+    cards.play2Cards.length - cards.play1Cards.length,
+    card, oldRow, oldColumn, row, column,
+  ]);
 };
 
 const checkTurningCard = (props, card, type) => {
@@ -284,13 +301,14 @@ const checkTurningCard = (props, card, type) => {
     for (let j = 0; j < 3; j += 1) {
       if (!table[i][j][0]) {
         let move = [];
-        if (type === 'turn') move = nCardsTurned(props, thisCard, i, j);
-        if (type === 'same') move = fakeCheckSame(props, thisCard, i, j);
-        if (type === 'plus') move = fakeCheckPlus(props, thisCard, i, j);
+        if (type === 'turn') move = nCardsTurned(props, thisCard, card.row, card.column, i, j);
+        if (type === 'same') move = fakeCheckSame(props, thisCard, card.row, card.column, i, j);
+        if (type === 'plus') move = fakeCheckPlus(props, thisCard, card.row, card.column, i, j);
         if (move[0] > diference) result.push(move);
       }
     }
   }
+  // console.log('here', result);
   return result;
 };
 
@@ -307,7 +325,6 @@ const PCMovement = props => {
     }
 
     if (result.length === 0) return randomMove(cards, table);
-    // console.log('Safe', result);
     return result[0];
   }
 
@@ -340,17 +357,29 @@ const PCMovement = props => {
       });
     }
     if (result.length === 0) return randomMove(cards, table);
-    // console.log('Safe 2', result);
     return result[0];
   }
 
-  // console.log('PC move', result);
-  if (result.length === 1) return { card: result[0][1], row: result[0][2], column: result[0][3] };
+  if (result.length === 1) {
+    return {
+      card: result[0][1],
+      oldRow: result[0][2],
+      oldColumn: result[0][3],
+      row: result[0][4],
+      column: result[0][5],
+    };
+  }
 
   const filterResult = result.sort((a, b) => a[0] < b[0]).filter(move => move[0] === result[0][0]);
   const finalResult = filterResult[getRandomNumber(0, filterResult.length)];
 
-  return ({ card: finalResult[1], row: finalResult[2], column: finalResult[3] });
+  return ({
+    card: finalResult[1],
+    oldRow: finalResult[2],
+    oldColumn: finalResult[3],
+    row: finalResult[4],
+    column: finalResult[5],
+  });
 };
 
 export default PCMovement;

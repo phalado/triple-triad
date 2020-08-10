@@ -8,7 +8,7 @@ import styles from '../styles/PlayingCards';
 
 const PlayingTexts = props => {
   const {
-    player, score, table, turn,
+    NPCName, player, score, table, turn,
   } = props;
   let [myTurn] = useState(turn);
   const contStyle = player
@@ -45,7 +45,7 @@ const PlayingTexts = props => {
   return (
     <View style={contStyle}>
       <Text style={{ ...styles.nameText, color: myColor }}>
-        {player ? 'Player 1' : 'PC'}
+        {player ? 'Player 1' : NPCName}
       </Text>
       {getTurnImage()}
       <Text style={{ ...styles.scoreText, color: myColor }}>
@@ -58,6 +58,7 @@ const PlayingTexts = props => {
 };
 
 PlayingTexts.propTypes = {
+  NPCName: PropTypes.string,
   player: PropTypes.bool,
   score: PropTypes.number.isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
@@ -66,6 +67,7 @@ PlayingTexts.propTypes = {
 
 PlayingTexts.defaultProps = {
   player: false,
+  NPCName: 'PC',
 };
 
 export default PlayingTexts;

@@ -78,7 +78,7 @@ const Card = props => {
               setMyTable(myTable);
               // console.log(table);
               cardSoundPlay();
-              handlePlaceCard(card, myTable, i, j);
+              handlePlaceCard(card, row, column, myTable, i, j);
             }
           }
         }

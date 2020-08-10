@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import {
-  View, Text, FlatList, Button,
-} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import PropTypes from 'prop-types';
-import DeckAnimatedCard from './DeckAnimatedCard';
-import GetDecksCards from './GetDecksCards';
 import Cards from '../constants/Cards';
-import { getDeckButtons } from '../Helpers/OtherHelpers';
 import { getCardsFromPlayerDeck } from '../Helpers/ExploreModeHelper';
+import GameDeckFlatList from './GameDeckFlatList';
 import styles from '../styles/GameDeck';
+import GameDeckDropZone from './GameDeckDropZone';
 
 const GameDeck = props => {
   const {
@@ -17,7 +13,8 @@ const GameDeck = props => {
   } = props;
   const { deck, type } = route.params;
   const [myDecks, setMyDecks] = useState(decks);
-  const [myCards] = useState((type === 'player') ? getCardsFromPlayerDeck(playerCards) : [...Cards].sort((a, b) => a > b));
+  const [myCards] = useState((type === 'player')
+    ? getCardsFromPlayerDeck(playerCards) : [...Cards].sort((a, b) => a > b));
 
   if (Object.entries(decks).length === 0) {
     startDeck();
@@ -68,43 +65,22 @@ const GameDeck = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ height: '50%', alignItems: 'center' }}>
-        <Text style={styles.title}>See your cards and change your decks</Text>
-        <FlatList
-          data={getFlatListData(myCards)}
-          renderItem={({ item }) => (
-            <DeckAnimatedCard
-              card={item}
-              table={table}
-              handleAddCard={handleAddCard}
-              deck={deck}
-            />
-          )}
-          horizontal
-          keyExtractor={card => card.name}
-        />
-      </View>
-      <View>
-        <View style={deck === 'none' ? styles.buttons : styles.dropZone}>
-          {deck !== 'none'
-            ? myDecks[type][deck].map((cardId, index) => GetDecksCards({
-              cardId, table, index, handleRemoveCard, deck,
-            }))
-            : getDeckButtons(navigation, styles.buttons, 'Game Deck', type)}
-        </View>
-        {deck === 'none' ? null
-          : (
-            <Button
-              style={{ margin: 20 }}
-              title="Save deck"
-              onPress={() => {
-                changeDeck(myDecks);
-                navigation.goBack(null);
-                navigation.navigate('Game Deck', { deck: myDecks[type].deck1, type });
-              }}
-            />
-          )}
-      </View>
+      <GameDeckFlatList
+        getFlatListData={getFlatListData}
+        table={table}
+        handleAddCard={handleAddCard}
+        deck={deck}
+        cards={myCards}
+      />
+      <GameDeckDropZone
+        deck={deck}
+        type={type}
+        table={table}
+        handleRemoveCard={handleRemoveCard}
+        navigation={navigation}
+        changeDeck={changeDeck}
+        myDecks={myDecks}
+      />
     </SafeAreaView>
   );
 };

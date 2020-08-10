@@ -24,11 +24,11 @@ const gameMusic = new Sound(imports.gameTheme, Sound.MAIN_BUNDLE);
 const gameMusicPlay = () => gameMusic.play();
 const gameMusicStop = () => gameMusic.stop();
 
-const winTheme = new Sound(imports.gameTheme, Sound.MAIN_BUNDLE);
+const winTheme = new Sound(imports.winTheme, Sound.MAIN_BUNDLE);
 const winThemePlay = () => winTheme.play();
 const winThemeStop = () => winTheme.stop();
 
-const looseTheme = new Sound(imports.gameTheme, Sound.MAIN_BUNDLE);
+const looseTheme = new Sound(imports.looseTheme, Sound.MAIN_BUNDLE);
 const looseThemePlay = () => looseTheme.play();
 const looseThemeStop = () => looseTheme.stop();
 

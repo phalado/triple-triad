@@ -45,7 +45,7 @@ const DeckAnimatedCard = props => {
       <Animated.View
         style={{
           ...styles.cardContainer,
-          zIndex: 30,
+          zIndex: 10,
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
         }}
         {...panResponder.panHandlers}
@@ -75,7 +75,7 @@ DeckAnimatedCard.propTypes = {
   card: PropTypes.objectOf(PropTypes.any).isRequired,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   handleAddCard: PropTypes.func.isRequired,
-  deck: PropTypes.string.isRequired,
+  deck: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
 };
 
 export default DeckAnimatedCard;

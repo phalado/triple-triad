@@ -10,13 +10,21 @@ const NPCsTable = props => {
   return (
     <View style={styles.tableContainer}>
       <View style={styles.tableHead}>
-        {tableHead.map(value => <Text style={styles.tableText} key={value}>{value}</Text>)}
+        {tableHead.map((value, index) => {
+          if (index === 0 || index === 4) {
+            return <Text style={styles.tableText0} key={value}>{value}</Text>;
+          }
+          return <Text style={styles.tableText} key={value}>{value}</Text>;
+        })}
       </View>
       <View>
         {tableData.map(row => (
           <View style={styles.tableHead} key={row}>
             {row.map((value, index) => {
               if (index === 5) return null;
+              if (index === 0) {
+                return <Text style={styles.tableText0} key={[index, value]}>{value}</Text>;
+              }
               if (index < 4) {
                 return <Text style={styles.tableText} key={[index, value]}>{value}</Text>;
               }

@@ -28,7 +28,7 @@ const GameDeckStyle = StyleSheet.create({
     position: 'relative',
     width: cardWidth,
     height: cardHeight,
-    zIndex: 10,
+    zIndex: 0,
   },
   image: {
     width: cardWidth,
@@ -53,6 +53,7 @@ const GameDeckStyle = StyleSheet.create({
   playerCardContainer: {
     position: 'relative',
     alignItems: 'center',
+    zIndex: 0,
   },
   removeClickable: {
     position: 'absolute',

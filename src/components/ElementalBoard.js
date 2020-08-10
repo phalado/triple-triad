@@ -5,7 +5,7 @@ import Images from '../constants/Images';
 import styles from '../styles/Table';
 
 const ElementalBoard = props => {
-  const { table, rules, modifyTable } = props;
+  const { table, modifyTable, elemental } = props;
   const elements = ['fire', 'water', 'ice', 'wind', 'poison', 'thunder', 'earth', 'holy'];
   const cardWidth = Dimensions.get('window').width * 0.17;
   const cardHeight = Dimensions.get('window').height * 0.28;
@@ -18,7 +18,7 @@ const ElementalBoard = props => {
   };
 
   table.forEach((row, i) => row.forEach((column, j) => {
-    if (rules.elemental) {
+    if (elemental) {
       const element = getRandomElement();
       table[i][j] = [null, null, element];
     }
@@ -27,7 +27,7 @@ const ElementalBoard = props => {
   modifyTable(table);
 
 
-  if (rules.elemental) {
+  if (elemental) {
     return (
       <View>
         {table.map((row, i) => row.map((col, j) => {
@@ -57,8 +57,8 @@ const ElementalBoard = props => {
 
 ElementalBoard.propTypes = {
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
-  rules: PropTypes.objectOf(PropTypes.bool).isRequired,
   modifyTable: PropTypes.func.isRequired,
+  elemental: PropTypes.bool.isRequired,
 };
 
 export default ElementalBoard;

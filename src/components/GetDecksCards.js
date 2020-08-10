@@ -58,11 +58,15 @@ const GetDecksCards = props => {
 };
 
 GetDecksCards.propTypes = {
-  cardId: PropTypes.number.isRequired,
+  cardId: PropTypes.number,
   table: PropTypes.arrayOf(PropTypes.array).isRequired,
   index: PropTypes.number.isRequired,
   handleRemoveCard: PropTypes.func.isRequired,
-  deck: PropTypes.string.isRequired,
+  deck: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+};
+
+GetDecksCards.defaultProps = {
+  cardId: null,
 };
 
 export default GetDecksCards;

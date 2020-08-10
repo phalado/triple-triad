@@ -7,7 +7,7 @@ import styles from '../styles/Options';
 
 const ChooseRules = props => {
   const { rules, changeRules } = props;
-  const [myState, setMyState] = useState(rules);
+  const [myState, setMyState] = useState(rules.custom);
 
   useFocusEffect(() => { changeRules(myState); }, []);
 

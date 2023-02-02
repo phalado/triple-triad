@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { StatusBar, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import InitialScreen from './components/containers/InitialScreen';
+import ExploreInitialScreen from './components/screens/ExploreInitialScreen';
 
 class Navigation extends Component {
   componentDidMount() {
@@ -11,14 +16,19 @@ class Navigation extends Component {
   }
 
   render() {
+    const Stack = createStackNavigator();
+    const Drawer = createDrawerNavigator();
+    const options = { headerShown: false }
+
     return (
-      <View><Text>Hello World</Text></View>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Initial Screen" component={InitialScreen} options={options} />
+          <Stack.Screen name="Explore" component={ExploreInitialScreen} options={options} />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 }
-
-// const Navigation = () => (
-//   <View><Text>Hello World</Text></View>
-// )
 
 export default Navigation;

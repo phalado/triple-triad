@@ -19,7 +19,7 @@ import rulesReducer from './slicers/rulesSlicer'
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['table'],
+  blacklist: ['table', 'cards'],
 };
 
 const rootReducer = combineReducers({

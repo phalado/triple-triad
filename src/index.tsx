@@ -8,6 +8,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Navigation from './Navigation';
 
 import tableReducer from './slicers/tableSlicer'
+import cardsReducer from './slicers/cardsSlicer'
+import decksReducer from './slicers/decksSlicer'
 
 const persistConfig = {
   key: 'root',
@@ -17,6 +19,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   table: tableReducer,
+  cards: cardsReducer,
+  decks: decksReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

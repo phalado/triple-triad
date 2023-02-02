@@ -10,6 +10,9 @@ import Navigation from './Navigation';
 import tableReducer from './slicers/tableSlicer'
 import cardsReducer from './slicers/cardsSlicer'
 import decksReducer from './slicers/decksSlicer'
+import eventsReducer from './slicers/eventsSlicer'
+import streakReducer from './slicers/streakSlicer'
+import npcsReducer from './slicers/npcsSlicer'
 
 const persistConfig = {
   key: 'root',
@@ -20,7 +23,10 @@ const persistConfig = {
 const rootReducer = combineReducers({
   table: tableReducer,
   cards: cardsReducer,
-  decks: decksReducer
+  decks: decksReducer,
+  events: eventsReducer,
+  streak: streakReducer,
+  npcs: npcsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

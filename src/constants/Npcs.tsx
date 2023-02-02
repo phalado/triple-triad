@@ -285,21 +285,6 @@ export default {
       tie: 0,
     },
   },
-  cardQueen: {
-    place: 'balambTown',
-    name: 'Queen of Cards',
-    special: [],
-    win: 0,
-    loose: 0,
-    tie: 0,
-    balambTown: [1, 2],
-    dollet: [1, 2, 3, 4],
-    delingCity: [1, 2, 3, 4, 5],
-    fishermansHorizon: [1, 2, 3, 4, 5],
-    shumiVillage: [1, 2],
-    winhill: [1, 2, 3, 4, 5, 6],
-    esthar: [1, 2, 3, 4, 5, 6, 7],
-  },
   dollet: {
     oldMan1: {
       name: 'Old man in bar',

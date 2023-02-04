@@ -6,18 +6,14 @@ const playerCardsSlicer = createSlice({
   name: 'playerCards',
   initialState,
   reducers: {
-    resetCardExplore: () => {},
-    addCardExplore: (state = initialState, action: { payload: { card: string } }) => {
-      const { card } = action.payload
+    resetCardExplore: () => ({}),
+    addCardExplore: (state = initialState, action: { payload: number }) => {
+      if (state[action.payload]) return ({ ...state, [action.payload]: state[action.payload] + 1 })
 
-      if (state[card]) return ({ ...state, [card]: state[card] + 1 })
-
-      return ({ ...state, [card]: 1 })
+      return ({ ...state, [action.payload]: 1 })
     },
-    removeCardExplore: (state = initialState, action: { payload: { card: string } }) => {
-      const { card } = action.payload
-
-      return ({ ...state, [card]: state[card] - 1 })
+    removeCardExplore: (state = initialState, action: { payload: number }) => {
+      return ({ ...state, [action.payload]: state[action.payload] - 1 })
     }
   }
 })

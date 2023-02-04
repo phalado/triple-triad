@@ -1,4 +1,4 @@
-export default {
+const Images: { [key: string]: any } = {
   player0: require('../contents/img/player0.png'),
   player1: require('../contents/img/player1.png'),
   player2: require('../contents/img/player2.png'),
@@ -163,3 +163,5 @@ export default {
   109: require('../contents/img/cards/109.png'),
   110: require('../contents/img/cards/110.png'),
 };
+
+export default Images

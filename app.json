@@ -4,7 +4,7 @@
     "slug": "triple-triad-explore",
     "version": "1.0.0",
     "orientation": "landscape",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/boardIconMaterial.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

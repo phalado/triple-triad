@@ -23,6 +23,7 @@ const CardModal = (
           element={(card as any).element}
           table={table}
           playCard={{ row: 0, column: 0, dragable: false }}
+          player0={false}
         />
       </View>
     </Modal>

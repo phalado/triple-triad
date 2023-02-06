@@ -44,11 +44,7 @@ const InitialScreen = ({
           onPress={() => navigation.navigate('Explore', { handleResetDeck })}
           style={styles.exploreButton}
         >
-          <Image
-            style={styles.backgroundImages}
-            source={Images.explore}
-            // alt="World Map"
-          />
+          <Image style={styles.backgroundImages} source={Images.explore} />
           <Text style={styles.buttonText}>Explore Mode</Text>
         </TouchableOpacity>
       </View>

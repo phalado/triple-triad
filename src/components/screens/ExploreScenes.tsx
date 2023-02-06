@@ -2,21 +2,23 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Audio } from 'expo-av';
-import styles from '../../styles/ExploreScenes';
-import CardInterface from '../../interfaces/CardInterface';
-import RulesInterface from '../../interfaces/RulesInterface';
 import { getRandonPlayerCards, getTableData } from '../../helpers/ExploreModeHelpers';
-import CardModal from '../modals/CardModal';
 import NPCsTable from '../NPCsTable';
+import CardModal from '../modals/CardModal';
 import PlacesModal from '../modals/PlacesModal';
+import RulesInterface from '../../interfaces/RulesInterface';
+import CardInterface from '../../interfaces/CardInterface';
 import { NpcsInterface } from '../../interfaces/NpcsInterface';
+import styles from '../../styles/ExploreScenes';
+import { useFocusEffect } from '@react-navigation/native';
+import TableInterface from '../../interfaces/TableInterface';
 
 const ExploreScenes = (
   props:
   {
     navigation: any,
     route: any
-    table: any
+    table: TableInterface
     npcs: NpcsInterface
     events: { [event: string]: boolean }
     rules: RulesInterface
@@ -45,29 +47,29 @@ const ExploreScenes = (
     resetCards
   } = props;
   const { place, image, audio } = route.params;
-  const [music, setMusic] = useState<any>()
-
   const [visible, setVisible] = useState(false);
   const [tableHead] = useState(['Name', 'Wins', 'Looses', 'Ties', 'Chalenge']);
   const [tableData] = useState(getTableData(npcs, place));
   const [cardVisible, setCardVisible] = useState(false);
   const [cardOwner, setCardOwner] = useState('player0');
 
-  useEffect(() => {
-    const playSound = async () => {
-      await Audio.Sound.createAsync(audio).then(({ sound }) => setMusic(sound))
-    }
+  useFocusEffect(
+    useCallback(() => {
+      let music: any = null;
 
-    playSound()
-  }, [])
-  
-  useEffect(() => {
-    if (!music) return
+      const setMusic = async () => {
+        Audio.Sound.createAsync(audio).then(({ sound }) => {
+          music = sound
+          music.playAsync()
+          music.setIsLoopingAsync(true)
+        })
+      }
 
-    music.playAsync()
+      setMusic()
 
-    return () => music.unloadAsync()
-  }, [music])
+      return () => music.unloadAsync();
+    }, []),
+  );
 
   if (Object.entries(npcs).length === 0) createNPCList();
 
@@ -91,7 +93,7 @@ const ExploreScenes = (
     resetTable();
     if (rules[place].random) {
       addCardsToStore(getRandonPlayerCards(playerCards), npcDeck);
-      navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location: place, npc } });
+      navigation.push('GamePlayDrawer', { screen: 'GamePlayDrawer', params: { npcDeck, location: place, npc } });
     } else navigation.navigate('Choose Cards', { npcDeck, location: place, npc });
   };
 

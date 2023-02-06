@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Button, Text, View } from "react-native";
+import { Alert, Button, View } from "react-native";
 import styles from '../styles/GameDeck';
 import GetDecksCards from "./GetDeckscards";
 
@@ -30,10 +30,9 @@ const ChooseCardsDropZone = (
         ))}
       </View>
       <Button
-        // style={{ margin: 20 }}
         title="Start Game"
         onPress={() => {
-          if (deck.some((card: number) => card === null)) {
+          if (deck.some((card: number) => card === 0)) {
             Alert.alert('Wait!', 'You need a full deck to enter in a game!', [
               {
                 text: 'Whatever.',

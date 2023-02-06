@@ -4,6 +4,7 @@ import Images from "../constants/Images";
 import styles from '../styles/GameDeck';
 import RankNumbers from "./RankNumbers";
 
+
 const DeckAnimatedCard = (
   props: {
     card: any
@@ -52,19 +53,14 @@ const DeckAnimatedCard = (
         }}
         {...panResponder.panHandlers}
       >
-        <Image
-          style={styles.image}
-          source={Images.player0}
-        />
-        <Image
-          style={styles.image}
-          source={Images[card.id]}
-        />
+        <Image style={styles.image} source={Images.player0} />
+        <Image style={styles.image} source={Images[card.id]} />
         <RankNumbers
           ranks={card.ranks}
           element={card.element}
           table={table}
           playCard={{ row: 0, column: 0, dragable: false }}
+          player0={true}
         />
       </Animated.View>
     </View>

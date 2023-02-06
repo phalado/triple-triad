@@ -26,7 +26,6 @@ const getNPCsCards = (cards: number[], special: number[]) => {
     const cardLevel = cards[getRandomNumber(0, cards.length)];
     const randomCard = getRandomNumber(1, 12);
     const card = randomCard + (11 * (cardLevel - 1));
-    // console.log(cards, cardLevel, randomCard, card);
     if (card !== 48) deck.push(card);
   }
 

@@ -1,5 +1,5 @@
 export default interface CardInterface {
-  id: number
+  id?: number
   row: number
   column: number
   dragable: boolean

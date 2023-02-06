@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
+import RankNumbers from "./RankNumbers";
 import Cards from "../constants/Cards";
 import Images from "../constants/Images";
 import styles from '../styles/GameDeck';
-import RankNumbers from "./RankNumbers";
 
 const GetDecksCards = (props: any) => {
   const { cardId, table, index, handleRemoveCard, deck } = props;
@@ -18,10 +18,9 @@ const GetDecksCards = (props: any) => {
           <View style={styles.cardContainer}>
             <Image style={styles.image} source={Images.player0} />
             <Image style={styles.image} source={Images[card.id]} />
-            <RankNumbers ranks={card.ranks} element={card.element} table={table} />
+            <RankNumbers ranks={card.ranks} element={card.element} table={table} player0={true} />
             <Text
               style={styles.removeClickable}
-              // title="Remove Card"
               onPress={() => handleRemoveCard(cardId, deck)}
             >
               {'  '}
@@ -39,7 +38,7 @@ const GetDecksCards = (props: any) => {
         <View style={styles.cardContainer}>
           <Image style={styles.image} source={Images.player0} />
           <Image style={styles.image} source={Images[card.id]} />
-          <RankNumbers ranks={card.ranks} element={card.element} table={table} />
+          <RankNumbers ranks={card.ranks} element={card.element} table={table} player0={true} />
         </View>
       </View>
     );

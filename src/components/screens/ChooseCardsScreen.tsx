@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import Cards from "../../constants/Cards";
 import { getCardsFromPlayerDeck } from "../../helpers/ExploreModeHelpers";
+import ChooseCardsDropZone from "../ChooseCardsDropZone";
+import GameDeckFlatList from "../GameDeckFlatList";
 import CardInterface from "../../interfaces/CardInterface";
 import DecksInterface from "../../interfaces/DecksInterface";
 import styles from '../../styles/GameDeck';
-import ChooseCardsDropZone from "../ChooseCardsDropZone";
-import GameDeckFlatList from "../GameDeckFlatList";
+import TableInterface from "../../interfaces/TableInterface";
 
 const ChooseCardsScreen = (
   props: {
     navigation: any
     route: any
-    table: any
+    table: TableInterface
     decks: any
     playerCards: { [index: string]: number }
     changeDeck: (data: { player: boolean, deck: string, cards: number[] }) => void
@@ -36,7 +37,6 @@ const ChooseCardsScreen = (
   const [myCards] = useState(getCardsFromPlayerDeck(playerCards));
   const [myDeck, setMyDeck] = useState([0, 0, 0, 0, 0]);
   const [flatListData, setFlatListData] = useState([...myCards]);
-  // console.log(playerCards);
 
   const addCardsToStore = () => {
     resetCards();
@@ -70,7 +70,7 @@ const ChooseCardsScreen = (
   return (
     <View style={styles.container}>
       <GameDeckFlatList
-        flatListData={flatListData.sort((a: any, b: any) => a.id - b.id)}
+        flatListData={flatListData.sort((a: any, b: any) => b.id - a.id)}
         table={table}
         handleAddCard={handleAddCard}
         deck={myDeck}

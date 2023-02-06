@@ -1,11 +1,9 @@
-export default interface TableInterface {
-  [location: string]: {
-    open: boolean
-    plus: boolean
-    same: boolean
-    elemental: boolean
-    sameWall: boolean
-    sudenDeath: boolean
-    random: boolean
-  }
+export interface CellInterface {
+  card: any,
+  player: any,
+  element: string | null
 }
+
+export interface RowInterface extends Array<CellInterface> {}
+
+export default interface TableInterface extends Array<RowInterface> {}

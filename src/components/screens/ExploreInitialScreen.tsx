@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import {
-  View, Text, Button, Alert, LogBox,
-} from 'react-native';
+import { View, Text, Button, Alert, LogBox } from 'react-native';
 import Images from '../../constants/Images';
 import places from '../../constants/Places';
 import { balambGarden } from '../../constants/Sounds';
-import styles from '../../styles/ExploreInitial';
 import ExploreModal from '../containers/ExploreModal';
+import styles from '../../styles/ExploreInitial';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
 
-const ExploreInitialScreen = (props: any) => {
+const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
   const { navigation, route } = props
   const [visible, setVisible] = useState(false);
 

@@ -52,6 +52,7 @@ const Images: { [key: string]: any } = {
   shumiVillage: require('../contents/img/scenes/shumiVillage.jpg'),
   esthar: require('../contents/img/scenes/esthar.jpg'),
   ufo: require('../contents/img/ufo.png'),
+  hamburguerIcon: require('../contents/img/hamburguer-icon-white.png'),
   1: require('../contents/img/cards/001.png'),
   2: require('../contents/img/cards/002.png'),
   3: require('../contents/img/cards/003.png'),

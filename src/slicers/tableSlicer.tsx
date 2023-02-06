@@ -1,10 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
+import TableInterface, { CellInterface, RowInterface } from '../interfaces/TableInterface';
 
-const initialState = [
-  [[null, null, null], [null, null, null], [null, null, null]],
-  [[null, null, null], [null, null, null], [null, null, null]],
-  [[null, null, null], [null, null, null], [null, null, null]],
+const cell: CellInterface = {
+  card: null,
+  player: null,
+  element: null
+}
+
+const initialState: TableInterface = [
+  [Object.assign({}, cell), Object.assign({}, cell), Object.assign({}, cell)],
+  [Object.assign({}, cell), Object.assign({}, cell), Object.assign({}, cell)],
+  [Object.assign({}, cell), Object.assign({}, cell), Object.assign({}, cell)]
 ];
+
+const copyTable = (table: TableInterface) => ([
+  ...table.map((row: RowInterface) => ([
+    ...row.map((cell: CellInterface) => ({ ...cell }))
+  ]))
+])
 
 const tableSlicer = createSlice({
   name: 'table',

@@ -1,5 +1,5 @@
-import React, { StyleHTMLAttributes } from 'react';
-import { Alert, View, Button } from 'react-native';
+import React from 'react';
+import { Alert } from 'react-native';
 import CardInterface from '../interfaces/CardInterface';
 import TableInterface, { CellInterface, RowInterface } from '../interfaces/TableInterface';
 
@@ -7,8 +7,6 @@ const getRandomBoolean = () => Math.floor(100 * Math.random()) % 2 === 0
 const getRandomNumber = (min: number, max: number) => (
   (Math.floor(1000000 * Math.random()) % (max - min)) + min
 )
-
-const cardsOnTheTable = (table: any) => table.flat().filter((field: any) => !!field[0]).length;
 
 const getCardContainer = (
   row: number, column: number, player: boolean, scrennHeight: number, styles: any
@@ -80,16 +78,24 @@ const resetGame = (
   ]);
 };
 
-const cloneTable = (table: TableInterface) => (
-  table.map((row: RowInterface) => row.map((cell: CellInterface) => ({ ...cell }))
-));
+// const cloneTable = (table: TableInterface) => (
+//   table.map((row: RowInterface) => row.map((cell: CellInterface) => ({ ...cell }))
+// ));
+
+// const updateTable = (tble: TableInterface, row: number, col: number, cell: CellInterface) => {
+//   console.log(cell)
+//   return [
+//     ...tble.map((tblRow, i) => {
+//       if (row !== i) return tblRow
+
+//       return [...tblRow.map((tblCell, j) => j !== col ? tblCell : cell)]
+//     })]
+// }
 
 export {
   getRandomBoolean,
   getRandomNumber,
-  cardsOnTheTable,
   getCardContainer,
   getRandomCards,
   resetGame,
-  cloneTable
 }

@@ -7,30 +7,29 @@ import thunk from 'redux-thunk'
 import { PersistGate } from 'redux-persist/integration/react';
 import Navigation from './Navigation';
 
-import tableReducer from './slicers/tableSlicer'
-import cardsReducer from './slicers/cardsSlicer'
 import decksReducer from './slicers/decksSlicer'
 import eventsReducer from './slicers/eventsSlicer'
 import streakReducer from './slicers/streakSlicer'
 import npcsReducer from './slicers/npcsSlicer'
 import playerCardsReducer from './slicers/playerCardSlicer'
 import rulesReducer from './slicers/rulesSlicer'
+import preLoadedSoundsReducer from './slicers/preLoadedSoundsSlicer';
+import { GameProvider } from './components/GameContext';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['table', 'cards'],
+  blacklist: ['cards'],
 };
 
 const rootReducer = combineReducers({
-  table: tableReducer,
-  cards: cardsReducer,
   decks: decksReducer,
   events: eventsReducer,
   streak: streakReducer,
   npcs: npcsReducer,
   playerCards: playerCardsReducer,
-  rules: rulesReducer
+  rules: rulesReducer,
+  preLoadedSounds: preLoadedSoundsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -43,7 +42,9 @@ const persistor = persistStore(store);
 const ReduxProvider = () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <Navigation />
+      <GameProvider>
+        <Navigation />
+      </GameProvider>
     </PersistGate>
   </Provider>
 );

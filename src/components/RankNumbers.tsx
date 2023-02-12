@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Image, View } from 'react-native';
 import Images from '../constants/Images';
-import TableInterface from '../interfaces/TableInterface';
 import styles from '../styles/RankNumbers';
+import { GameContext } from './GameContext';
 
 const RankNumbers = (
   props: {
     ranks: (string | number)[],
     element: string,
-    table: TableInterface,
     playCard?: { row: number, column: number, dragable: boolean },
     player0: boolean
   }
 ) => {
-  const { ranks, element, table, playCard, player0 } = props;
+  const { ranks, element, playCard, player0 } = props;
   const { row, column, dragable } = playCard || { row: 0, column: 0, dragable: true };
+  const { getCellElement } = useContext(GameContext)
   const rankUp = `rank${ranks[0]}`;
   const rankLf = `rank${ranks[1]}`;
   const rankRt = `rank${ranks[2]}`;
@@ -22,8 +22,9 @@ const RankNumbers = (
 
   let [plusMinus] = useState('none');
   if (!dragable || player0) {
-    if (table[row][column].element !== null) {
-      plusMinus = table[row][column].element === element ? 'plus' : 'minus';
+    const cellElement = getCellElement(row, column)
+    if (cellElement !== null) {
+      plusMinus = cellElement === element ? 'plus' : 'minus';
     }
   }
 

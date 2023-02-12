@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Text, View } from 'react-native';
 import { getNPCsCards } from '../helpers/ExploreModeHelpers';
 import styles from '../styles/ExploreScenes';

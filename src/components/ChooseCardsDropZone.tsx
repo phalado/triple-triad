@@ -4,15 +4,29 @@ import styles from '../styles/GameDeck';
 import GetDecksCards from "./GetDeckscards";
 
 const ChooseCardsDropZone = (
-  props: any
+  props: {
+    deck: any
+    navigation: any
+    handleRemoveCard: (cardId: number) => void
+    npcDeck: number[]
+    location: string
+    npc: string
+    addCardsToStore: () => void
+  }
 ) => {
   const {
-    deck, navigation, table, handleRemoveCard, npcDeck, location, npc, addCardsToStore,
+    deck,
+    navigation,
+    handleRemoveCard,
+    npcDeck,
+    location,
+    npc,
+    addCardsToStore,
   } = props;
 
   const removeCardHandler = (cardId: number, deck: number[]) => {
     deck.splice(deck.indexOf(cardId), 1, 0).sort();
-    handleRemoveCard(cardId, deck);
+    handleRemoveCard(cardId);
   };
 
   return (
@@ -21,7 +35,6 @@ const ChooseCardsDropZone = (
         {deck.map((cardId: number, index: number) => (
           <GetDecksCards
             cardId={cardId}
-            table={table}
             index={index}
             handleRemoveCard={removeCardHandler}
             deck={deck}

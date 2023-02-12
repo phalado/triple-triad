@@ -1,19 +1,19 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
+import CardObjectInterface from "../interfaces/CardObjectInterface";
 import styles from '../styles/GameDeck';
 import DeckAnimatedCard from "./DeckAnimatedCard";
 
 const GameDeckFlatList = (
   props: {
-    flatListData?: any
+    flatListData?: CardObjectInterface[]
     getFlatListData?: any
-    table: any
     handleAddCard: (cardId: number) => void
-    deck: any
-    cards: any
+    deck: number[]
+    cards: CardObjectInterface[]
   }
 ) => {
-  const { flatListData, getFlatListData, table, handleAddCard, deck, cards } = props
+  const { flatListData, getFlatListData, handleAddCard, deck, cards } = props
   const keys = [];
 
   const getKey = (cardName: string) => {
@@ -29,7 +29,6 @@ const GameDeckFlatList = (
         renderItem={({ item }) => (
           <DeckAnimatedCard
             card={item}
-            table={table}
             handleAddCard={handleAddCard}
             deck={deck}
           />

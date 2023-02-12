@@ -1,24 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Images from '../../constants/Images';
+import { cardSound, gameTheme, special } from '../../constants/Sounds';
 import { getRandomCards } from '../../helpers/OtherHelpers';
 import CardInterface from '../../interfaces/CardInterface';
 import styles from '../../styles/AppStyles'
+import { Audio } from 'expo-av';
+import { GameContext } from '../GameContext';
 
 const InitialScreen = ({
   navigation,
-  createCard,
-  resetTable,
   resetPlayerDeckExplore,
-  restartEvents
+  restartEvents,
+  loadSound
 }: {
   navigation: any,
-  createCard: (player: boolean, card: CardInterface) => void,
-  resetTable: () => void,
   resetPlayerDeckExplore: () => void,
-  restartEvents: () => void
+  restartEvents: () => void,
+  loadSound: (name: string, sound: any) => void
 }) => {
+  const { resetTable, createCard } = useContext(GameContext)
+
   useEffect(() => {
     resetTable();
     let newCards = getRandomCards();
@@ -30,6 +33,10 @@ const InitialScreen = ({
     newCards.forEach((card: number, index: number) => {
       createCard(false, { id: card, row: 3 + index, column: 3, dragable: true })
     })
+
+    Audio.Sound.createAsync(gameTheme).then(({ sound }) => loadSound('gameMusic', sound))
+    Audio.Sound.createAsync(cardSound).then(({ sound }) => loadSound('cardSound', sound))
+    Audio.Sound.createAsync(special).then(({ sound }) => loadSound('specialSound', sound))
   }, [])
 
   const handleResetDeck = () => {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Button, Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Audio } from 'expo-av';
@@ -12,39 +12,33 @@ import { NpcsInterface } from '../../interfaces/NpcsInterface';
 import styles from '../../styles/ExploreScenes';
 import { useFocusEffect } from '@react-navigation/native';
 import TableInterface from '../../interfaces/TableInterface';
+import { gameTheme } from '../../constants/Sounds';
+import { GameContext } from '../GameContext';
 
 const ExploreScenes = (
   props:
   {
     navigation: any,
     route: any
-    table: TableInterface
     npcs: NpcsInterface
     events: { [event: string]: boolean }
     rules: RulesInterface
     playerCards: { [index: string]: number }
     addCardToExploreDeck: (card: number) => void,
     createNPCList: () => void
-    resetTable: () => void
     changeEvent: (event: string) => void
-    createCard: (player: boolean, card: CardInterface) => void
-    resetCards: () => void
   }
 ) => {
   const {
     navigation,
     route,
-    table,
     npcs,
     events,
     rules,
     playerCards,
     addCardToExploreDeck,
     createNPCList,
-    resetTable,
     changeEvent,
-    createCard,
-    resetCards
   } = props;
   const { place, image, audio } = route.params;
   const [visible, setVisible] = useState(false);
@@ -52,12 +46,13 @@ const ExploreScenes = (
   const [tableData] = useState(getTableData(npcs, place));
   const [cardVisible, setCardVisible] = useState(false);
   const [cardOwner, setCardOwner] = useState('player0');
+  const { resetTable, createCard, resetCards } = useContext(GameContext)
 
   useFocusEffect(
     useCallback(() => {
       let music: any = null;
 
-      const setMusic = async () => {
+      const loadMusic = async () => {
         Audio.Sound.createAsync(audio).then(({ sound }) => {
           music = sound
           music.playAsync()
@@ -65,7 +60,7 @@ const ExploreScenes = (
         })
       }
 
-      setMusic()
+      loadMusic()
 
       return () => music.unloadAsync();
     }, []),
@@ -91,10 +86,12 @@ const ExploreScenes = (
 
   const startGame = (npcDeck: number[], npc: any) => {
     resetTable();
+    const params = { npcDeck, location: place, npc }
+
     if (rules[place].random) {
       addCardsToStore(getRandonPlayerCards(playerCards), npcDeck);
-      navigation.push('GamePlayDrawer', { screen: 'GamePlayDrawer', params: { npcDeck, location: place, npc } });
-    } else navigation.navigate('Choose Cards', { npcDeck, location: place, npc });
+      navigation.push('GamePlayDrawer', { screen: 'GamePlayDrawer', params: params });
+    } else navigation.navigate('Choose Cards', params);
   };
 
   //MELHORAR
@@ -121,7 +118,7 @@ const ExploreScenes = (
       <Image style={styles.backgroundImage} source={image} />
       <View style={styles.subContainerLeft}>
         <PlacesModal visible={visible} handleTravel={handleTravel} />
-        <CardModal visible={cardVisible} cardId={48} table={table} cardOwner={cardOwner} />
+        <CardModal visible={cardVisible} cardId={48} cardOwner={cardOwner} />
         <Button title="Travel" onPress={() => setVisible(true)} />
         {/* <Button
           title="Edit Deck"

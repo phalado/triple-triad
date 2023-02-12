@@ -7,8 +7,7 @@ import CardModal from './CardModal';
 const ExploreModal = (
   props: {
     visible: boolean,
-    startScene: any
-    table: any
+    startScene: () => void
     addCardToExploreDeck: (card: number) => void
     createNPCList: () => void
     restartRules: () => void
@@ -17,7 +16,6 @@ const ExploreModal = (
   const {
     visible,
     startScene,
-    table,
     addCardToExploreDeck,
     createNPCList,
     restartRules
@@ -25,6 +23,7 @@ const ExploreModal = (
   const [cardModalVisible, setCardModalVisible] = useState(false)
   const [modalCard, setModalCard] = useState(1);
   const [cardOwner, setCardOwner] = useState('player0');
+
 
   // const addFirstCardsToDeck = (cards: number[]) => {
   //   createNPCList();
@@ -67,7 +66,7 @@ const ExploreModal = (
 
   return (
     <Modal isVisible={visible}>
-      <CardModal visible={cardModalVisible} cardId={modalCard} table={table} cardOwner={cardOwner} />
+      <CardModal visible={cardModalVisible} cardId={modalCard} cardOwner={cardOwner} />
       <View style={styles.newContainer}>
         <Text style={styles.speakingText}>
           Oh, hey, would you like to have these?

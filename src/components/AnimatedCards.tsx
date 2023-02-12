@@ -1,47 +1,46 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Animated, Dimensions, Image, PanResponder, View } from "react-native";
 import { Audio } from 'expo-av';
-import { cardSound } from "../constants/Sounds";
-import { cardsOnTheTable, getCardContainer } from "../helpers/OtherHelpers";
+import { getCardContainer } from "../helpers/OtherHelpers";
 import CardInterface from "../interfaces/CardInterface";
-import RulesInterface from "../interfaces/RulesInterface";
 import TableInterface from "../interfaces/TableInterface";
 import styles from '../styles/AnimatedCard';
 import Images from "../constants/Images";
 import RankNumbers from "./RankNumbers";
+import CardObjectInterface from "../interfaces/CardObjectInterface";
+import PreLoadedSoundsInterface from "../interfaces/PreLoadedSounds";
+import { LocalRulesInterface } from "../interfaces/RulesInterface";
+import { GameContext } from "./GameContext";
 
 const AnimatedCard = (
   props: {
-    card: any,
+    card: CardObjectInterface,
     playCard: CardInterface,
     player: boolean,
-    table: TableInterface,
     handlePlaceCard: (
-      card: CardInterface,
+      player: boolean,
+      card: CardObjectInterface,
       oldRow: number,
       oldColumn: number,
-      tble: any,
       row: number,
       column: number
     ) => void,
     gameOver: boolean | string,
-    turn: boolean,
-    rules: any
+    rules: LocalRulesInterface,
+    preLoadedSounds: PreLoadedSoundsInterface,
   }
 ) => {
-  const { card, playCard, player, table, handlePlaceCard, gameOver, turn, rules } = props;
+  const { 
+    card,
+    playCard,
+    player,
+    handlePlaceCard,
+    gameOver,
+    rules,
+    preLoadedSounds,
+  } = props;
   const { row, column, dragable } = playCard;
-  const [myTable, setMyTable] = useState(table);
-  let [myTurn] = useState(turn);
-  const [music, setMusic] = useState<any>(null)
-
-  useEffect(() => {
-    const setMusicState = async () => {
-      Audio.Sound.createAsync(cardSound).then(({ sound }) => setMusic(sound))
-    }
-
-    setMusicState()
-  })
+  const { table, cardsOnTheTable, turn } = useContext(GameContext)
 
   const pan = useRef<any>(new Animated.ValueXY()).current;
 
@@ -58,8 +57,7 @@ const AnimatedCard = (
     const begY = Dimensions.get('window').height * 0.08;
     const endY = Dimensions.get('window').height * 0.36;
 
-    // if (myTable[row][column][0] !== null) return;
-    if (myTable[row][column].card !== null) return;
+    if (table[row][column].card !== null) return;
 
     return (
       gesture.moveY > begY + (row * cardHeight)
@@ -69,7 +67,7 @@ const AnimatedCard = (
     );
   };
 
-  const panResponder = useRef(PanResponder.create({
+  const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: () => true,
     onPanResponderGrant: () => {
       pan.setOffset({
@@ -82,27 +80,24 @@ const AnimatedCard = (
       { dx: pan.x, dy: pan.y },
     ], { useNativeDriver: false }),
     onPanResponderRelease: (e, gesture) => {
-      myTurn = cardsOnTheTable(myTable) % 2 === 1 ? !turn : turn;
-      if (player !== myTurn) {
+      if (player !== turn) {
         Animated.spring(pan, {
           toValue: { x: 0, y: 0 },
           friction: 5,
           useNativeDriver: false,
         }).start();
-        music.playAsync();
+        preLoadedSounds.cardSound.playAsync();
       } else {
         for (let i = 0; i <= 2; i += 1) {
           for (let j = 0; j <= 2; j += 1) {
-            if (myTable[i][j].card === null && isDropArea(e, gesture, i, j)) {
+            if (table[i][j].card === null && isDropArea(e, gesture, i, j)) {
               Animated.spring(pan, {
                 toValue: { x: -cardWidth, y: -cardHeight },
                 friction: 10,
                 useNativeDriver: false,
               }).start();
-              myTable[i][j] = { card, player, element: table[i][j].element };
-              setMyTable(myTable);
-              music.playAsync();
-              handlePlaceCard(card, row, column, myTable, i, j);
+              preLoadedSounds.cardSound.playAsync();
+              handlePlaceCard(player, card, row, column, i, j);
             }
           }
         }
@@ -113,10 +108,10 @@ const AnimatedCard = (
           friction: 5,
           useNativeDriver: false,
         }).start();
-        music.playAsync();
+        preLoadedSounds.cardSound.playAsync();
       }
     },
-  })).current;
+  });
 
   if (!player && !rules.open && row > 2) return (
     <View style={cardContainer}>
@@ -137,7 +132,6 @@ const AnimatedCard = (
       <RankNumbers
         ranks={card.ranks}
         element={card.element}
-        table={table}
         playCard={playCard}
         player0={false}
       />
@@ -151,7 +145,6 @@ const AnimatedCard = (
       <RankNumbers
         ranks={card.ranks}
         element={card.element}
-        table={table}
         playCard={playCard}
         player0={false}
       />

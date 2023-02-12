@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import CardInterface from '../../interfaces/CardInterface';
 import StateInterface from '../../interfaces/StateInterface';
 import { createNpcList } from '../../slicers/npcsSlicer';
 import { addCardExplore, removeCardExplore } from '../../slicers/playerCardSlicer';
@@ -8,7 +7,6 @@ import ExploreModal from '../modals/ExploreModal';
 
 const mapStateToProps = (state: StateInterface) => ({
   // playerCards: state.playerCards,
-  table: state.table,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

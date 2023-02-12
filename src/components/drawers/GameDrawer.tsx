@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Text, View } from "react-native";
 import { resetGame } from "../../helpers/OtherHelpers";
+import RulesInterface from "../../interfaces/RulesInterface";
 import styles from '../../styles/GameDrawer';
+import { GameContext } from "../GameContext";
 
 const GameDrawer = (
-  props: any
+  props: {
+    navigation: any
+    rules:RulesInterface
+    location: string
+  }
 ) => {
-  const { rules, createCard, resetCards, resetTable, navigation, state, location } = props;
+  const { rules, navigation, location } = props;
+  const { resetTable, createCard, resetCards } = useContext(GameContext)
 
   const giveUpButton = () => resetGame({ resetCards, resetTable, createCard, navigation });
 

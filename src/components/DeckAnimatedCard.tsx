@@ -1,19 +1,19 @@
 import React, { useRef } from "react";
 import { Animated, Dimensions, Image, PanResponder, Text, View } from "react-native";
 import Images from "../constants/Images";
+import CardObjectInterface from "../interfaces/CardObjectInterface";
 import styles from '../styles/GameDeck';
 import RankNumbers from "./RankNumbers";
 
 
 const DeckAnimatedCard = (
   props: {
-    card: any
-    table: any
-    handleAddCard: any
-    deck: any
+    card: CardObjectInterface
+    handleAddCard: (cardId: number) => void
+    deck: number[]
   }
 ) => {
-  const { card, table, handleAddCard, deck } = props;
+  const { card, handleAddCard, deck } = props;
   const pan = useRef<any>(new Animated.ValueXY()).current;
 
   const isDropArea = (
@@ -38,7 +38,7 @@ const DeckAnimatedCard = (
         friction: 5,
         useNativeDriver: false,
       }).start();
-      if (isDropArea(e, gesture)) handleAddCard(card.id, deck);
+      if (isDropArea(e, gesture)) handleAddCard(card.id);
     },
   })).current;
 
@@ -58,7 +58,6 @@ const DeckAnimatedCard = (
         <RankNumbers
           ranks={card.ranks}
           element={card.element}
-          table={table}
           playCard={{ row: 0, column: 0, dragable: false }}
           player0={true}
         />

@@ -1,13 +1,14 @@
 import { getRandomBoolean, getRandomNumber } from "./OtherHelpers";
 import { NpcsInterface } from "../interfaces/NpcsInterface";
 import Cards from "../constants/Cards";
+import CardObjectInterface from "../interfaces/CardObjectInterface";
 
 // MELHORAR
 const getCardsFromPlayerDeck = (playerCards: { [card: string]: number }) => {
-  const deck: any = [];
+  const deck: CardObjectInterface[] = [];
   Object.entries(playerCards).forEach(([key, value]) => {
     for (let i = 0; i < value; i += 1) {
-      deck.push(Cards.find(card => card.id === parseInt(key, 10)));
+      deck.push(Cards.find(card => card.id === parseInt(key, 10)) as CardObjectInterface);
     }
   });
   return deck;

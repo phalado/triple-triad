@@ -1,42 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View } from "react-native";
 import Cards from "../../constants/Cards";
 import { getCardsFromPlayerDeck } from "../../helpers/ExploreModeHelpers";
 import ChooseCardsDropZone from "../ChooseCardsDropZone";
 import GameDeckFlatList from "../GameDeckFlatList";
-import CardInterface from "../../interfaces/CardInterface";
-import DecksInterface from "../../interfaces/DecksInterface";
 import styles from '../../styles/GameDeck';
-import TableInterface from "../../interfaces/TableInterface";
+import CardObjectInterface from "../../interfaces/CardObjectInterface";
+import { GameContext } from "../GameContext";
 
 const ChooseCardsScreen = (
   props: {
     navigation: any
     route: any
-    table: TableInterface
-    decks: any
     playerCards: { [index: string]: number }
-    changeDeck: (data: { player: boolean, deck: string, cards: number[] }) => void
-    startDeck: () => void
-    createCard: (player: boolean, card: CardInterface) => void
-    resetCards: () => void
   }
 ) => {
-  const {
-    navigation,
-    route,
-    table,
-    decks,
-    playerCards,
-    changeDeck,
-    startDeck,
-    createCard,
-    resetCards,
-  } = props
+  const { navigation, route, playerCards } = props
   const { npcDeck, location, npc } = route.params.params || route.params;
   const [myCards] = useState(getCardsFromPlayerDeck(playerCards));
   const [myDeck, setMyDeck] = useState([0, 0, 0, 0, 0]);
   const [flatListData, setFlatListData] = useState([...myCards]);
+  const { createCard, resetCards } = useContext(GameContext)
 
   const addCardsToStore = () => {
     resetCards();
@@ -50,10 +34,10 @@ const ChooseCardsScreen = (
   };
 
   const handleAddCard = (cardId: number) => {
-    if (myDeck.some((value: any) => value === 0)) {
+    if (myDeck.some((value: number) => value === 0)) {
       myDeck.splice(myDeck.indexOf(0), 1, cardId).sort();
       setMyDeck([...myDeck]);
-      const thisCard = Cards.find(card => card.id === cardId);
+      const thisCard = Cards.find(card => card.id === cardId) as CardObjectInterface;
       flatListData.splice(flatListData.indexOf(thisCard), 1).sort();
       setFlatListData(flatListData);
     }
@@ -62,7 +46,7 @@ const ChooseCardsScreen = (
   const handleRemoveCard = (cardId: number) => {
     myDeck.splice(myDeck.indexOf(cardId), 1, 0).sort();
     setMyDeck([...myDeck]);
-    const thisCard = Cards.find(card => card.id === cardId);
+    const thisCard = Cards.find(card => card.id === cardId) as CardObjectInterface;
     flatListData.push(thisCard);
     setFlatListData(flatListData.sort((a: any, b: any) => a.id - b.id));
   };
@@ -70,14 +54,14 @@ const ChooseCardsScreen = (
   return (
     <View style={styles.container}>
       <GameDeckFlatList
-        flatListData={flatListData.sort((a: any, b: any) => b.id - a.id)}
-        table={table}
+        flatListData={flatListData.sort((
+            a: CardObjectInterface, b: CardObjectInterface
+          ) => b.id - a.id)}
         handleAddCard={handleAddCard}
         deck={myDeck}
         cards={myCards}
       />
       <ChooseCardsDropZone
-        table={table}
         deck={myDeck}
         handleRemoveCard={handleRemoveCard}
         addCardsToStore={addCardsToStore}

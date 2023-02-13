@@ -79,9 +79,7 @@ const GamePlayScreen = (
 
   const callGameOverWindow = (gameOver: boolean | 'win' | 'loose' | 'tie') => {
     navigation.pop();
-    navigation.navigate('Game over', {
-      gameOver, npcDeck, location, npc, p1InitialCards,
-    });
+    navigation.navigate('Game over', { gameOver, npcDeck, location, npc, p1InitialCards });
   };
 
   const showModalWindow = (value?: string) => {
@@ -127,16 +125,17 @@ const GamePlayScreen = (
     if (existCard(row, column - 1)) cardCombat(newProps, row, column - 1, 1, 2);
     if (existCard(row, column + 1)) cardCombat(newProps, row, column + 1, 2, 1);
 
-    if (cardsOnTheTable < 9) showModalWindow();
+    if (cardsOnTheTable() < 9) showModalWindow();
     setTurn(false)
   };
 
   useEffect(() => {
-    if (cardsOnTheTable === 9) {
-      if (cards.player1Cards.length > cards.player2Cards.length) setGameOver('win');
-      else if (cards.player1Cards.length < cards.player2Cards.length) setGameOver('loose');
-      else setGameOver('tie');
-      setTimeout(() => callGameOverWindow(gameOver), 1500);
+    let callGameOver = gameOver
+    if (cardsOnTheTable() === 9) {
+      if (cards.player1Cards.length > cards.player2Cards.length) callGameOver = 'win';
+      else if (cards.player1Cards.length < cards.player2Cards.length) callGameOver = 'loose';
+      else callGameOver = 'tie';
+      setTimeout(() => callGameOverWindow(callGameOver), 1500);
       return
     }
 

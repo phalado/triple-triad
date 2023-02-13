@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk'
 import { PersistGate } from 'redux-persist/integration/react';
 import Navigation from './Navigation';
+import { GameProvider } from './components/GameContext';
 
 import decksReducer from './slicers/decksSlicer'
 import eventsReducer from './slicers/eventsSlicer'
@@ -14,7 +15,7 @@ import npcsReducer from './slicers/npcsSlicer'
 import playerCardsReducer from './slicers/playerCardSlicer'
 import rulesReducer from './slicers/rulesSlicer'
 import preLoadedSoundsReducer from './slicers/preLoadedSoundsSlicer';
-import { GameProvider } from './components/GameContext';
+import cardQueenReducer from './slicers/cardQueenSlicer';
 
 const persistConfig = {
   key: 'root',
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   npcs: npcsReducer,
   playerCards: playerCardsReducer,
   rules: rulesReducer,
-  preLoadedSounds: preLoadedSoundsReducer
+  preLoadedSounds: preLoadedSoundsReducer,
+  cardQueen: cardQueenReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

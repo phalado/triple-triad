@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { Button, Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Audio } from 'expo-av';
@@ -7,13 +7,11 @@ import NPCsTable from '../NPCsTable';
 import CardModal from '../modals/CardModal';
 import PlacesModal from '../modals/PlacesModal';
 import RulesInterface from '../../interfaces/RulesInterface';
-import CardInterface from '../../interfaces/CardInterface';
 import { NpcsInterface } from '../../interfaces/NpcsInterface';
 import styles from '../../styles/ExploreScenes';
 import { useFocusEffect } from '@react-navigation/native';
-import TableInterface from '../../interfaces/TableInterface';
-import { gameTheme } from '../../constants/Sounds';
 import { GameContext } from '../GameContext';
+import CardQueenInterface from '../../interfaces/CardQueenInterface';
 
 const ExploreScenes = (
   props:
@@ -24,6 +22,7 @@ const ExploreScenes = (
     events: { [event: string]: boolean }
     rules: RulesInterface
     playerCards: { [index: string]: number }
+    cardQueen: any
     addCardToExploreDeck: (card: number) => void,
     createNPCList: () => void
     changeEvent: (event: string) => void
@@ -36,6 +35,7 @@ const ExploreScenes = (
     events,
     rules,
     playerCards,
+    cardQueen,
     addCardToExploreDeck,
     createNPCList,
     changeEvent,
@@ -43,7 +43,7 @@ const ExploreScenes = (
   const { place, image, audio } = route.params;
   const [visible, setVisible] = useState(false);
   const [tableHead] = useState(['Name', 'Wins', 'Looses', 'Ties', 'Chalenge']);
-  const [tableData] = useState(getTableData(npcs, place));
+  const [tableData] = useState(getTableData(npcs, place, cardQueen));
   const [cardVisible, setCardVisible] = useState(false);
   const [cardOwner, setCardOwner] = useState('player0');
   const { resetTable, createCard, resetCards } = useContext(GameContext)
@@ -62,7 +62,9 @@ const ExploreScenes = (
 
       loadMusic()
 
-      return () => music.unloadAsync();
+      return () => {
+        if (music) music.unloadAsync()
+      };
     }, []),
   );
 
@@ -90,8 +92,12 @@ const ExploreScenes = (
 
     if (rules[place].random) {
       addCardsToStore(getRandonPlayerCards(playerCards), npcDeck);
+      navigation.pop();
       navigation.push('GamePlayDrawer', { screen: 'GamePlayDrawer', params: params });
-    } else navigation.navigate('Choose Cards', params);
+    } else {
+      navigation.pop();
+      navigation.navigate('Choose Cards', params);
+    }
   };
 
   //MELHORAR

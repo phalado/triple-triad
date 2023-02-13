@@ -13,7 +13,7 @@ export const GameContext = createContext<any>({
   resetTable: () => {},
   updateTable: () => {},
   getCellElement: () => {},
-  cardsOnTheTable: 0,
+  cardsOnTheTable: () => {},
   resetCards: () => {},
   createCard: () => {},
   removeCard: () => {},
@@ -27,14 +27,9 @@ export const GameContext = createContext<any>({
 export const GameProvider = ({ children }: { children: ReactElement }) => {
   const [table, setTable] = useState<TableInterface>([])
   const [cards, setcards] = useState<PlayerCardsInterface>({ player1Cards: [], player2Cards: [] })
-  const [cardsOnTheTable, setCardsOnTheTable] = useState(
-    table.flat().filter((field: CellInterface) => field.card).length
-  )
   const [turn, setTurn] = useState(getRandomBoolean())
 
-  useEffect(() => {
-    setCardsOnTheTable(table.flat().filter((field: CellInterface) => field.card).length)
-  }, [table])
+  const cardsOnTheTable = () => table.flat().filter((field: CellInterface) => field.card).length
 
   const cell: CellInterface = { card: null, player: null, element: null }
   const initialState = [

@@ -26,7 +26,7 @@ const npcsSlicer = createSlice({
         }
       })
     },
-    remveCardNpc: (
+    removeCardNpc: (
       state = initialState,
       action: { payload: { npc: string, card: number, location: string } }
     ) => {
@@ -63,5 +63,5 @@ const npcsSlicer = createSlice({
   }
 })
 
-export const { createNpcList, addCardNpc, remveCardNpc, changeNpcStreak } = npcsSlicer.actions
+export const { createNpcList, addCardNpc, removeCardNpc, changeNpcStreak } = npcsSlicer.actions
 export default npcsSlicer.reducer

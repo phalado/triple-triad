@@ -3,7 +3,6 @@ import { Animated, Dimensions, Image, PanResponder, View } from "react-native";
 import { Audio } from 'expo-av';
 import { getCardContainer } from "../helpers/OtherHelpers";
 import CardInterface from "../interfaces/CardInterface";
-import TableInterface from "../interfaces/TableInterface";
 import styles from '../styles/AnimatedCard';
 import Images from "../constants/Images";
 import RankNumbers from "./RankNumbers";

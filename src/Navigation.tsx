@@ -9,6 +9,7 @@ import ExploreScenes from './components/containers/ExploreScenes';
 import ChooseCardsScreen from './components/containers/ChooseCardsScreen';
 import GameDrawer from './components/containers/GameDrawer';
 import GamePlay from './components/containers/GamePlay';
+import GameOverScreen from './components/containers/GameOverScreen';
 
 class Navigation extends Component {
   componentDidMount() {
@@ -42,6 +43,7 @@ class Navigation extends Component {
           <Stack.Screen name="Explore Scenes" component={ExploreScenes} options={options} />
           <Stack.Screen name="Choose Cards" component={ChooseCardsScreen} options={options} />
           <Stack.Screen name="GamePlay" component={GameDrawerContainer} options={options} />
+          <Stack.Screen name="Game over" component={GameOverScreen} options={options} />
         </Stack.Navigator>
       </NavigationContainer>
     );

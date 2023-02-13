@@ -22,10 +22,7 @@ const ElementalBoard = () => {
   
     table.forEach((row: any, i: number) => row.forEach((cell: CellInterface, j: number) => {
       const element = getRandomElement()
-      if (element) {
-        updateTable(i, i, { player: cell.player, card: cell.card, element })
-        console.log(i, j, element)
-      }
+      if (element) updateTable(i, i, { player: cell.player, card: cell.card, element })
     }));
   }, [])
 

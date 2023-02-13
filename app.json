@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "triple-triad-explore",
+    "name": "Triple Triad Explore",
     "slug": "triple-triad-explore",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "landscape",
     "icon": "./assets/boardIconMaterial.png",
     "userInterfaceStyle": "light",
@@ -21,6 +21,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.PhaladoTeck.triple-triad-explore",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

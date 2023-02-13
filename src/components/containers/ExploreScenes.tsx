@@ -13,6 +13,7 @@ const mapStateToProps = (state: StateInterface) => ({
   events: state.events,
   rules: state.rules,
   playerCards: state.playerCards,
+  cardQueen: state.cardQueen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

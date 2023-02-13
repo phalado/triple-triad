@@ -20,7 +20,7 @@ interface NewPropsInterface {
   ) => void
   preLoadedSounds: PreLoadedSoundsInterface
   existCard: (row: number, column: number) => boolean
-  cardsOnTheTable: number
+  cardsOnTheTable: () => number
 }
 
 const getRank = (rank: number, cardElement: string, rules: LocalRulesInterface, element: string | null) => {
@@ -68,7 +68,7 @@ const cardCombat = (
   if (showModalWindow) {
     showModalWindow('combo');
     specialSound.playAsync();
-    if (cardsOnTheTable === 9) setTimeout(() => showModalWindow(), 1100);
+    if (cardsOnTheTable() === 9) setTimeout(() => showModalWindow(), 1100);
   }
 };
 

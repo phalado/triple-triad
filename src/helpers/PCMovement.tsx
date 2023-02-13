@@ -389,14 +389,14 @@ const PCMovement = (props: {
   rules: LocalRulesInterface,
   table: TableInterface,
   cloneTable: (table: TableInterface) => TableInterface,
-  cardsOnTheTable: number
+  cardsOnTheTable: () => number
 }) => {
   const { cards, rules, table, cloneTable, cardsOnTheTable } = props;
   const newProps = { cards, table, rules, cloneTable }
 
   const result: any = [];
 
-  if (cardsOnTheTable === 0) {
+  if (cardsOnTheTable() === 0) {
     if (rules.open) {
       cards.player2Cards.forEach(card => {
         const move: any = safeMovement(newProps, card);

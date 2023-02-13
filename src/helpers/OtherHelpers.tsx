@@ -78,19 +78,20 @@ const resetGame = (
   ]);
 };
 
-// const cloneTable = (table: TableInterface) => (
-//   table.map((row: RowInterface) => row.map((cell: CellInterface) => ({ ...cell }))
-// ));
+const getCardsId = (cards: CardInterface[]) => {
+  const newP1Cards: CardInterface[] = [];
+  const newP2Cards: CardInterface[] = [];
+  cards.forEach(card => newP1Cards.push(card));
 
-// const updateTable = (tble: TableInterface, row: number, col: number, cell: CellInterface) => {
-//   console.log(cell)
-//   return [
-//     ...tble.map((tblRow, i) => {
-//       if (row !== i) return tblRow
+  let value = 0;
+  while (newP1Cards.length > 5) {
+    value = getRandomNumber(0, newP1Cards.length);
+    newP2Cards.push(newP1Cards[value]);
+    newP1Cards.splice(value, 1);
+  }
 
-//       return [...tblRow.map((tblCell, j) => j !== col ? tblCell : cell)]
-//     })]
-// }
+  return ({ newP1Cards, newP2Cards });
+};
 
 export {
   getRandomBoolean,
@@ -98,4 +99,5 @@ export {
   getCardContainer,
   getRandomCards,
   resetGame,
+  getCardsId
 }

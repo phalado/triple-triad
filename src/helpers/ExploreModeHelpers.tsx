@@ -294,7 +294,7 @@ const cardClubEvents = (
     );
   }
 
-  if (npc === 'kadowaki' && events.king) {
+  if (npc === 'kadowaki' && events.king && !events.kadowaki) {
     Alert.alert(
       'Dr Kadowaki', 'You\'ll probably find the King soon, now that you\'ve defeated the 4-Suits.', [{
         text: 'Whatever',

@@ -21,7 +21,7 @@ const RankNumbers = (
   const rankDn = `rank${ranks[3]}`;
 
   let [plusMinus] = useState('none');
-  if (!dragable || player0) {
+  if ((!dragable || player0) && row < 8) {
     const cellElement = getCellElement(row, column)
     if (cellElement !== null) {
       plusMinus = cellElement === element ? 'plus' : 'minus';

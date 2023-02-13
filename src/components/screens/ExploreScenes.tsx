@@ -93,7 +93,7 @@ const ExploreScenes = (
     if (rules[place].random) {
       addCardsToStore(getRandonPlayerCards(playerCards), npcDeck);
       navigation.pop();
-      navigation.push('GamePlayDrawer', { screen: 'GamePlayDrawer', params: params });
+      navigation.push('GamePlay', { screen: 'GamePlay', params: params });
     } else {
       navigation.pop();
       navigation.navigate('Choose Cards', params);

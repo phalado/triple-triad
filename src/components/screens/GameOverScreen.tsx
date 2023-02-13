@@ -63,7 +63,6 @@ const GameOverScreen = (props: {
   const [visible, setVisible] = useState(false);
   const [modalCard, setModalCard] = useState(1);
   const [cardOwner, setCardOwner] = useState('player0');
-  console.log(npc)
 
   useFocusEffect(
     useCallback(() => {
@@ -124,7 +123,7 @@ const GameOverScreen = (props: {
     navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location, npc } });
   };
 
-  if (rules.sudenDeath && gameOver === 'tie' && cardsOnTheTable() === 9) {
+  if (rules[location].sudenDeath && gameOver === 'tie' && cardsOnTheTable() === 9) {
     setTimeout(() => sudenDeathGame(), 2000);
     return (
       <View style={styles.container}>
@@ -210,7 +209,7 @@ const GameOverScreen = (props: {
               <RankNumbers
                 ranks={newCard.ranks}
                 element={newCard.element}
-                playCard={{ row: 0, column: 0, dragable: false }}
+                playCard={{ row: 8, column: 8, dragable: false }}
                 player0={false}
               />
             </View>
@@ -227,7 +226,7 @@ const GameOverScreen = (props: {
             <RankNumbers
               ranks={newCard.ranks}
               element={newCard.element}
-              playCard={{ row: 0, column: 0, dragable: false }}
+              playCard={{ row: 8, column: 8, dragable: false }}
               player0={false}
             />
           </TouchableOpacity>

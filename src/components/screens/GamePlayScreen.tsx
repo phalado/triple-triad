@@ -19,7 +19,6 @@ import RulesInterface from "../../interfaces/RulesInterface";
 import { NpcsInterface } from "../../interfaces/NpcsInterface";
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
 import PreLoadedSoundsInterface from "../../interfaces/PreLoadedSounds";
-import PlaceRules from "../../constants/PlaceRules";
 
 LogBox.ignoreLogs([
   'Found screens with the same name nested inside one another.',
@@ -157,37 +156,39 @@ const GamePlayScreen = (
 
   return (
     <View style={styles.container}>
-      <Table elemental={rules[location].elemental} navigation={navigation} />
-      <PlayingTexts player score={cards.player1Cards.length} />
-      <PlayingTexts
-        NPCName={npc === 'Card Queen' ? npc : npcs[newLocation][npc].name}
-        score={cards.player2Cards.length}
-      />
-      <PlayerTurnModal visible={visibleModal} value={modalValue} />
-      {cards.player1Cards.map((playCard: CardInterface) => (
-        <AnimatedCard
-          card={Cards.find(card => card.id === playCard.id) as CardObjectInterface}
-          playCard={playCard}
-          player
-          gameOver={gameOver}
-          rules={rules[location]}
-          preLoadedSounds={preLoadedSounds}
-          handlePlaceCard={handlePlaceCard}
-          key={JSON.stringify([playCard.id, playCard.row, playCard.column, true])}
+      <View style={styles.subContainer}>
+        <Table elemental={rules[location].elemental} navigation={navigation} />
+        <PlayingTexts player score={cards.player1Cards.length} />
+        <PlayingTexts
+          NPCName={npc === 'Card Queen' ? npc : npcs[newLocation][npc].name}
+          score={cards.player2Cards.length}
         />
-      ))}
-      {cards.player2Cards.map((playCard: CardInterface) => (
-        <AnimatedCard
-          card={Cards.find(card => card.id === playCard.id) as CardObjectInterface}
-          playCard={playCard}
-          player={false}
-          gameOver={gameOver}
-          rules={rules[location]}
-          preLoadedSounds={preLoadedSounds}
-          handlePlaceCard={handlePlaceCard}
-          key={JSON.stringify([playCard.id, playCard.row, playCard.column, false])}
-        />
-      ))}
+        <PlayerTurnModal visible={visibleModal} value={modalValue} />
+        {cards.player1Cards.map((playCard: CardInterface) => (
+          <AnimatedCard
+            card={Cards.find(card => card.id === playCard.id) as CardObjectInterface}
+            playCard={playCard}
+            player
+            gameOver={gameOver}
+            rules={rules[location]}
+            preLoadedSounds={preLoadedSounds}
+            handlePlaceCard={handlePlaceCard}
+            key={JSON.stringify([playCard.id, playCard.row, playCard.column, true])}
+          />
+        ))}
+        {cards.player2Cards.map((playCard: CardInterface) => (
+          <AnimatedCard
+            card={Cards.find(card => card.id === playCard.id) as CardObjectInterface}
+            playCard={playCard}
+            player={false}
+            gameOver={gameOver}
+            rules={rules[location]}
+            preLoadedSounds={preLoadedSounds}
+            handlePlaceCard={handlePlaceCard}
+            key={JSON.stringify([playCard.id, playCard.row, playCard.column, false])}
+          />
+        ))}
+      </View>
     </View>
   )
 }

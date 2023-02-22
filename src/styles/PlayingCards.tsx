@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import CSSSizes from '../constants/CSSSizes';
 
-const ScreenWidth = Dimensions.get('window').width;
-const ScreenHeight = Dimensions.get('window').height;
+const { ScreenWidth, ScreenHeight } = CSSSizes
 
 const PlayingCardsStyles = StyleSheet.create({
   container: {

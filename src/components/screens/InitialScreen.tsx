@@ -54,6 +54,13 @@ const InitialScreen = ({
           <Image style={styles.backgroundImages} source={Images.explore} />
           <Text style={styles.buttonText}>Explore Mode</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Catalog', { screen: 'Catalog', params: { deck: 'none', type: 'custom' } })}
+          style={styles.exploreButton}
+        >
+          <Image style={styles.backgroundImages} source={Images.deckScreen} />
+          <Text style={styles.buttonText}>Catalog</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )

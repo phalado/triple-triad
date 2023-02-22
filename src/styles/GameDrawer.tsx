@@ -1,10 +1,13 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import CSSSizes from '../constants/CSSSizes';
+
+const { ScreenHeight } = CSSSizes
 
 const GameDrawerStyle = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    height: Dimensions.get('window').height,
+    height: ScreenHeight,
   },
   mainTitle: {
     fontSize: 20,

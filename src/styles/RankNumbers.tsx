@@ -1,13 +1,14 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import CSSSizes from '../constants/CSSSizes';
 
-const cardWidth = Dimensions.get('window').width * 0.17;
-const cardHeight = Dimensions.get('window').height * 0.28;
-
-const rankUpDownConstant = 20;
-const rankLeftRightConstant = 10;
-
-const letterWidth = cardWidth / 6;
-const letterheight = cardHeight / 6;
+const {
+  cardWidth,
+  cardHeight,
+  rankUpDownConstant,
+  rankLeftRightConstant,
+  letterWidth,
+  letterheight
+} = CSSSizes
 
 const RankNumberStyles = StyleSheet.create({
   container: {

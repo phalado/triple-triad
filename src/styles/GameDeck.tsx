@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import CSSSizes from '../constants/CSSSizes';
 
-const cardWidth = Dimensions.get('window').width * 0.17;
-const cardHeight = Dimensions.get('window').height * 0.28;
+const { cardWidth, cardHeight, ScreenWidth } = CSSSizes
 
 const GameDeckStyle = StyleSheet.create({
   container: {
@@ -13,7 +13,7 @@ const GameDeckStyle = StyleSheet.create({
     paddingBottom: 20,
     marginVertical: 8,
     marginHorizontal: 8,
-    width: Dimensions.get('window').width * 0.25,
+    width: ScreenWidth * 0.25,
     alignItems: 'center',
   },
   title: {

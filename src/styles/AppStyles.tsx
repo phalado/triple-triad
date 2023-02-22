@@ -1,30 +1,30 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import CSSSizes from '../constants/CSSSizes';
 
-const screenHeight = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
+const { ScreenWidth, ScreenHeight } = CSSSizes
 
 const AppStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    height: screenHeight,
+    height: ScreenHeight,
     margin: 0,
   },
   halfSections: {
-    height: screenHeight / 2,
-    width: screenWidth,
+    height: ScreenHeight / 2,
+    width: ScreenWidth,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
   exploreButton: {
-    width: screenWidth / 3,
+    width: ScreenWidth / 3,
     height: '100%',
     justifyContent: 'center',
     alignContent: 'center',
   },
   exploreButton2: {
-    width: screenWidth / 4,
+    width: ScreenWidth / 4,
     height: '100%',
     justifyContent: 'center',
     alignContent: 'center',

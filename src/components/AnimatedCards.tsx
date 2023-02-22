@@ -126,7 +126,7 @@ const AnimatedCard = (
       }}
       {...panResponder.panHandlers}
     >
-      <Image style={styles.card} source={Images[playerImage]} />
+      <Image style={styles.cardBackground} source={Images[playerImage]} />
       <Image style={styles.card} source={Images[card.id]} />
       <RankNumbers
         ranks={card.ranks}
@@ -139,7 +139,7 @@ const AnimatedCard = (
 
   return (
     <View style={cardContainer}>
-      <Image style={styles.card} source={Images[playerImage]} />
+      <Image style={styles.cardBackground} source={Images[playerImage]} />
       <Image style={styles.card} source={Images[card.id]} />
       <RankNumbers
         ranks={card.ranks}

@@ -1,9 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import CSSSizes from '../constants/CSSSizes';
 
-const ScreenWidth = Dimensions.get('window').width;
-const ScreenHeight = Dimensions.get('window').height;
-const cardWidth = ScreenWidth * 0.17;
-const cardHeight = ScreenHeight * 0.28;
+const { cardWidth, cardHeight, ScreenHeight, TableWidth } = CSSSizes
 
 const CardStyles = StyleSheet.create({
   container: {
@@ -12,13 +10,13 @@ const CardStyles = StyleSheet.create({
     height: cardHeight,
   },
   leftColumn: {
-    left: (ScreenWidth - (3 * cardWidth)) / 2,
+    left: (TableWidth - (3 * cardWidth)) / 2,
   },
   centerColumn: {
-    left: (ScreenWidth - cardWidth) / 2,
+    left: (TableWidth - cardWidth) / 2,
   },
   rightColumn: {
-    left: (ScreenWidth + cardWidth) / 2,
+    left: (TableWidth + cardWidth) / 2,
   },
   topRow: {
     top: (ScreenHeight - (3 * cardHeight)) / 2,
@@ -34,6 +32,12 @@ const CardStyles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
+  },
+  cardBackground: {
+    position: 'absolute',
+    width: '96%',
+    height: '96%',
+    margin: '2%'
   },
 });
 

@@ -7,10 +7,11 @@ import styles from "../styles/CatalogScreen"
 
 const CatalogCard = (
   props: {
-    card: CardObjectInterface
+    card: CardObjectInterface,
+    cardType: string
   }
 ) => {
-  const { card } = props;
+  const { card, cardType } = props;
 
   return (
     <>
@@ -24,8 +25,8 @@ const CatalogCard = (
         />
       </View>
       <View style={styles.aboutCard}>
-        <Text style={styles.aboutText}>{card.name + " - Monster"}</Text>
-        <Text style={styles.aboutText}>{card.element}</Text>
+        <Text style={styles.aboutText}>{card.name + " - " + cardType}</Text>
+        <Text style={styles.aboutText}>{"Element: " + card.element}</Text>
       </View>
     </>
   );

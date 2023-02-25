@@ -12,12 +12,23 @@ const CatalogScreenStyles = StyleSheet.create({
   leftContainer: {
     width: '70%',
     height: '95%',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'relative'
   },
   title: {
     fontSize: 30,
     margin: 10,
     color: 'white'
+  },
+  catalogTypeButton: {
+    position: 'absolute',
+    right: '15%',
+    top: '4%'
+  },
+  catalogTypeButtonText: {
+    fontSize: 20,
+    color: 'white',
+    textDecorationLine: 'underline'
   },
   levelContainer: {
     flexDirection: 'row',
@@ -61,6 +72,7 @@ const CatalogScreenStyles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     flex: 1,
+    textAlign: 'center'
   },
   rightContainer: {
     width: '30%',
@@ -93,6 +105,23 @@ const CatalogScreenStyles = StyleSheet.create({
   },
   aboutText: {
     color: 'white'
+  },
+  albumScrollView: {
+    width: '90%',
+  },
+  albumContainer: {
+    width: '100%',
+    height: ScreenHeight,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    flexWrap: 'wrap',
+    padding: 16,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    alignSelf: 'stretch',
+  },
+  miniCardContainer: {
+    width: '22%',
+    height: '33%',
   }
 })
 

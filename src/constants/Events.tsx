@@ -1,4 +1,5 @@
 export default {
+  newGame: true,
   caraway: true,
   jack: true,
   joker: true,

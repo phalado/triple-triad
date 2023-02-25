@@ -12,6 +12,7 @@ LogBox.ignoreLogs([
 
 const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
   const { navigation, route } = props
+  const { eventNewGame } = route.params
   const [visible, setVisible] = useState(false);
 
   const startScene = () => {
@@ -46,7 +47,7 @@ const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
           ]);
         }}
       />
-      <Button
+      {!eventNewGame && <Button
         title="Continue"
         onPress={() => {
           navigation.pop();
@@ -56,7 +57,7 @@ const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
             audio: balambGarden,
           });
         }}
-      />
+      />}
       <Button title="Go Back" onPress={() => navigation.pop()} />
     </View>
   );

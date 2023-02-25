@@ -13,12 +13,16 @@ const InitialScreen = ({
   navigation,
   resetPlayerDeckExplore,
   restartEvents,
-  loadSound
+  loadSound,
+  events,
+  changeEvent
 }: {
   navigation: any,
   resetPlayerDeckExplore: () => void,
   restartEvents: () => void,
-  loadSound: (name: string, sound: any) => void
+  loadSound: (name: string, sound: any) => void,
+  events: { [event: string]: boolean },
+  changeEvent: (event: string) => void
 }) => {
   const { resetTable, createCard } = useContext(GameContext)
 
@@ -42,13 +46,14 @@ const InitialScreen = ({
   const handleResetDeck = () => {
     resetPlayerDeckExplore();
     restartEvents();
+    changeEvent('newGame')
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.halfSections}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Explore', { handleResetDeck })}
+          onPress={() => navigation.navigate('Explore', { handleResetDeck, eventNewGame: events.newGame })}
           style={styles.exploreButton}
         >
           <Image style={styles.backgroundImages} source={Images.explore} />

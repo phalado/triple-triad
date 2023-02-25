@@ -1,24 +1,41 @@
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import CatalogCard from "../CatalogCard";
 
 import Cards from "../../constants/Cards";
 import Images from "../../constants/Images";
-import getCardCatalogTableData from "../../helpers/CatalogHelpers";
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
 import styles from "../../styles/CatalogScreen"
+import CatalogCardList from "../CatalogCardList";
+import CatalogCardAlbum from "../CatalogCardAlbum";
 
 const CatalogScreen = (props: { playerCards: { [card: string]: number } }) => {
   const { playerCards } = props;
   const [level, setLevel] = useState(1)
   const [selectedCard, setSelectedCard] = useState(0)
-  const tableHead = ['Id', 'Name', 'Element', 'Quantity']
+  const [catalogTypeList, setCatalogTypeList] = useState(true)
+
+  const cardTypes = (level: number) => {
+    switch (true) {
+      case level <= 5: return 'Monster'
+      case level <= 7: return 'Boss'
+      case level <= 9: return 'Guardian Force'
+      default: return 'Character'
+    }
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
         <Text style={styles.title}>Catalog</Text>
+        <TouchableOpacity
+          style={styles.catalogTypeButton}
+          onPress={() => setCatalogTypeList(prev => !prev)}
+        >
+          <Text style={styles.catalogTypeButtonText}>
+            {catalogTypeList ? 'List' : 'Album'}
+          </Text>
+        </TouchableOpacity>
         <View style={styles.levelContainer}>
           <TouchableOpacity
             style={styles.levelIconContainer}
@@ -27,7 +44,7 @@ const CatalogScreen = (props: { playerCards: { [card: string]: number } }) => {
           >
             <Image style={styles.levelIcon} source={Images.turn2} />
           </TouchableOpacity>
-          <Text style={styles.levelTitle}>{"level " + level}</Text>
+          <Text style={styles.levelTitle}>{"Level " + level + ' - ' + cardTypes(level)}</Text>
           <TouchableOpacity
             style={styles.levelIconContainer}
             disabled={level === 10}
@@ -36,36 +53,29 @@ const CatalogScreen = (props: { playerCards: { [card: string]: number } }) => {
             <Image style={styles.levelIcon} source={Images.turn1} />
           </TouchableOpacity>
         </View>
-        <ScrollView style={{ width: '90%', height: '50%' }}>
-          <View style={styles.tableContainer}>
-            <View style={styles.tableHead}>
-              {tableHead.map((value) => (
-              <Text style={styles.tableText} key={value}>{value}</Text>)
-              )}
-            </View>
-            {getCardCatalogTableData(playerCards, level).map(row => (
-              <TouchableOpacity
-                onPress={() => setSelectedCard(row[0] as number)}
-                key={JSON.stringify(row)}
-              >
-                <View style={styles.tableHead}>
-                  {row.map((value, index) => (
-                    <Text style={styles.tableText} key={JSON.stringify([index, value])}>{value}</Text>
-                  ))}
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
+        {catalogTypeList ?
+          <CatalogCardList
+            playerCards={playerCards}
+            setSelectedCard={setSelectedCard}
+            level={level}
+          />
+        :
+          <CatalogCardAlbum
+            playerCards={playerCards}
+            setSelectedCard={setSelectedCard}
+            level={level}
+          />
+        }
       </View>
       <View style={styles.rightContainer}>
-        {selectedCard === 0 ? (
+        {!playerCards[selectedCard] ? (
           <View style={styles.cardContainer}>
             <Image style={styles.card} source={Images.cardBack} />
           </View>
         ) : (
           <CatalogCard
             card={Cards.find(card => card.id === selectedCard) as CardObjectInterface}
+            cardType={cardTypes(level)}
           />
         )}
       </View>

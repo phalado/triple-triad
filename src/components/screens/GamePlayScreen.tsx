@@ -52,8 +52,7 @@ const GamePlayScreen = (
   let [gameOver, setGameOver] = useState<boolean | 'tie' | 'win' | 'loose'>(false);
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
-  const { npcDeck, location, npc } = route.params //? route.params
-    // : { npcDeck: null, location: null, npc: null, gameMusic: null };
+  const { npcDeck, location, npc } = route.params
   const [p1InitialCards] = useState(cards.player1Cards.map((card: CardInterface) => card.id));
   // const rules = PlaceRules
 
@@ -160,7 +159,7 @@ const GamePlayScreen = (
         <Table elemental={rules[location].elemental} navigation={navigation} />
         <PlayingTexts player score={cards.player1Cards.length} />
         <PlayingTexts
-          NPCName={npc === 'Card Queen' ? npc : npcs[newLocation][npc].name}
+          NPCName={npc === 'Card Queen' || location === 'random' ? npc : npcs[newLocation][npc].name}
           score={cards.player2Cards.length}
         />
         <PlayerTurnModal visible={visibleModal} value={modalValue} />

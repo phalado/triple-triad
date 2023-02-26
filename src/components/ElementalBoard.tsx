@@ -4,12 +4,12 @@ import Images from "../constants/Images";
 import { CellInterface } from "../interfaces/TableInterface";
 import styles from '../styles/Table';
 import { GameContext } from "./GameContext";
+import CSSSizes from "../constants/CSSSizes";
 
 const ElementalBoard = () => {
   const { table, updateTable } = useContext(GameContext)
   const elements = ['fire', 'water', 'ice', 'wind', 'poison', 'thunder', 'earth', 'holy'];
-  const cardWidth = Dimensions.get('window').width * 0.17;
-  const cardHeight = Dimensions.get('window').height * 0.28;
+  const { cardWidth, cardHeight } = CSSSizes
 
   useEffect(() => {
     const getRandomElement = () => {

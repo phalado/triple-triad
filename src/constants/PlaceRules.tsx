@@ -1,5 +1,5 @@
 export default {
-  custom: {
+  random: {
     open: true,
     plus: false,
     same: false,

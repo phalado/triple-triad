@@ -96,14 +96,6 @@ const GameOverScreen = (props: {
     newCards.forEach((card, index) => {
       createCard(false, { id: card, row: 3 + index, column: 3, dragable: true });
     });
-
-    const place = places.find(place => place[1] === location) as any[]
-    navigation.pop();
-    navigation.push('Explore Scenes', {
-      place: place[1],
-      image: place[2],
-      audio: place[3],
-    });
   };
 
   const sudenDeathGame = () => {
@@ -134,7 +126,7 @@ const GameOverScreen = (props: {
     );
   }
 
-  if (npcDeck) {
+  if (npcDeck && location !== 'random') {
     const winCard = (cardId: number) => {
       if (npc === 'Card Queen') {
         if (cardId === 48 || cardId > 77) removeSpecialCardQueen(cardId)
@@ -301,12 +293,17 @@ const GameOverScreen = (props: {
           title="New random game"
           onPress={() => {
             resetGame();
-            navigation.push('GamePlay', { screen: 'GamePlay' });
+            navigation.pop();
+            navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location, npc } });
           }}
         />
         <Button
           title="Back to initial screen"
-          onPress={() => {}}
+          onPress={() => {
+            resetGame();
+            navigation.pop();
+            navigation.push('Initial Screen')
+          }}
         />
       </View>
     </View>

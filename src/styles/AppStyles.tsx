@@ -11,14 +11,14 @@ const AppStyles = StyleSheet.create({
     margin: 0,
   },
   halfSections: {
-    height: ScreenHeight / 2,
+    height: ScreenHeight / 2.5,
     width: ScreenWidth,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
   exploreButton: {
-    width: ScreenWidth / 3,
+    width: ScreenWidth / 4,
     height: '100%',
     justifyContent: 'center',
     alignContent: 'center',

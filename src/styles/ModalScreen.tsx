@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import CSSSizes from '../constants/CSSSizes';
 
-const { cardWidth, cardHeight } = CSSSizes
+const { cardWidth, cardHeight, ScreenHeight } = CSSSizes
 
 const ModalStyles = StyleSheet.create({
   container: {
@@ -95,6 +95,26 @@ const ModalStyles = StyleSheet.create({
     resizeMode: 'stretch',
     position: 'absolute',
   },
+  optionsContainer: {
+    backgroundColor: 'white',
+    alignContent: 'center',
+    justifyContent: 'space-evenly',
+    marginLeft: '30%',
+    width: '40%',
+    height: ScreenHeight * 0.8,
+  },
+  options: {
+    marginHorizontal: '30%',
+    width: '40%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  rulesButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    margin: 20
+  }
 });
 
 export default ModalStyles;

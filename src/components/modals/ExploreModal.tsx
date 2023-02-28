@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { Button, Text, View } from 'react-native'
 import Modal from 'react-native-modal'
-import styles from '../../styles/ModalScreen';
 import CardModal from './CardModal';
+import styles from '../../styles/ModalScreen';
+import Texts from '../../constants/Texts';
+import GameOptionsInterface from '../../interfaces/GameOptionsInterface';
 
 const ExploreModal = (
   props: {
     visible: boolean,
     startScene: () => void
+    gameOptions: GameOptionsInterface
     addCardToExploreDeck: (card: number) => void
     createNPCList: () => void
     restartRules: () => void
@@ -16,10 +19,12 @@ const ExploreModal = (
   const {
     visible,
     startScene,
+    gameOptions,
     addCardToExploreDeck,
     createNPCList,
     restartRules
   } = props;
+  const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
   const [cardModalVisible, setCardModalVisible] = useState(false)
   const [modalCard, setModalCard] = useState(1);
   const [cardOwner, setCardOwner] = useState('player0');
@@ -68,13 +73,9 @@ const ExploreModal = (
     <Modal isVisible={visible}>
       <CardModal visible={cardModalVisible} cardId={modalCard} cardOwner={cardOwner} />
       <View style={styles.newContainer}>
-        <Text style={styles.speakingText}>
-          Oh, hey, would you like to have these?
-          My brother gave me these cards but they&apos;re really not my thing.
-          You can have them if you&apos;d like.
-        </Text>
+        <Text style={styles.speakingText}>{texts.newGame}</Text>
         <Button
-          title="Whatever."
+          title={texts.whatever}
           onPress={() => addFirstCardsToDeck([1, 2, 4, 6, 7, 8, 10, 85])}
         />
       </View>

@@ -1,14 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Images from '../../constants/Images';
-import { cardSound, gameTheme, special } from '../../constants/Sounds';
-import { getRandomCards } from '../../helpers/OtherHelpers';
-import styles from '../../styles/AppStyles'
 import { Audio } from 'expo-av';
 import { GameContext } from '../GameContext';
 import RandomRulesModal from '../modals/RandomRulesModal';
+import { getRandomCards } from '../../helpers/OtherHelpers';
+
+import Images from '../../constants/Images';
+import { cardSound, gameTheme, special } from '../../constants/Sounds';
+import Texts from '../../constants/Texts';
+
 import RulesInterface, { LocalRulesInterface } from '../../interfaces/RulesInterface';
+import styles from '../../styles/AppStyles'
+import GameOptionsInterface from '../../interfaces/GameOptionsInterface';
 
 const InitialScreen = ({
   navigation,
@@ -18,7 +22,8 @@ const InitialScreen = ({
   restartEvents,
   loadSound,
   changeEvent,
-  changeRandomRules
+  changeRandomRules,
+  gameOptions
 }: {
   navigation: any,
   events: { [event: string]: boolean },
@@ -27,10 +32,12 @@ const InitialScreen = ({
   restartEvents: () => void,
   loadSound: (name: string, sound: any) => void,
   changeEvent: (event: string) => void,
-  changeRandomRules: (rules: LocalRulesInterface) => void
+  changeRandomRules: (rules: LocalRulesInterface) => void,
+  gameOptions: GameOptionsInterface
 }) => {
   const { resetTable, createCard, resetCards } = useContext(GameContext)
   const [rulesModal, setRulesModal] = useState(false)
+  const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
 
   useEffect(() => {
     resetTable();
@@ -73,11 +80,13 @@ const InitialScreen = ({
         />
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Explore', { handleResetDeck, eventNewGame: events.newGame })}
+          onPress={() => navigation.navigate('Explore', {
+            handleResetDeck, eventNewGame: events.newGame, language: gameOptions.language
+          })}
           style={styles.exploreButton}
         >
           <Image style={styles.backgroundImages} source={Images.explore} />
-          <Text style={styles.buttonText}>Explore Mode</Text>
+          <Text style={styles.buttonText}>{texts.exploreMode}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => setRulesModal(true)} style={styles.exploreButton}>
@@ -85,7 +94,7 @@ const InitialScreen = ({
             style={styles.backgroundImages}
             source={Images.randomGame}
           />
-          <Text style={styles.buttonText}>Random Game</Text>
+          <Text style={styles.buttonText}>{texts.randomGame}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -93,7 +102,15 @@ const InitialScreen = ({
           style={styles.exploreButton}
         >
           <Image style={styles.backgroundImages} source={Images.deckScreen} />
-          <Text style={styles.buttonText}>Catalog</Text>
+          <Text style={styles.buttonText}>{texts.catalog}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Options')}
+          style={styles.exploreButton}
+        >
+          <Image style={styles.backgroundImages} source={Images.options} />
+          <Text style={styles.buttonText}>{texts.options}</Text>
         </TouchableOpacity>
       </View>
     </View>

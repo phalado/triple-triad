@@ -3,7 +3,8 @@ import StateInterface from '../../interfaces/StateInterface';
 import CatalogScreen from '../screens/CatalogScreen';
 
 const mapStateToProps = (state: StateInterface) => ({
-  playerCards: state.playerCards
+  playerCards: state.playerCards,
+  gameOptions: state.gameOptions
 });
 
 export default connect(mapStateToProps, null)(CatalogScreen);

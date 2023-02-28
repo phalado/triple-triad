@@ -18,6 +18,8 @@ import RulesInterface from "../../interfaces/RulesInterface";
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
 import { cardClubEvents, rareCardsQuest } from "../../helpers/ExploreModeHelpers";
 import { NpcsInterface } from "../../interfaces/NpcsInterface";
+import Texts from "../../constants/Texts";
+import GameOptionsInterface from "../../interfaces/GameOptionsInterface";
 
 const GameOverScreen = (props: {
   navigation: any
@@ -27,6 +29,7 @@ const GameOverScreen = (props: {
   events: { [event: string]: boolean }
   npcs: NpcsInterface
   preLoadedSounds: any
+  gameOptions: GameOptionsInterface
   addCardToNPC: (data: { npc: string, card: number, location: string }) => void
   removeCardFromNPC: (data: { npc: string, card: number, location: string }) => void
   changeNPCStreak: (data: { npc: string, streak: 'win' | 'loose' | 'tie', location: string }) => void
@@ -46,6 +49,7 @@ const GameOverScreen = (props: {
     events,
     npcs,
     preLoadedSounds,
+    gameOptions,
     addCardToNPC,
     removeCardFromNPC,
     changeNPCStreak,
@@ -63,6 +67,7 @@ const GameOverScreen = (props: {
   const [visible, setVisible] = useState(false);
   const [modalCard, setModalCard] = useState(1);
   const [cardOwner, setCardOwner] = useState('player0');
+  const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
 
   useFocusEffect(
     useCallback(() => {
@@ -121,7 +126,7 @@ const GameOverScreen = (props: {
       <View style={styles.container}>
         <Image style={styles.backgroundImage} source={Images.board} />
         <Image style={styles.gameOverImage} source={Images[gameOver]} />
-        <Text style={styles.suddenDeathText}>SUDDEN DEATH!!!</Text>
+        <Text style={styles.suddenDeathText}>{texts.suddenDeath}</Text>
       </View>
     );
   }
@@ -232,7 +237,7 @@ const GameOverScreen = (props: {
           <CardModal visible={visible} cardId={modalCard} cardOwner={cardOwner} />
           <Image style={styles.backgroundImage} source={Images.board} />
           <Image style={styles.gameOverImage} source={Images[gameOver]} />
-          <Text style={styles.text}>Choose one card</Text>
+          <Text style={styles.text}>{texts.chooseOneCard}</Text>
           <View style={styles.chooseCardContainer}>
             {npcDeck.map((thisCard: number, index: number) => loadCard(thisCard, false, index))}
           </View>
@@ -246,12 +251,12 @@ const GameOverScreen = (props: {
           <CardModal visible={visible} cardId={modalCard} cardOwner={cardOwner} />
           <Image style={styles.backgroundImage} source={Images.board} />
           <Image style={styles.gameOverImage} source={Images[gameOver]} />
-          <Text style={styles.text}>One card will be choosen</Text>
+          <Text style={styles.text}>{texts.cardWillBeChoosen}</Text>
           <View style={styles.chooseCardContainer}>
             {p1InitialCards.map((thisCard: number, index: number) => loadCard(thisCard, true, index))}
           </View>
           <Button
-            title="Go back"
+            title={texts.goBack}
             onPress={() => looseCard(Math.max(...p1InitialCards))}
           />
         </View>
@@ -267,7 +272,7 @@ const GameOverScreen = (props: {
           </View>
           <View style={styles.buttonsContainer}>
             <Button
-              title="Go back"
+              title={texts.goBack}
               onPress={() => {
                 const myPlace = places.find(p => p[1] === location) as any[];
                 if (npc === 'cardQueen') changeCardQueenStreak('tie')
@@ -290,7 +295,7 @@ const GameOverScreen = (props: {
       <Image style={styles.gameOverImage} source={Images[gameOver]} />
       <View style={styles.buttonsContainer}>
         <Button
-          title="New random game"
+          title={texts.newRandomGame}
           onPress={() => {
             resetGame();
             navigation.pop();
@@ -298,7 +303,7 @@ const GameOverScreen = (props: {
           }}
         />
         <Button
-          title="Back to initial screen"
+          title={texts.backInitialScreen}
           onPress={() => {
             resetGame();
             navigation.pop();

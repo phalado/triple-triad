@@ -5,6 +5,7 @@ import places from '../../constants/Places';
 import { balambGarden } from '../../constants/Sounds';
 import ExploreModal from '../containers/ExploreModal';
 import styles from '../../styles/ExploreInitial';
+import Texts from '../../constants/Texts';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -12,8 +13,9 @@ LogBox.ignoreLogs([
 
 const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
   const { navigation, route } = props
-  const { eventNewGame } = route.params
+  const { eventNewGame, language } = route.params
   const [visible, setVisible] = useState(false);
+  const [texts] = useState(Texts[(language as 'eng' | 'ptbr')])
 
   const startScene = () => {
     navigation.pop();
@@ -31,14 +33,14 @@ const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
       <Button
         title="New Game"
         onPress={() => {
-          Alert.alert('Wait!', 'If you have a saved game this will erase your data and start a new one. Are you sure?', [
+          Alert.alert(texts.wait, texts.newGameAlert, [
             {
-              text: 'I can\'t just run away. (Cancel)',
+              text: texts.runAway,
               onPress: () => null,
               style: 'cancel',
             },
             {
-              text: 'Whatever (Ok)',
+              text: texts.whatever,
               onPress: () => {
                 route.params.handleResetDeck();
                 setVisible(true);
@@ -48,7 +50,7 @@ const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
         }}
       />
       {!eventNewGame && <Button
-        title="Continue"
+        title={texts.continue}
         onPress={() => {
           navigation.pop();
           navigation.push('Explore Scenes', {
@@ -58,7 +60,7 @@ const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
           });
         }}
       />}
-      <Button title="Go Back" onPress={() => navigation.pop()} />
+      <Button title={texts.goBack} onPress={() => navigation.pop()} />
     </View>
   );
 }

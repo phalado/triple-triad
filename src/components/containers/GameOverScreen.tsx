@@ -11,7 +11,8 @@ const mapStateToProps = (state: StateInterface) => ({
   playerCards: state.playerCards,
   events: state.events,
   npcs: state.npcs,
-  preLoadedSounds: state.preLoadedSounds
+  preLoadedSounds: state.preLoadedSounds,
+  gameOptions: state.gameOptions
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

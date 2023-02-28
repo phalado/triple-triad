@@ -1,6 +1,7 @@
 import CardInterface from "./CardInterface"
 import CardObjectInterface from "./CardObjectInterface"
 import DecksInterface from "./DecksInterface"
+import GameOptionsInterface from "./GameOptionsInterface"
 import { NpcsInterface } from "./NpcsInterface"
 import PreLoadedSoundsInterface from "./PreLoadedSounds"
 import RulesInterface from "./RulesInterface"
@@ -17,5 +18,6 @@ export default interface StateInterface {
   playerCards: { [card: string]: number }
   rules: RulesInterface
   preLoadedSounds: PreLoadedSoundsInterface
-  cardQueen: CardObjectInterface
+  cardQueen: CardObjectInterface,
+  gameOptions: GameOptionsInterface
 }

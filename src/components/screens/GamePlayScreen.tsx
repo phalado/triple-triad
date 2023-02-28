@@ -19,6 +19,7 @@ import RulesInterface from "../../interfaces/RulesInterface";
 import { NpcsInterface } from "../../interfaces/NpcsInterface";
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
 import PreLoadedSoundsInterface from "../../interfaces/PreLoadedSounds";
+import GameOptionsInterface from "../../interfaces/GameOptionsInterface";
 
 LogBox.ignoreLogs([
   'Found screens with the same name nested inside one another.',
@@ -29,11 +30,12 @@ const GamePlayScreen = (
     rules: RulesInterface,
     npcs: NpcsInterface,
     preLoadedSounds: PreLoadedSoundsInterface,
+    gameOptions: GameOptionsInterface,
     navigation: any,
     route: any
   }
 ) => {
-  const { rules, npcs, preLoadedSounds, navigation, route } = props;
+  const { rules, npcs, preLoadedSounds, gameOptions, navigation, route } = props;
 
   const {
     table,
@@ -49,12 +51,11 @@ const GamePlayScreen = (
     setTurn
   } = useContext(GameContext)
 
-  let [gameOver, setGameOver] = useState<boolean | 'tie' | 'win' | 'loose'>(false);
+  let [gameOver] = useState<boolean | 'tie' | 'win' | 'loose'>(false);
   const [visibleModal, setVisibleModal] = useState(false);
   const [modalValue, setModalValue] = useState('none');
   const { npcDeck, location, npc } = route.params
   const [p1InitialCards] = useState(cards.player1Cards.map((card: CardInterface) => card.id));
-  // const rules = PlaceRules
 
   useFocusEffect(
     useCallback(() => {
@@ -162,7 +163,7 @@ const GamePlayScreen = (
           NPCName={npc === 'Card Queen' || location === 'random' ? npc : npcs[newLocation][npc].name}
           score={cards.player2Cards.length}
         />
-        <PlayerTurnModal visible={visibleModal} value={modalValue} />
+        <PlayerTurnModal visible={visibleModal} value={modalValue} gameOptions={gameOptions} />
         {cards.player1Cards.map((playCard: CardInterface) => (
           <AnimatedCard
             card={Cards.find(card => card.id === playCard.id) as CardObjectInterface}

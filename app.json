@@ -7,7 +7,7 @@
     "icon": "./assets/boardIconMaterial.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/boardIconMaterial.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,12 +24,12 @@
     "android": {
       "package": "com.phalado.tripletriadexplore",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/boardIconMaterial.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/boardIconMaterial.png"
     },
     "extra": {
       "eas": {

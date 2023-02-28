@@ -11,7 +11,8 @@ import { changeRandomRules } from '../../slicers/rulesSlicer';
 
 const mapStateToProps = (state: StateInterface) => ({
   events: state.events,
-  rules: state.rules
+  rules: state.rules,
+  gameOptions: state.gameOptions
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

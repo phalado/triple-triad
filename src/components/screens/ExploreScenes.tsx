@@ -12,6 +12,8 @@ import styles from '../../styles/ExploreScenes';
 import { useFocusEffect } from '@react-navigation/native';
 import { GameContext } from '../GameContext';
 import CardQueenInterface from '../../interfaces/CardQueenInterface';
+import Texts from '../../constants/Texts';
+import GameOptionsInterface from '../../interfaces/GameOptionsInterface';
 
 const ExploreScenes = (
   props:
@@ -22,7 +24,8 @@ const ExploreScenes = (
     events: { [event: string]: boolean }
     rules: RulesInterface
     playerCards: { [index: string]: number }
-    cardQueen: any
+    cardQueen: any,
+    gameOptions: GameOptionsInterface
     addCardToExploreDeck: (card: number) => void,
     createNPCList: () => void
     changeEvent: (event: string) => void
@@ -36,13 +39,15 @@ const ExploreScenes = (
     rules,
     playerCards,
     cardQueen,
+    gameOptions,
     addCardToExploreDeck,
     createNPCList,
     changeEvent,
   } = props;
   const { place, image, audio } = route.params;
+  const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
   const [visible, setVisible] = useState(false);
-  const [tableHead] = useState(['Name', 'Wins', 'Looses', 'Ties', 'Chalenge']);
+  const [tableHead] = useState(texts.npcTableHead);
   const [tableData] = useState(getTableData(npcs, place, cardQueen));
   const [cardVisible, setCardVisible] = useState(false);
   const [cardOwner, setCardOwner] = useState('player0');
@@ -125,15 +130,15 @@ const ExploreScenes = (
       <View style={styles.subContainerLeft}>
         <PlacesModal visible={visible} handleTravel={handleTravel} />
         <CardModal visible={cardVisible} cardId={48} cardOwner={cardOwner} />
-        <Button title="Travel" onPress={() => setVisible(true)} />
+        <Button title={texts.travel} onPress={() => setVisible(true)} />
         {/* <Button
           title="Edit Deck"
           onPress={() => navigation.navigate('Game Deck', { screen: 'Game Deck', params: { deck: 'none', type: 'player' } })}
         /> */}
-        <Button title="Go Back" onPress={() => navigation.pop()} />
+        <Button title={texts.goBack} onPress={() => navigation.pop()} />
       </View>
       <View style={styles.subContainerRight}>
-        <Text style={styles.text}>List of players</Text>
+        <Text style={styles.text}>{texts.listOfPlayers}</Text>
         <ScrollView style={{ width: '90%', height: '50%' }}>
           <NPCsTable tableHead={tableHead} tableData={tableData as any} startGame={startGame} />
         </ScrollView>

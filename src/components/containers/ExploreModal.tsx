@@ -6,7 +6,7 @@ import { restartRules } from '../../slicers/rulesSlicer';
 import ExploreModal from '../modals/ExploreModal';
 
 const mapStateToProps = (state: StateInterface) => ({
-  // playerCards: state.playerCards,
+  gameOptions: state.gameOptions
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

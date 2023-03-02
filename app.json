@@ -7,7 +7,7 @@
     "icon": "./assets/card-back.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/board-mat.jpg",
+      "image": "./assets/boardIconMaterial.png",
       "resizeMode": "stretch",
       "backgroundColor": "#ffffff"
     },

@@ -40,14 +40,6 @@ export default {
       loose: 0,
       tie: 0,
     },
-    kadowaki: {
-      name: 'Dr. Kadowaki',
-      cards: [1, 2, 3, 4, 5],
-      special: [],
-      win: 0,
-      loose: 0,
-      tie: 0,
-    },
     doorman: {
       name: 'Doorman',
       cards: [1, 2, 3, 5],

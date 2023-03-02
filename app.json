@@ -4,11 +4,11 @@
     "slug": "triple-triad-explore",
     "version": "2.0.0",
     "orientation": "landscape",
-    "icon": "./assets/boardIconMaterial.png",
+    "icon": "./assets/card-back.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/boardIconMaterial.png",
-      "resizeMode": "contain",
+      "image": "./assets/board-mat.jpg",
+      "resizeMode": "stretch",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -24,12 +24,12 @@
     "android": {
       "package": "com.phalado.tripletriadexplore",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/boardIconMaterial.png",
+        "foregroundImage": "./assets/card-back.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/boardIconMaterial.png"
+      "favicon": "./assets/card-back.png"
     },
     "extra": {
       "eas": {

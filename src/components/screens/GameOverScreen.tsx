@@ -68,6 +68,16 @@ const GameOverScreen = (props: {
   const [modalCard, setModalCard] = useState(1);
   const [cardOwner, setCardOwner] = useState('player0');
   const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
+  const cardClub = [
+    'CC Jack',
+    'CC Magician Joker',
+    'CC Knight Club',
+    'CC Princess Diamond',
+    'CC Prince Spade',
+    'CC Queen of Heart - Xu',
+    'Dr. Kadowaki',
+    'CC Master King - Quistis'
+  ]
 
   useFocusEffect(
     useCallback(() => {
@@ -137,8 +147,10 @@ const GameOverScreen = (props: {
         if (cardId === 48 || cardId > 77) removeSpecialCardQueen(cardId)
         changeCardQueenStreak('win')
       } else{
-        if (cardId === 48 || cardId > 77) removeCardFromNPC({ location, npc, card: cardId });
-        changeNPCStreak({ location, npc, streak: 'win' });
+        const newLocation = cardClub.includes(npc) ? 'cardClub' : location
+
+        if (cardId === 48 || cardId > 77) removeCardFromNPC({ location: newLocation, npc, card: cardId });
+        changeNPCStreak({ location: newLocation, npc, streak: 'win' });
       }
       setModalCard(cardId);
       addCardToExploreDeck(cardId);
@@ -155,7 +167,7 @@ const GameOverScreen = (props: {
             place: myPlace[1], image: myPlace[2], audio: myPlace[3]
           });
           cardClubEvents(events, changeEvent, npc, npcs, addCardToNPC, texts);
-        }, 1000);
+        }, 500);
       }, 1000);
     };
 
@@ -166,7 +178,10 @@ const GameOverScreen = (props: {
         );
       }
       if (npc === 'Card Queen') changeCardQueenStreak('loose')
-      else changeNPCStreak({ location, npc, streak: 'loose' });
+      else {
+        const newLocation = cardClub.includes(npc) ? 'cardClub' : location
+        changeNPCStreak({ location: newLocation, npc, streak: 'loose' });
+      }
       removeCardFromExploreDeck(cardId);
       setModalCard(cardId);
       setCardOwner('player1');
@@ -276,7 +291,10 @@ const GameOverScreen = (props: {
               onPress={() => {
                 const myPlace = places.find(p => p[1] === location) as any[];
                 if (npc === 'cardQueen') changeCardQueenStreak('tie')
-                changeNPCStreak({ location, npc, streak: 'tie' });
+                else {
+                  const newLocation = cardClub.includes(npc) ? 'cardClub' : location
+                  changeNPCStreak({ location: newLocation, npc, streak: 'tie' });
+                }
                 navigation.pop();
                 navigation.push('Explore Scenes', {
                   place: myPlace[1], image: myPlace[2], audio: myPlace[3]

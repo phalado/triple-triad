@@ -63,6 +63,7 @@ const CatalogScreen = (
             playerCards={playerCards}
             setSelectedCard={setSelectedCard}
             level={level}
+            texts={texts}
           />
         :
           <CatalogCardAlbum
@@ -81,6 +82,7 @@ const CatalogScreen = (
           <CatalogCard
             card={Cards.find(card => card.id === selectedCard) as CardObjectInterface}
             cardType={cardTypes(level)}
+            language={gameOptions.language}
           />
         )}
       </View>

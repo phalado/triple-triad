@@ -1,15 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
+import { GameContext } from "./GameContext";
 import { Image, Text, View } from "react-native";
 import Images from "../constants/Images";
 import styles from '../styles/PlayingCards';
-import { GameContext } from "./GameContext";
 
 const PlayingTexts = (props: {
   NPCName?: string
   player?: boolean
   score: number
+  username?: string
+  texts: { [key: string]: string | string[] }
 }) => {
-  const { NPCName, player, score } = props;
+  const { NPCName, player, score, username, texts } = props;
   const { turn } = useContext(GameContext)
 
   const contStyle = player
@@ -29,13 +31,11 @@ const PlayingTexts = (props: {
   return (
     <View style={contStyle}>
       <Text style={{ ...styles.nameText, color: myColor }}>
-        {player ? 'Player 1' : NPCName}
+        {player ? username : NPCName}
       </Text>
       {getTurnImage()}
       <Text style={{ ...styles.scoreText, color: myColor }}>
-        Score:
-        {' '}
-        {score}
+        {(texts.score as string) + score}
       </Text>
     </View>
   )

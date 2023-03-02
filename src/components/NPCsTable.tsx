@@ -12,10 +12,11 @@ const NPCsTable = (
   props: {
     tableHead: string[],
     tableData: (string | number | { cards: number[]; special: number[]; })[],
-    startGame: (cards: number[], row: any) => void
+    startGame: (cards: number[], row: any) => void,
+    texts: { [key: string]: (string | string[]) }
   }
 ) => {
-  const { tableHead, tableData, startGame } = props;
+  const { tableHead, tableData, startGame, texts } = props;
 
   const generateKey = (npcName: string, value: any, index: number) => {
     return npcName + String(value) + String(index)
@@ -54,7 +55,7 @@ const NPCsTable = (
                 }
                 return (
                   <Button
-                    title="Challenge"
+                    title={texts.challenge as string}
                     onPress={() => startGame(getNPCsCards((value as cardInterface).cards, (value as cardInterface).special), (row as any)[5])}
                     key={generateKey(npcName, value, index)}
                   />

@@ -4,23 +4,28 @@ import Cards from "../../constants/Cards";
 import { getCardsFromPlayerDeck } from "../../helpers/ExploreModeHelpers";
 import ChooseCardsDropZone from "../ChooseCardsDropZone";
 import GameDeckFlatList from "../GameDeckFlatList";
-import styles from '../../styles/GameDeck';
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
+import GameOptionsInterface from "../../interfaces/GameOptionsInterface";
 import { GameContext } from "../GameContext";
+import styles from '../../styles/GameDeck';
+import Texts from "../../constants/Texts";
 
 const ChooseCardsScreen = (
   props: {
     navigation: any
     route: any
-    playerCards: { [index: string]: number }
+    playerCards: { [index: string]: number },
+    gameOptions: GameOptionsInterface
   }
 ) => {
-  const { navigation, route, playerCards } = props
+  const { navigation, route, playerCards, gameOptions } = props
+  const { language } = gameOptions
   const { npcDeck, location, npc } = route.params.params || route.params;
   const [myCards] = useState(getCardsFromPlayerDeck(playerCards));
   const [myDeck, setMyDeck] = useState([0, 0, 0, 0, 0]);
   const [flatListData, setFlatListData] = useState([...myCards]);
   const { createCard, resetCards } = useContext(GameContext)
+  const [texts] = useState(Texts[language as 'eng' | 'ptbr'])
 
   const addCardsToStore = () => {
     resetCards();
@@ -60,6 +65,7 @@ const ChooseCardsScreen = (
         handleAddCard={handleAddCard}
         deck={myDeck}
         cards={myCards}
+        texts={texts}
       />
       <ChooseCardsDropZone
         deck={myDeck}
@@ -69,6 +75,7 @@ const ChooseCardsScreen = (
         npcDeck={npcDeck}
         location={location}
         npc={npc}
+        texts={texts}
       />
     </View>
   )

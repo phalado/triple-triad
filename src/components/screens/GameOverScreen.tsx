@@ -154,7 +154,7 @@ const GameOverScreen = (props: {
           navigation.push('Explore Scenes', {
             place: myPlace[1], image: myPlace[2], audio: myPlace[3]
           });
-          cardClubEvents(events, changeEvent, npc, npcs, addCardToNPC);
+          cardClubEvents(events, changeEvent, npc, npcs, addCardToNPC, texts);
         }, 1000);
       }, 1000);
     };
@@ -162,7 +162,7 @@ const GameOverScreen = (props: {
     const looseCard = (cardId: number) => {
       if (cardId === 48 || cardId > 77) {
         rareCardsQuest(
-          npc, cardId, location, events, changeEvent, addCardToNPC, changeCardQueenPlace,
+          npc, cardId, location, events, changeEvent, addCardToNPC, changeCardQueenPlace, texts
         );
       }
       if (npc === 'Card Queen') changeCardQueenStreak('loose')

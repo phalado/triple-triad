@@ -5,8 +5,14 @@ import Cards from "../constants/Cards";
 import Images from "../constants/Images";
 import styles from '../styles/GameDeck';
 
-const GetDecksCards = (props: any) => {
-  const { cardId, index, handleRemoveCard, deck } = props;
+const GetDecksCards = (props: {
+  cardId: number
+  index: number
+  handleRemoveCard: (cardId: number, deck: number[]) => void
+  deck: number[]
+  texts: { [key: string]: string | string[] }
+}) => {
+  const { cardId, index, handleRemoveCard, deck, texts } = props;
 
   if (cardId) {
     const card:any = Cards.find(crd => crd.id === cardId);
@@ -46,7 +52,7 @@ const GetDecksCards = (props: any) => {
 
   return (
     <View style={styles.playerCardContainer} key={JSON.stringify([cardId, index])}>
-      <Text style={styles.title}>Empty spot</Text>
+      <Text style={styles.title}>{texts.emptySpot}</Text>
       <View style={styles.cardContainer}>
         <Image style={styles.image} source={Images.player0} />
       </View>

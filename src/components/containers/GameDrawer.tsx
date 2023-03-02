@@ -4,9 +4,7 @@ import GameDrawer from '../drawers/GameDrawer';
 
 const mapStateToProps = (state: StateInterface) => ({
   rules: state.rules,
+  gameOptions: state.gameOptions
 });
-
-// const mapDispatchToProps = (dispatch: any) => ({
-// });
 
 export default connect(mapStateToProps, null)(GameDrawer);

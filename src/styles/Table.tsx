@@ -4,8 +4,14 @@ import CSSSizes from '../constants/CSSSizes';
 const { ScreenWidth, ScreenHeight, TableWidth, cardWidth, cardHeight } = CSSSizes
 
 const TableStyles = StyleSheet.create({
+  backgroundImage: {
+    position: 'absolute',
+    left: -ScreenWidth / 2,
+    resizeMode: 'stretch',
+    width: ScreenWidth,
+    height: ScreenHeight,
+  },
   container: {
-    backgrounfColor: 'black',
     position: 'absolute',
     left: -TableWidth / 2,
     resizeMode: 'stretch',

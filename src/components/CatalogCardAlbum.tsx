@@ -14,7 +14,6 @@ const CatalogCardAlbum = (
   }
 ) => {
   const { playerCards, setSelectedCard, level } = props;
-  const tableHead = ['Id', 'Name', 'Element', 'Quantity']
 
   return (
     <ScrollView style={styles.albumScrollView}>

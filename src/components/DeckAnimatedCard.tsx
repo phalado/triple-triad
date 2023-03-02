@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { Animated, Dimensions, Image, PanResponder, Text, View } from "react-native";
+import RankNumbers from "./RankNumbers";
 import Images from "../constants/Images";
 import CardObjectInterface from "../interfaces/CardObjectInterface";
 import styles from '../styles/GameDeck';
-import RankNumbers from "./RankNumbers";
 
 
 const DeckAnimatedCard = (

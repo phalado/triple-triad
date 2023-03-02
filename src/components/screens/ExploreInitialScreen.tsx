@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Button, Alert, LogBox } from 'react-native';
-import Images from '../../constants/Images';
 import places from '../../constants/Places';
-import { balambGarden } from '../../constants/Sounds';
 import ExploreModal from '../containers/ExploreModal';
 import styles from '../../styles/ExploreInitial';
 import Texts from '../../constants/Texts';
@@ -13,7 +11,8 @@ LogBox.ignoreLogs([
 
 const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
   const { navigation, route } = props
-  const { eventNewGame, language } = route.params
+  const { eventNewGame, gameOptions } = route.params
+  const { language, lastLocation } = gameOptions
   const [visible, setVisible] = useState(false);
   const [texts] = useState(Texts[(language as 'eng' | 'ptbr')])
 
@@ -31,7 +30,7 @@ const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
       <Text style={{ fontSize: 25 }}>Coming Soon!</Text>
       <ExploreModal visible={visible} startScene={startScene} />
       <Button
-        title="New Game"
+        title={texts.newGame}
         onPress={() => {
           Alert.alert(texts.wait, texts.newGameAlert, [
             {
@@ -52,11 +51,12 @@ const ExploreInitialScreen = (props: { navigation: any, route: any }) => {
       {!eventNewGame && <Button
         title={texts.continue}
         onPress={() => {
+          const place = places.find(plc => plc[1] === lastLocation) as any[]
           navigation.pop();
           navigation.push('Explore Scenes', {
-            place: 'balambGarden',
-            image: Images.balambGarden,
-            audio: balambGarden,
+            place: place[1],
+            image: place[2],
+            audio: place[3],
           });
         }}
       />}

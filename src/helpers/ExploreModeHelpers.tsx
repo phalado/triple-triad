@@ -131,9 +131,7 @@ const getTableData = (npcs: NpcsInterface, place: string, cardQueen: CardQueenIn
   }
 
   Object.entries(npcs[place]).forEach(([key, value]) => {
-    const {
-      name, win, loose, tie, cards, special,
-    } = value;
+    const { name, win, loose, tie, cards, special } = value;
     tableData.push([name, win, loose, tie, { cards, special }, key]);
   });
 
@@ -165,13 +163,14 @@ const cardClubEvents = (
   changeEvent: (event: string) => void,
   npc: string,
   npcs: NpcsInterface,
-  addCardToNPC: (data: { npc: string, card: number, location: string }) => void
+  addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
+  texts: { [key: string]: string | string[] }
 ) => {
   const vics = Object.values(npcs.balambGarden).filter(value => value.win > 0).length;
   if (vics >= 9 && events.jack) {
     Alert.alert(
-      'Card Club Jack', 'Yo! Looks like you\'re doing pretty hood qith the card games. It\'s almost time... Oh, all right. I challenge you! I\'m CC Group\'s Jack. You appear to be a worthy opponent.', [{
-        text: 'Whatever',
+      texts.ccJack as string, texts.ccJackOpen as string, [{
+        text: texts.whatever as string,
         onPress: () => null,
         style: 'cancel',
       }],
@@ -181,12 +180,12 @@ const cardClubEvents = (
 
   if (npc === 'jack' && events.joker) {
     Alert.alert(
-      'Card Club Jack', 'I lost. You are really good. But don\'t think you\'ve defeated the CC Group just yet. There are 6 members in the CC Group I haven\'t defeated. The first is the Card Master and the CC Group\'s leader, King. And the others are called the 4 suits. Then there\'s Card Magician Joker, whose ability is still a mystery even to me. Now that you defeated me, I\'m sure they\'ll show up soon. Good luck to you.', [{
-        text: 'Whatever',
+      texts.ccJack as string, texts.ccJackClose as string, [{
+        text: texts.whatever as string,
         onPress: () => {
           Alert.alert(
-            'Card Club Joker', 'Hey, heard you\'ve been playing some good games. Sure, you wanna play? What? The CC Group? Yeah, I\'m a member. I\'m Card Magician Joker. As my name says, I\'m the black sheep of the group.', [{
-              text: 'Whatever',
+            texts.ccJoker as string, texts.ccJokerOpen as string, [{
+              text: texts.whatever as string,
               onPress: () => null,
               style: 'cancel',
             }],
@@ -200,12 +199,12 @@ const cardClubEvents = (
 
   if (npc === 'joker' && events.club) {
     Alert.alert(
-      'Card Club Joker', 'You\'re really good.', [{
-        text: 'Whatever',
+      texts.ccJoker as string, texts.ccJokerClose as string, [{
+        text: texts.whatever as string,
         onPress: () => {
           Alert.alert(
-            'Card Club Club', '... It\'s been a while since someone beat Jack. I\'m Club, one of the 4 CC Knights. Do you dare to chalenge me?', [{
-              text: 'Whatever',
+            texts.ccClub as string, texts.ccClubOpen as string, [{
+              text: texts.whatever as string,
               onPress: () => null,
               style: 'cancel',
             }],
@@ -219,12 +218,12 @@ const cardClubEvents = (
 
   if (npc === 'club' && events.diamond) {
     Alert.alert(
-      'Card Club Club', 'Not bad. But beware, there are many players far better than me in the CC Group.', [{
-        text: 'Whatever',
+      texts.ccClub as string, texts.ccClubClose as string, [{
+        text: texts.whatever as string,
         onPress: () => {
           Alert.alert(
-            'Card Club Diamond', 'Amazing! But Club, too! Are you surprised? That\'s right, we are Card Princess Diamond. We\'re the Diamond duo. We respect your card playing habilities. We challenge you.', [{
-              text: 'Whatever',
+            texts.ccDiamond as string, texts.ccDiamondOpen as string, [{
+              text: texts.whatever as string,
               onPress: () => null,
               style: 'cancel',
             }],
@@ -238,12 +237,12 @@ const cardClubEvents = (
 
   if (npc === 'diamond' && events.spade) {
     Alert.alert(
-      'Card Club Diamond', 'He\'s good. He\'s very good. I can\'t remember the last time we\'ve been defeated. Ever since Headmaster Cid? But there are still 2 of us left.', [{
-        text: 'Whatever',
+      texts.ccDiamond as string, texts.ccDiamondClose as string, [{
+        text: texts.whatever as string,
         onPress: () => {
           Alert.alert(
-            'Card Club Spade', 'Wow. Amazing! I can\'t believe you defeated Diamond. Yes, I am one of the 4-Suits of CC group, Card Knight Spade. It\'s been a while since someone made it this far... Shall we start?', [{
-              text: 'Whatever',
+            texts.ccSpade as string, texts.ccSpadeOpen as string, [{
+              text: texts.whatever as string,
               onPress: () => null,
               style: 'cancel',
             }],
@@ -257,12 +256,12 @@ const cardClubEvents = (
 
   if (npc === 'spade' && events.heart) {
     Alert.alert(
-      'Card Club Spade', 'Wow, you are good... I accpet defeat. I can tell you\'ve collected and played cards all over the world. And you remind me of her... Her talent, especially. Oh, now I\'ve said too much. Well, there is one more suit for you to defeat. But Heart is no ordinary player. She became the top player of CC group in only 3 months. She is a true genious. You two seems to have a similar learning hability. Well, now that I have bored you with too much detail I shall leave. So long.', [{
-        text: 'Whatever',
+      texts.ccSpade as string, texts.ccSpadeClose as string, [{
+        text: texts.whatever as string,
         onPress: () => {
           Alert.alert(
-            'Card Club Heart - Xu', 'Oh, I\'m a bit surprised. I didn\'t think Spade would loose... But this is good. I haven\'t been able to find a worth oponent lately. That\'s right! Allow me to introduce myself. I am Xu. Otherwise known as... the CC Group Card Queen Heart. Whenever you\'re ready, let\'s go.', [{
-              text: 'Whatever',
+            texts.ccHeart as string, texts.ccHeartOpen as string, [{
+              text: texts.whatever as string,
               onPress: () => null,
               style: 'cancel',
             }],
@@ -276,12 +275,12 @@ const cardClubEvents = (
 
   if (npc === 'heart' && events.kadowaki) {
     Alert.alert(
-      'Card Club Heart - Xu', '...... Defeat...... I knew this day would come, but... Oh well... You\'re only the second person to defeat me. The other is the CC group leader King, the Card Master. Now that you\'ve defeated all the 4-Suits, you\'ll eventually play the King.', [{
-        text: 'Whatever',
+      texts.ccHeart as string, texts.ccHeartClose as string, [{
+        text: texts.whatever as string,
         onPress: () => {
           Alert.alert(
-            'Dr Kadowaki', 'Congratulations! I heard you defeated all 4 suits of the CC group. Oh, me...? I have nothing to do with the group. ...Well, I guess it\' ok to tell you. I was theCC group King for a long time, but I passed the position over to another girl 4 years ago. Oh, you want to know who she is? Sorry, I can\'t tell you. Well, she may revel herself if you defeat me.', [{
-              text: 'Whatever',
+            'Dr Kadowaki', texts.ccKadowakiOpen as string, [{
+              text: texts.whatever as string,
               onPress: () => null,
               style: 'cancel',
             }],
@@ -296,12 +295,12 @@ const cardClubEvents = (
 
   if (npc === 'kadowaki' && events.king && !events.kadowaki) {
     Alert.alert(
-      'Dr Kadowaki', 'You\'ll probably find the King soon, now that you\'ve defeated the 4-Suits.', [{
-        text: 'Whatever',
+      'Dr Kadowaki', texts.ccKadowakiClose as string, [{
+        text: texts.whatever as string,
         onPress: () => {
           Alert.alert(
-            'Card Club King - Quistis', 'You defeated the 4-Suits. You\'ve proven worthy. The CC group leader, the card master King... Is I, Quistis Trepe. All decked in my uniform! You really are something. I can\'t believe how much your game has improved. I knew we were destined to play. Let\'s begin!', [{
-              text: 'Go talk to a wall.',
+            texts.ccKing as string, texts.ccKingOpen as string, [{
+              text: texts.talkToAWall as string,
               onPress: () => null,
               style: 'cancel',
             }],
@@ -315,8 +314,8 @@ const cardClubEvents = (
 
   if (npc === 'king' && events.ccEnd) {
     Alert.alert(
-      'Card Club King - Quistis', 'I can\'t believe I lost. Don\'t get too cocky just yet. We can challenge each other as equals from now on.', [{
-        text: 'Go talk to a wall.',
+      texts.ccKing as string, texts.ccKingClose as string, [{
+        text: texts.talkToAWall as string,
         onPress: () => null,
         style: 'cancel',
       }],
@@ -368,16 +367,17 @@ const rareCardsQuest = (
   events: { [event: string]: boolean },
   changeEvent: (event: string) => void,
   addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
-  changeCardQueenPlace: (place: string) => void
+  changeCardQueenPlace: (place: string) => void,
+  texts: { [key: string]: string | string[] }
 ) => {
   if (npc === 'caraway' && cardId === 85 && events.caraway) {
     addCardToNPC({ location, npc, card: 107 });
     addCardToNPC({ location: 'fishermansHorizon', npc: 'martine', card: 85 });
-    Alert.alert('Caraway', 'Thank you for your Ifrit card. Now I might use my daughter\'s to play.', [{
-      text: 'Whatever',
+    Alert.alert('Caraway', texts.carawayOpen as string, [{
+      text: texts.whatever as string,
       onPress: () => Alert.alert(
-        'Caraway', 'Are you asking me about the Ifrit card you lost other day (today)? Well, I lost it to my friend Martine.', [{
-          text: 'Whatever',
+        'Caraway', texts.carawayClose as string, [{
+          text: texts.whatever as string,
           onPress: () => null,
           style: 'cancel',
         }],
@@ -414,8 +414,8 @@ const rareCardsQuest = (
     addCardToNPC({ location: 'dollet', npc: 'cardQueenSon', card: cardId });
     const newLocation = getNewLocation(location);
     Alert.alert(
-      'Card Queen', `This place is boring me. I'm moving ro ${newLocation.name}`, [{
-        text: 'Whatever',
+      'Card Queen', (texts.cardQueenLeaving as string) + newLocation.name, [{
+        text: texts.whatever as string,
         onPress: () => null,
         style: 'cancel',
       }],

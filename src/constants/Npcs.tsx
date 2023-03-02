@@ -894,6 +894,14 @@ export default {
       loose: 0,
       tie: 0,
     },
+    zone: {
+      name: 'Zone',
+      cards: [2, 3, 7],
+      special: [84],
+      win: 0,
+      loose: 0,
+      tie: 0,
+    },
     edea: {
       name: 'Edea',
       cards: [1, 2, 3, 4, 5, 6, 7],

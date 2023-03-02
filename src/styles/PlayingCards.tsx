@@ -18,14 +18,14 @@ const PlayingCardsStyles = StyleSheet.create({
     left: ScreenWidth * 0.025,
   },
   nameText: {
-    fontSize: ScreenWidth * 0.04,
+    fontSize: ScreenWidth * 0.03,
     textAlign: 'center',
   },
   scoreText: {
     position: 'absolute',
     bottom: -ScreenHeight * 0.04,
     left: ScreenWidth * 0.01,
-    fontSize: ScreenWidth * 0.04,
+    fontSize: ScreenWidth * 0.03,
     textAlign: 'center',
   },
   cursorR: {

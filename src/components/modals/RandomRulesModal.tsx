@@ -44,7 +44,6 @@ const RandomRulesModal = (props: {
         {addSwitch('Same', 'same')}
         {addSwitch('Plus', 'plus')}
         {addSwitch('Same Wall', 'sameWall')}
-        {addSwitch('Random', 'random')}
         {addSwitch('Suden Death', 'sudenDeath')}
         <View style={styles.rulesButtonsContainer}>
           <Button title={'Start Game'} onPress={() => startRandomGame()} />

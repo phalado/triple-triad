@@ -4,14 +4,16 @@ import CardObjectInterface from "../interfaces/CardObjectInterface";
 import RankNumbers from "./RankNumbers";
 import Images from "../constants/Images";
 import styles from "../styles/CatalogScreen"
+import Texts from "../constants/Texts";
 
 const CatalogCard = (
   props: {
     card: CardObjectInterface,
-    cardType: string
+    cardType: string,
+    language: string
   }
 ) => {
-  const { card, cardType } = props;
+  const { card, cardType, language } = props;
 
   return (
     <>
@@ -26,7 +28,9 @@ const CatalogCard = (
       </View>
       <View style={styles.aboutCard}>
         <Text style={styles.aboutText}>{card.name + " - " + cardType}</Text>
-        <Text style={styles.aboutText}>{"Element: " + card.element}</Text>
+        <Text style={styles.aboutText}>
+          {Texts[(language as 'eng' | 'ptbr')].element + ": " + card.element}
+        </Text>
       </View>
     </>
   );

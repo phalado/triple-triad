@@ -7,6 +7,7 @@ import { createNpcList } from '../../slicers/npcsSlicer';
 import { addCardExplore } from '../../slicers/playerCardSlicer';
 
 import StateInterface from '../../interfaces/StateInterface';
+import { changeLastLocation } from '../../slicers/gameOptions';
 
 const mapStateToProps = (state: StateInterface) => ({
   npcs: state.npcs,
@@ -21,6 +22,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   addCardToExploreDeck: (card: number) => dispatch(addCardExplore(card)),
   createNPCList: () => dispatch(createNpcList()),
   changeEvent: (event: string) => dispatch(changeEvent(event)),
+  changeLastLocation: (location: string) => dispatch(changeLastLocation(location))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExploreScenes);

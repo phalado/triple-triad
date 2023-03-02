@@ -37,7 +37,9 @@ const InitialScreen = ({
 }) => {
   const { resetTable, createCard, resetCards } = useContext(GameContext)
   const [rulesModal, setRulesModal] = useState(false)
-  const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
+  const [texts, setTexts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
+
+  useEffect(() => setTexts(Texts[(gameOptions.language as 'eng' | 'ptbr')]), [gameOptions.language])
 
   useEffect(() => {
     resetTable();
@@ -81,7 +83,7 @@ const InitialScreen = ({
 
         <TouchableOpacity
           onPress={() => navigation.navigate('Explore', {
-            handleResetDeck, eventNewGame: events.newGame, language: gameOptions.language
+            handleResetDeck, eventNewGame: events.newGame, gameOptions
           })}
           style={styles.exploreButton}
         >

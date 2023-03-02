@@ -1,15 +1,17 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { Button, Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useFocusEffect } from '@react-navigation/native';
 import { Audio } from 'expo-av';
-import { getRandonPlayerCards, getTableData } from '../../helpers/ExploreModeHelpers';
 import NPCsTable from '../NPCsTable';
+import PupuEvent from '../PupuEvent';
+import { getRandonPlayerCards, getTableData } from '../../helpers/ExploreModeHelpers';
+import { getRandomNumber } from '../../helpers/OtherHelpers';
 import CardModal from '../modals/CardModal';
 import PlacesModal from '../modals/PlacesModal';
 import RulesInterface from '../../interfaces/RulesInterface';
 import { NpcsInterface } from '../../interfaces/NpcsInterface';
 import styles from '../../styles/ExploreScenes';
-import { useFocusEffect } from '@react-navigation/native';
 import { GameContext } from '../GameContext';
 import CardQueenInterface from '../../interfaces/CardQueenInterface';
 import Texts from '../../constants/Texts';
@@ -26,9 +28,10 @@ const ExploreScenes = (
     playerCards: { [index: string]: number }
     cardQueen: any,
     gameOptions: GameOptionsInterface
-    addCardToExploreDeck: (card: number) => void,
+    addCardToExploreDeck: (card: number) => void
     createNPCList: () => void
     changeEvent: (event: string) => void
+    changeLastLocation: (location: string) => void
   }
 ) => {
   const {
@@ -43,6 +46,7 @@ const ExploreScenes = (
     addCardToExploreDeck,
     createNPCList,
     changeEvent,
+    changeLastLocation
   } = props;
   const { place, image, audio } = route.params;
   const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
@@ -87,6 +91,7 @@ const ExploreScenes = (
   };
 
   const handleTravel = (place: string, image: any, audio: any) => {
+    changeLastLocation(place)
     navigation.pop();
     navigation.push('Explore Scenes', { place, image, audio });
   };
@@ -140,10 +145,15 @@ const ExploreScenes = (
       <View style={styles.subContainerRight}>
         <Text style={styles.text}>{texts.listOfPlayers}</Text>
         <ScrollView style={{ width: '90%', height: '50%' }}>
-          <NPCsTable tableHead={tableHead} tableData={tableData as any} startGame={startGame} />
+          <NPCsTable
+            tableHead={tableHead}
+            tableData={tableData as any}
+            startGame={startGame}
+            texts={texts}
+          />
         </ScrollView>
       </View>
-      {/* {(getRandomNumber(0, 10) <= 2 && events.pupu4) && <PupuEvent getPupuEvent={getPupuEvent} />} */}
+      {(getRandomNumber(0, 10) <= 2 && events.pupu4) && <PupuEvent getPupuEvent={getPupuEvent} />}
     </View>
   );
 };

@@ -73,7 +73,7 @@ const ExploreModal = (
     <Modal isVisible={visible}>
       <CardModal visible={cardModalVisible} cardId={modalCard} cardOwner={cardOwner} />
       <View style={styles.newContainer}>
-        <Text style={styles.speakingText}>{texts.newGame}</Text>
+        <Text style={styles.speakingText}>{texts.newGameText}</Text>
         <Button
           title={texts.whatever}
           onPress={() => addFirstCardsToDeck([1, 2, 4, 6, 7, 8, 10, 85])}

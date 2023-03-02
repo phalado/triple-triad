@@ -5,13 +5,14 @@ import GetDecksCards from "./GetDeckscards";
 
 const ChooseCardsDropZone = (
   props: {
-    deck: any
+    deck: number[]
     navigation: any
     handleRemoveCard: (cardId: number) => void
     npcDeck: number[]
     location: string
     npc: string
     addCardsToStore: () => void
+    texts: { [key: string]: string | string[] }
   }
 ) => {
   const {
@@ -22,6 +23,7 @@ const ChooseCardsDropZone = (
     location,
     npc,
     addCardsToStore,
+    texts
   } = props;
 
   const removeCardHandler = (cardId: number, deck: number[]) => {
@@ -38,17 +40,18 @@ const ChooseCardsDropZone = (
             index={index}
             handleRemoveCard={removeCardHandler}
             deck={deck}
-            key={[cardId, index]}
+            key={JSON.stringify([cardId, index])}
+            texts={texts}
           />
         ))}
       </View>
       <Button
-        title="Start Game"
+        title={texts.startGame as string}
         onPress={() => {
           if (deck.some((card: number) => card === 0)) {
-            Alert.alert('Wait!', 'You need a full deck to enter in a game!', [
+            Alert.alert(texts.wait as string, texts.fullDeck as string, [
               {
-                text: 'Whatever.',
+                text: texts.whatever as string,
                 onPress: () => null,
                 style: 'cancel',
               },

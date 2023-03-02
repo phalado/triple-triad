@@ -1,4 +1,4 @@
-import React, { createContext, ReactElement, useEffect, useState } from "react";
+import React, { createContext, ReactElement, useState } from "react";
 import { getRandomBoolean } from "../helpers/OtherHelpers";
 import CardInterface from "../interfaces/CardInterface";
 import CardObjectInterface from "../interfaces/CardObjectInterface";

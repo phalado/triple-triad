@@ -11,7 +11,7 @@ const OpenDrawerIcon = (props: any) => {
       style={{position: 'absolute'}}
       onPress={() => navigation.openDrawer()}
     >
-      <View style={{ paddingHorizontal: 10 }}>
+      <View style={{ paddingHorizontal: 10, marginTop: 10 }}>
         <Image style={styles.hamburguerIcon} source={Images.hamburguerIcon} />
       </View>
     </TouchableOpacity>

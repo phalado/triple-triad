@@ -9,11 +9,12 @@ const CatalogCardList = (
   props: {
     playerCards: { [card: string]: number },
     setSelectedCard: (cardId: number) => void,
-    level: number
+    level: number,
+    texts: { [key: string]: string | string[] }
   }
 ) => {
-  const { playerCards, setSelectedCard, level } = props;
-  const tableHead = ['Id', 'Name', 'Element', 'Quantity']
+  const { playerCards, setSelectedCard, level, texts } = props;
+  const tableHead = texts.catalogTableHead as string[]
 
   return (
     <ScrollView style={{ width: '90%', height: '50%' }}>

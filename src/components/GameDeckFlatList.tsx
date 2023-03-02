@@ -11,9 +11,10 @@ const GameDeckFlatList = (
     handleAddCard: (cardId: number) => void
     deck: number[]
     cards: CardObjectInterface[]
+    texts: { [key: string]: string | string[] }
   }
 ) => {
-  const { flatListData, getFlatListData, handleAddCard, deck, cards } = props
+  const { flatListData, getFlatListData, handleAddCard, deck, cards, texts } = props
   const keys = [];
 
   const getKey = (cardName: string) => {
@@ -23,7 +24,7 @@ const GameDeckFlatList = (
 
   return (
     <View style={{ height: '50%', alignItems: 'center' }}>
-      <Text style={styles.title}>See your cards and change your decks</Text>
+      <Text style={styles.title}>{texts.seeYourCards}</Text>
       <FlatList
         data={flatListData || getFlatListData(cards)}
         renderItem={({ item }) => (

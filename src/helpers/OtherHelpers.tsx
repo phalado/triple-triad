@@ -1,7 +1,5 @@
-import React from 'react';
 import { Alert } from 'react-native';
 import CardInterface from '../interfaces/CardInterface';
-import TableInterface, { CellInterface, RowInterface } from '../interfaces/TableInterface';
 
 const getRandomBoolean = () => Math.floor(100 * Math.random()) % 2 === 0
 const getRandomNumber = (min: number, max: number) => (
@@ -44,21 +42,20 @@ const resetGame = (
     resetCards: () => void,
     resetTable: () => void,
     createCard: (player: boolean, card: CardInterface) => void,
-    navigation: any
+    navigation: any,
+    texts: { [key: string]: string | string[] }
   }
 ) => {
-  const {
-    resetCards, resetTable, createCard, navigation,
-  } = props;
+  const { resetCards, resetTable, createCard, navigation, texts } = props;
 
-  Alert.alert('Wait!', 'If you leave this game will be canceled. Are you sure?', [
+  Alert.alert(texts.wait as string, texts.giveUpGame as string, [
     {
-      text: 'I can\'t just run away. (Cancel)',
+      text: texts.runAway as string,
       onPress: () => null,
       style: 'cancel',
     },
     {
-      text: 'Whatever (Ok)',
+      text: texts.whatever as string,
       onPress: () => {
         navigation.pop();
         resetTable();

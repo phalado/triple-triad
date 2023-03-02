@@ -13,7 +13,7 @@ const GameDeckStyle = StyleSheet.create({
     paddingBottom: 20,
     marginVertical: 8,
     marginHorizontal: 8,
-    width: ScreenWidth * 0.25,
+    width: ScreenWidth * 0.18,
     alignItems: 'center',
   },
   title: {

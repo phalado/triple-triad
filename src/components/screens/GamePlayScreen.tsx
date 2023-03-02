@@ -20,6 +20,7 @@ import { NpcsInterface } from "../../interfaces/NpcsInterface";
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
 import PreLoadedSoundsInterface from "../../interfaces/PreLoadedSounds";
 import GameOptionsInterface from "../../interfaces/GameOptionsInterface";
+import Texts from "../../constants/Texts";
 
 LogBox.ignoreLogs([
   'Found screens with the same name nested inside one another.',
@@ -36,6 +37,8 @@ const GamePlayScreen = (
   }
 ) => {
   const { rules, npcs, preLoadedSounds, gameOptions, navigation, route } = props;
+  const { language } = gameOptions
+  const [texts] = useState(Texts[language as 'eng' | 'ptbr'])
 
   const {
     table,
@@ -63,7 +66,7 @@ const GamePlayScreen = (
       preLoadedSounds.gameMusic.setIsLoopingAsync(true)
 
       const onBackPress = () => {
-        resetGame({ resetCards, resetTable, createCard, navigation });
+        resetGame({ resetCards, resetTable, createCard, navigation, texts });
         return true;
       };
 
@@ -158,10 +161,16 @@ const GamePlayScreen = (
     <View style={styles.container}>
       <View style={styles.subContainer}>
         <Table elemental={rules[location].elemental} navigation={navigation} />
-        <PlayingTexts player score={cards.player1Cards.length} />
+        <PlayingTexts
+          player
+          score={cards.player1Cards.length}
+          username={gameOptions.username}
+          texts={texts}
+        />
         <PlayingTexts
           NPCName={npc === 'Card Queen' || location === 'random' ? npc : npcs[newLocation][npc].name}
           score={cards.player2Cards.length}
+          texts={texts}
         />
         <PlayerTurnModal visible={visibleModal} value={modalValue} gameOptions={gameOptions} />
         {cards.player1Cards.map((playCard: CardInterface) => (

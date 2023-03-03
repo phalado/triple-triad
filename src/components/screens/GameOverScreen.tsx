@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { Button, Image, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { GameContext } from "../GameContext";
-import { Audio } from "expo-av";
+// import { Audio } from "expo-av";
 import RankNumbers from "../RankNumbers";
 import CardModal from "../modals/CardModal";
 
@@ -79,24 +79,24 @@ const GameOverScreen = (props: {
     'CC Master King - Quistis'
   ]
 
-  useFocusEffect(
-    useCallback(() => {
-      let music: any = null;
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     let music: any = null;
 
-      const loadMusic = async () => {
-        const theme = gameOver === 'win' ? winTheme : looseTheme
-        Audio.Sound.createAsync(theme).then(({ sound }) => {
-          music = sound
-          music.playAsync()
-          music.setIsLoopingAsync(true)
-        })
-      }
+  //     const loadMusic = async () => {
+  //       const theme = gameOver === 'win' ? winTheme : looseTheme
+  //       Audio.Sound.createAsync(theme).then(({ sound }) => {
+  //         music = sound
+  //         music.playAsync()
+  //         music.setIsLoopingAsync(true)
+  //       })
+  //     }
 
-      loadMusic()
+  //     loadMusic()
 
-      return () => music.unloadAsync();
-    }, []),
-  );
+  //     return () => music.unloadAsync();
+  //   }, []),
+  // );
 
   const resetGame = () => {
     resetTable();

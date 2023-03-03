@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from 'react'
 import { Button, Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
-import { Audio } from 'expo-av';
+// import { Audio } from 'expo-av';
 import NPCsTable from '../NPCsTable';
 import PupuEvent from '../PupuEvent';
 import { getRandonPlayerCards, getTableData } from '../../helpers/ExploreModeHelpers';
@@ -57,25 +57,25 @@ const ExploreScenes = (
   const [cardOwner, setCardOwner] = useState('player0');
   const { resetTable, createCard, resetCards } = useContext(GameContext)
 
-  useFocusEffect(
-    useCallback(() => {
-      let music: any = null;
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     let music: any = null;
 
-      const loadMusic = async () => {
-        Audio.Sound.createAsync(audio).then(({ sound }) => {
-          music = sound
-          music.playAsync()
-          music.setIsLoopingAsync(true)
-        })
-      }
+  //     const loadMusic = async () => {
+  //       Audio.Sound.createAsync(audio).then(({ sound }) => {
+  //         music = sound
+  //         music.playAsync()
+  //         music.setIsLoopingAsync(true)
+  //       })
+  //     }
 
-      loadMusic()
+  //     loadMusic()
 
-      return () => {
-        if (music) music.unloadAsync()
-      };
-    }, []),
-  );
+  //     return () => {
+  //       if (music) music.unloadAsync()
+  //     };
+  //   }, []),
+  // );
 
   if (Object.entries(npcs).length === 0) createNPCList();
 

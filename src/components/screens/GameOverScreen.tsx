@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { Button, Image, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { GameContext } from "../GameContext";
-// import { Audio } from "expo-av";
+import { Audio } from "expo-av";
 import RankNumbers from "../RankNumbers";
 import CardModal from "../modals/CardModal";
 
@@ -17,7 +17,7 @@ import CardInterface from "../../interfaces/CardInterface";
 import RulesInterface from "../../interfaces/RulesInterface";
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
 import { cardClubEvents, rareCardsQuest } from "../../helpers/ExploreModeHelpers";
-import { NpcsInterface } from "../../interfaces/NpcsInterface";
+import { NpcInterface, NpcsInterface } from "../../interfaces/NpcsInterface";
 import Texts from "../../constants/Texts";
 import GameOptionsInterface from "../../interfaces/GameOptionsInterface";
 
@@ -40,6 +40,7 @@ const GameOverScreen = (props: {
   addSpecialCardQueen: (card: number) => void
   removeSpecialCardQueen: (card: number) => void
   changeCardQueenStreak: (streak: 'win' | 'loose' | 'tie') => void
+  addNpcToLocation: (data: { npc: NpcInterface, location: string }) => void
 }) => {
   const {
     navigation,
@@ -59,7 +60,8 @@ const GameOverScreen = (props: {
     changeCardQueenPlace,
     addSpecialCardQueen,
     removeSpecialCardQueen,
-    changeCardQueenStreak
+    changeCardQueenStreak,
+    addNpcToLocation
   } = props
 
   const { gameOver, npcDeck, location, npc, p1InitialCards } = route.params
@@ -79,24 +81,24 @@ const GameOverScreen = (props: {
     'CC Master King - Quistis'
   ]
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     let music: any = null;
+  useFocusEffect(
+    useCallback(() => {
+      let music: any = null;
 
-  //     const loadMusic = async () => {
-  //       const theme = gameOver === 'win' ? winTheme : looseTheme
-  //       Audio.Sound.createAsync(theme).then(({ sound }) => {
-  //         music = sound
-  //         music.playAsync()
-  //         music.setIsLoopingAsync(true)
-  //       })
-  //     }
+      const loadMusic = async () => {
+        const theme = gameOver === 'win' ? winTheme : looseTheme
+        Audio.Sound.createAsync(theme).then(({ sound }) => {
+          music = sound
+          music.playAsync()
+          music.setIsLoopingAsync(true)
+        })
+      }
 
-  //     loadMusic()
+      loadMusic()
 
-  //     return () => music.unloadAsync();
-  //   }, []),
-  // );
+      return () => music.unloadAsync();
+    }, []),
+  );
 
   const resetGame = () => {
     resetTable();
@@ -166,7 +168,7 @@ const GameOverScreen = (props: {
           navigation.push('Explore Scenes', {
             place: myPlace[1], image: myPlace[2], audio: myPlace[3]
           });
-          cardClubEvents(events, changeEvent, npc, npcs, addCardToNPC, texts);
+          cardClubEvents(events, changeEvent, npc, npcs, addCardToNPC, texts, addNpcToLocation);
         }, 500);
       }, 1000);
     };

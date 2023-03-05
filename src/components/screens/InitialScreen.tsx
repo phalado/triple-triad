@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-// import { Audio } from 'expo-av';
+import { Audio } from 'expo-av';
 import { GameContext } from '../GameContext';
 import RandomRulesModal from '../modals/RandomRulesModal';
 import { getRandomCards } from '../../helpers/OtherHelpers';
 
 import Images from '../../constants/Images';
-// import { cardSound, gameTheme, special } from '../../constants/Sounds';
+import { cardSound, gameTheme, special } from '../../constants/Sounds';
 import Texts from '../../constants/Texts';
 
 import RulesInterface, { LocalRulesInterface } from '../../interfaces/RulesInterface';
@@ -53,9 +53,9 @@ const InitialScreen = ({
       createCard(false, { id: card, row: 3 + index, column: 3, dragable: true })
     })
 
-    // Audio.Sound.createAsync(gameTheme).then(({ sound }) => loadSound('gameMusic', sound))
-    // Audio.Sound.createAsync(cardSound).then(({ sound }) => loadSound('cardSound', sound))
-    // Audio.Sound.createAsync(special).then(({ sound }) => loadSound('specialSound', sound))
+    Audio.Sound.createAsync(gameTheme).then(({ sound }) => loadSound('gameMusic', sound))
+    Audio.Sound.createAsync(cardSound).then(({ sound }) => loadSound('cardSound', sound))
+    Audio.Sound.createAsync(special).then(({ sound }) => loadSound('specialSound', sound))
   }, [])
 
   const handleResetDeck = () => {

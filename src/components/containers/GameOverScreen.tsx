@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import StateInterface from '../../interfaces/StateInterface';
-import { addCardNpc, changeNpcStreak, removeCardNpc } from '../../slicers/npcsSlicer';
+import { addCardNpc, addNpcToLocation, changeNpcStreak, removeCardNpc } from '../../slicers/npcsSlicer';
 import { addCardExplore, removeCardExplore } from '../../slicers/playerCardSlicer';
 import { changeEvent } from '../../slicers/eventsSlicer';
 import GameOverScreen from '../screens/GameOverScreen';
 import { addSpecialCardQueen, changeCardQueenPlace, changeCardQueenStreak, removeSpecialCardQueen } from '../../slicers/cardQueenSlicer';
+import { NpcInterface } from '../../interfaces/NpcsInterface';
 
 const mapStateToProps = (state: StateInterface) => ({
   rules: state.rules,
@@ -31,7 +32,10 @@ const mapDispatchToProps = (dispatch: any) => ({
   changeCardQueenPlace: (place: string) => dispatch(changeCardQueenPlace(place)),
   addSpecialCardQueen: (card: number) => dispatch(addSpecialCardQueen(card)),
   removeSpecialCardQueen: (card: number) => dispatch(removeSpecialCardQueen(card)),
-  changeCardQueenStreak: (streak: 'win' | 'loose' | 'tie') => dispatch(changeCardQueenStreak(streak))
+  changeCardQueenStreak: (streak: 'win' | 'loose' | 'tie') => dispatch(changeCardQueenStreak(streak)),
+  addNpcToLocation: (
+    data: { npc: NpcInterface, location: string }
+  ) => dispatch(addNpcToLocation(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameOverScreen);

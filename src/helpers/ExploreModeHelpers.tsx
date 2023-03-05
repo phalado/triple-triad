@@ -1,9 +1,10 @@
 import { getRandomBoolean, getRandomNumber } from "./OtherHelpers";
-import { NpcsInterface } from "../interfaces/NpcsInterface";
+import { NpcInterface, NpcsInterface } from "../interfaces/NpcsInterface";
 import Cards from "../constants/Cards";
 import CardObjectInterface from "../interfaces/CardObjectInterface";
 import { Alert } from "react-native";
 import CardQueenInterface from "../interfaces/CardQueenInterface";
+import Npcs from "../constants/Npcs";
 
 // MELHORAR
 const getCardsFromPlayerDeck = (playerCards: { [card: string]: number }) => {
@@ -50,86 +51,6 @@ const getTableData = (npcs: NpcsInterface, place: string, cardQueen: CardQueenIn
     ]);
   }
 
-  if (place === 'balambGarden') {
-    const victories = Object.values(npcs[place]).filter(value => value.win > 0).length;
-    if (victories >= 9) {
-      tableData.push([
-        npcs.cardClub.jack.name,
-        npcs.cardClub.jack.win,
-        npcs.cardClub.jack.loose,
-        npcs.cardClub.jack.tie,
-        { cards: npcs.cardClub.jack.cards, special: npcs.cardClub.jack.special },
-        'jack',
-      ]);
-
-      if (npcs.cardClub.jack.win > 0) {
-        tableData.push([
-          npcs.cardClub.joker.name,
-          npcs.cardClub.joker.win,
-          npcs.cardClub.joker.loose,
-          npcs.cardClub.joker.tie,
-          { cards: npcs.cardClub.joker.cards, special: npcs.cardClub.joker.special },
-          'joker',
-        ]);
-
-        if (npcs.cardClub.joker.win > 0) {
-          tableData.push([
-            npcs.cardClub.club.name,
-            npcs.cardClub.club.win,
-            npcs.cardClub.club.loose,
-            npcs.cardClub.club.tie,
-            { cards: npcs.cardClub.club.cards, special: npcs.cardClub.club.special },
-            'club',
-          ]);
-
-          if (npcs.cardClub.club.win > 0) {
-            tableData.push([
-              npcs.cardClub.diamond.name,
-              npcs.cardClub.diamond.win,
-              npcs.cardClub.diamond.loose,
-              npcs.cardClub.diamond.tie,
-              { cards: npcs.cardClub.diamond.cards, special: npcs.cardClub.diamond.special },
-              'diamond',
-            ]);
-
-            if (npcs.cardClub.diamond.win > 0) {
-              tableData.push([
-                npcs.cardClub.spade.name,
-                npcs.cardClub.spade.win,
-                npcs.cardClub.spade.loose,
-                npcs.cardClub.spade.tie,
-                { cards: npcs.cardClub.spade.cards, special: npcs.cardClub.spade.special },
-                'spade',
-              ]);
-
-              if (npcs.cardClub.spade.win > 0) {
-                tableData.push([
-                  npcs.cardClub.heart.name,
-                  npcs.cardClub.heart.win,
-                  npcs.cardClub.heart.loose,
-                  npcs.cardClub.heart.tie,
-                  { cards: npcs.cardClub.heart.cards, special: npcs.cardClub.heart.special },
-                  'heart',
-                ]);
-
-                if (npcs.cardClub.heart.win > 0 && npcs.balambGarden.kadowaki.win > 0) {
-                  tableData.push([
-                    npcs.cardClub.king.name,
-                    npcs.cardClub.king.win,
-                    npcs.cardClub.king.loose,
-                    npcs.cardClub.king.tie,
-                    { cards: npcs.cardClub.king.cards, special: npcs.cardClub.king.special },
-                    'king',
-                  ]);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
   Object.entries(npcs[place]).forEach(([key, value]) => {
     const { name, win, loose, tie, cards, special } = value;
     tableData.push([name, win, loose, tie, { cards, special }, key]);
@@ -164,18 +85,26 @@ const cardClubEvents = (
   npc: string,
   npcs: NpcsInterface,
   addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
-  texts: { [key: string]: string | string[] }
+  texts: { [key: string]: string | string[] },
+  addNpcToLocation: (data: { npc: NpcInterface, location: string }) => void
 ) => {
   const vics = Object.values(npcs.balambGarden).filter(value => value.win > 0).length;
+
+  const changeEventAndAddNpc = (
+    event: 'jack' | 'joker' | 'club' | 'diamond' | 'spade' | 'heart' | 'kadowaki' | 'king'
+  ) => {
+    changeEvent(event)
+    addNpcToLocation({ npc: { [event]: { ...Npcs.cardClub[event] } }, location: 'balambGarden' })
+  }
+
   if (vics >= 9 && events.jack) {
     Alert.alert(
       texts.ccJack as string, texts.ccJackOpen as string, [{
         text: texts.whatever as string,
-        onPress: () => null,
+        onPress: () => changeEventAndAddNpc('jack'),
         style: 'cancel',
       }],
     );
-    changeEvent('jack');
   }
 
   if (npc === 'jack' && events.joker) {
@@ -186,11 +115,10 @@ const cardClubEvents = (
           Alert.alert(
             texts.ccJoker as string, texts.ccJokerOpen as string, [{
               text: texts.whatever as string,
-              onPress: () => null,
+              onPress: () => changeEventAndAddNpc('joker'),
               style: 'cancel',
             }],
           );
-          changeEvent('joker');
         },
         style: 'cancel',
       }],
@@ -205,11 +133,10 @@ const cardClubEvents = (
           Alert.alert(
             texts.ccClub as string, texts.ccClubOpen as string, [{
               text: texts.whatever as string,
-              onPress: () => null,
+              onPress: () => changeEventAndAddNpc('club'),
               style: 'cancel',
             }],
           );
-          changeEvent('club');
         },
         style: 'cancel',
       }],
@@ -224,11 +151,10 @@ const cardClubEvents = (
           Alert.alert(
             texts.ccDiamond as string, texts.ccDiamondOpen as string, [{
               text: texts.whatever as string,
-              onPress: () => null,
+              onPress: () => changeEventAndAddNpc('diamond'),
               style: 'cancel',
             }],
           );
-          changeEvent('diamond');
         },
         style: 'cancel',
       }],
@@ -243,11 +169,10 @@ const cardClubEvents = (
           Alert.alert(
             texts.ccSpade as string, texts.ccSpadeOpen as string, [{
               text: texts.whatever as string,
-              onPress: () => null,
+              onPress: () => changeEventAndAddNpc('spade'),
               style: 'cancel',
             }],
           );
-          changeEvent('spade');
         },
         style: 'cancel',
       }],
@@ -262,11 +187,10 @@ const cardClubEvents = (
           Alert.alert(
             texts.ccHeart as string, texts.ccHeartOpen as string, [{
               text: texts.whatever as string,
-              onPress: () => null,
+              onPress: () => changeEventAndAddNpc('heart'),
               style: 'cancel',
             }],
           );
-          changeEvent('heart');
         },
         style: 'cancel',
       }],
@@ -281,12 +205,13 @@ const cardClubEvents = (
           Alert.alert(
             'Dr Kadowaki', texts.ccKadowakiOpen as string, [{
               text: texts.whatever as string,
-              onPress: () => null,
+              onPress: () => {
+                addCardToNPC({ location: 'balambGarden', npc: 'kadowaki', card: 97 });
+                changeEvent('kadowaki');
+              },
               style: 'cancel',
             }],
           );
-          addCardToNPC({ location: 'balambGarden', npc: 'kadowaki', card: 97 });
-          changeEvent('kadowaki');
         },
         style: 'cancel',
       }],
@@ -301,11 +226,10 @@ const cardClubEvents = (
           Alert.alert(
             texts.ccKing as string, texts.ccKingOpen as string, [{
               text: texts.talkToAWall as string,
-              onPress: () => null,
+              onPress: () => changeEventAndAddNpc('king'),
               style: 'cancel',
             }],
           );
-          changeEvent('king');
         },
         style: 'cancel',
       }],
@@ -316,11 +240,10 @@ const cardClubEvents = (
     Alert.alert(
       texts.ccKing as string, texts.ccKingClose as string, [{
         text: texts.talkToAWall as string,
-        onPress: () => null,
+        onPress: () => changeEvent('ccEnd'),
         style: 'cancel',
       }],
     );
-    changeEvent('ccEnd');
   }
 };
 
@@ -378,13 +301,12 @@ const rareCardsQuest = (
       onPress: () => Alert.alert(
         'Caraway', texts.carawayClose as string, [{
           text: texts.whatever as string,
-          onPress: () => null,
+          onPress: () => changeEvent('caraway'),
           style: 'cancel',
         }],
       ),
       style: 'cancel',
     }]);
-    changeEvent('caraway');
   } else if (npc === 'Card Queen') {
     if (cardId === 81 && events.minimog) {
       addCardToNPC({ location: 'delingCity', npc: 'manInBlack', card: 101 });

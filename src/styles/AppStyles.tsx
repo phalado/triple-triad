@@ -16,6 +16,7 @@ const AppStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    flexWrap: 'wrap'
   },
   exploreButton: {
     width: ScreenWidth / 4,

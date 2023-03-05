@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NpcsInterface } from '../interfaces/NpcsInterface';
+import { NpcInterface, NpcsInterface } from '../interfaces/NpcsInterface';
 import npcs from '../constants/Npcs'
 
 const initialState: NpcsInterface = npcs
@@ -9,6 +9,17 @@ const npcsSlicer = createSlice({
   initialState,
   reducers: {
     createNpcList: () => initialState,
+    addNpcToLocation: (
+      state = initialState,
+      action: { payload: { npc: NpcInterface, location: string } }
+    ) => {
+      const { npc, location } = action.payload
+
+      return ({
+        ...state,
+        [location]: { ...state[location], ...npc }
+      })
+    },
     addCardNpc: (
       state = initialState,
       action: { payload: { npc: string, card: number, location: string } }
@@ -63,5 +74,5 @@ const npcsSlicer = createSlice({
   }
 })
 
-export const { createNpcList, addCardNpc, removeCardNpc, changeNpcStreak } = npcsSlicer.actions
+export const { createNpcList, addCardNpc, removeCardNpc, changeNpcStreak, addNpcToLocation } = npcsSlicer.actions
 export default npcsSlicer.reducer

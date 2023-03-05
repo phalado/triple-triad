@@ -37,6 +37,10 @@ const OptionsStyles = StyleSheet.create({
   flagImage: {
     width: '100%',
     height: '100%'
+  },
+  buttonContainer: {
+    width: '40%',
+    marginLeft: '30%',
   }
 });
 

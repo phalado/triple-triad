@@ -7,6 +7,7 @@
     "scheme": "https://expo.dev/accounts/phalado/projects/triple-triad-explore",
     "icon": "./assets/card-back.png",
     "userInterfaceStyle": "light",
+    "jsEngine": "hermes",
     "updates": {
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/af34fb23-a825-4f1f-b818-ec99d66e2de8"

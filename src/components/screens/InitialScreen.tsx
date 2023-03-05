@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
 import { GameContext } from '../GameContext';
 import RandomRulesModal from '../modals/RandomRulesModal';

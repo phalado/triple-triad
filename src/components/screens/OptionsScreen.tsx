@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Button, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Images from "../../constants/Images";
 import Texts from "../../constants/Texts";
 import GameOptionsInterface from "../../interfaces/GameOptionsInterface";
@@ -10,9 +10,10 @@ const OptionsScreen = (props:
     gameOptions: GameOptionsInterface,
     changeUsername: (username: string) => void
     changeGameLanguage: (language: string) => void
+    navigation: any
   }
 ) => {
-  const { gameOptions, changeUsername, changeGameLanguage } = props;
+  const { gameOptions, changeUsername, changeGameLanguage, navigation } = props;
   const { language } = gameOptions
 
 
@@ -34,6 +35,9 @@ const OptionsScreen = (props:
         <TouchableOpacity style={styles.flag} onPress={() => changeGameLanguage('eng')}>
           <Image source={Images.eng} style={styles.flagImage} />
         </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title={Texts[(language as 'eng' | 'ptbr')].goBack} onPress={() => navigation.pop()} />
       </View>
     </View>
   )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import InitialScreen from './components/containers/InitialScreen';
 import ExploreInitialScreen from './components/screens/ExploreInitialScreen';
@@ -23,7 +23,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const Stack = createStackNavigator();
+    const Stack = createNativeStackNavigator();
     const Drawer = createDrawerNavigator();
     const options = { headerShown: false }
 
@@ -39,7 +39,7 @@ class Navigation extends Component {
 
     return (
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Initial Screen">
           <Stack.Screen name="Initial Screen" component={InitialScreen} options={options} />
           <Stack.Screen name="Explore" component={ExploreInitialScreen} options={options} />
           <Stack.Screen name="Explore Scenes" component={ExploreScenes} options={options} />

@@ -4,12 +4,12 @@ import { changeGameLanguage, changeUsername } from '../../slicers/gameOptions';
 import OptionsScreen from '../screens/OptionsScreen';
 
 const mapStateToProps = (state: StateInterface) => ({
-  gameOptions: state.gameOptions
+  gameOptions: state.gameOptions,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   changeUsername: (username: string) => dispatch(changeUsername(username)),
-  changeGameLanguage: (language: string) => dispatch(changeGameLanguage(language))
+  changeGameLanguage: (language: 'eng' | 'ptbr') => dispatch(changeGameLanguage(language))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OptionsScreen);

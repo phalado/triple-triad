@@ -22,7 +22,7 @@ const gameOptionsSlicer = createSlice({
     ) => ({ ...state, username: action.payload }),
     changeGameLanguage: (
       state = initialState,
-      action: { payload: string }
+      action: { payload: 'eng' | 'ptbr' }
     ) => ({ ...state, language: action.payload }),
   }
 })

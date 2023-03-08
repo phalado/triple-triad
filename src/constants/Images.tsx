@@ -37,6 +37,8 @@ const Images: { [key: string]: any } = {
   randomGame: require('../contents/img/scenes/randomBoard.png'),
   quickGame: require('../contents/img/scenes/quickGame.png'),
   options: require('../contents/img/scenes/options.png'),
+  rings: require('../contents/img/scenes/achievements.jpg'),
+  ragnarok: require('../contents/img/scenes/ragnarok.jpg'),
   changeRules: require('../contents/img/scenes/rulesScreen.png'),
   deckScreen: require('../contents/img/scenes/deckScreen.jpg'),
   classroom: require('../contents/img/scenes/classroom.jpg'),

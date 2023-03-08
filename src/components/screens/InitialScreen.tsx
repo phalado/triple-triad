@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+
 import { Audio } from 'expo-av';
 import { GameContext } from '../GameContext';
 import RandomRulesModal from '../modals/RandomRulesModal';
@@ -10,14 +11,18 @@ import { cardSound, gameTheme, special } from '../../constants/Sounds';
 import Texts from '../../constants/Texts';
 
 import RulesInterface, { LocalRulesInterface } from '../../interfaces/RulesInterface';
-import styles from '../../styles/AppStyles'
 import GameOptionsInterface from '../../interfaces/GameOptionsInterface';
+import AchievementsInterface from '../../interfaces/AchievementsInterface';
+import styles from '../../styles/AppStyles'
+
 
 const InitialScreen = ({
   navigation,
   events,
   rules,
+  achievements,
   resetPlayerDeckExplore,
+  restartAchievements,
   restartEvents,
   loadSound,
   changeEvent,
@@ -27,7 +32,9 @@ const InitialScreen = ({
   navigation: any,
   events: { [event: string]: boolean },
   rules: RulesInterface,
+  achievements: AchievementsInterface,
   resetPlayerDeckExplore: () => void,
+  restartAchievements: () => void,
   restartEvents: () => void,
   loadSound: (name: string, sound: any) => void,
   changeEvent: (event: string) => void,
@@ -36,9 +43,10 @@ const InitialScreen = ({
 }) => {
   const { resetTable, createCard, resetCards } = useContext(GameContext)
   const [rulesModal, setRulesModal] = useState(false)
-  const [texts, setTexts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
+  const language: 'eng' | 'ptbr' = gameOptions.language
+  const [texts, setTexts] = useState(Texts[language])
 
-  useEffect(() => setTexts(Texts[(gameOptions.language as 'eng' | 'ptbr')]), [gameOptions.language])
+  useEffect(() => setTexts(Texts[language]), [gameOptions.language])
 
   useEffect(() => {
     resetTable();
@@ -104,6 +112,14 @@ const InitialScreen = ({
         >
           <Image style={styles.backgroundImages} source={Images.deckScreen} />
           <Text style={styles.buttonText}>{texts.catalog}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Achievements', { screen: 'Achievements', achievements, texts })}
+          style={styles.exploreButton}
+        >
+          <Image style={styles.backgroundImages} source={Images.ragnarok} />
+          <Text style={styles.buttonText}>{texts.achievements}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

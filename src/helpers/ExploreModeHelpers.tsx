@@ -5,6 +5,7 @@ import CardObjectInterface from "../interfaces/CardObjectInterface";
 import { Alert } from "react-native";
 import CardQueenInterface from "../interfaces/CardQueenInterface";
 import Npcs from "../constants/Npcs";
+import AchievementsInterface from "../interfaces/AchievementsInterface";
 
 // MELHORAR
 const getCardsFromPlayerDeck = (playerCards: { [card: string]: number }) => {
@@ -86,14 +87,26 @@ const cardClubEvents = (
   npcs: NpcsInterface,
   addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
   texts: { [key: string]: string | string[] },
-  addNpcToLocation: (data: { npc: NpcInterface, location: string }) => void
+  addNpcToLocation: (data: { npc: NpcInterface, location: string }) => void,
+  changeAchievement: (achievement: string) => void
 ) => {
   const vics = Object.values(npcs.balambGarden).filter(value => value.win > 0).length;
 
   const changeEventAndAddNpc = (
     event: 'jack' | 'joker' | 'club' | 'diamond' | 'spade' | 'heart' | 'kadowaki' | 'king'
   ) => {
+    const achievementName = {
+      jack: 'cardClubBegin',
+      joker: 'beatJack',
+      club: 'beatJoker',
+      diamond: 'beatClub',
+      spade: 'beatDiamond',
+      heart: 'beatSpade',
+      king: 'beatKadowaki',
+    }
+
     changeEvent(event)
+    if (event !== 'kadowaki') changeAchievement(achievementName[event])
     addNpcToLocation({ npc: { [event]: { ...Npcs.cardClub[event] } }, location: 'balambGarden' })
   }
 
@@ -207,6 +220,7 @@ const cardClubEvents = (
               text: texts.whatever as string,
               onPress: () => {
                 addCardToNPC({ location: 'balambGarden', npc: 'kadowaki', card: 97 });
+                changeAchievement('beatHeart')
                 changeEvent('kadowaki');
               },
               style: 'cancel',
@@ -240,7 +254,10 @@ const cardClubEvents = (
     Alert.alert(
       texts.ccKing as string, texts.ccKingClose as string, [{
         text: texts.talkToAWall as string,
-        onPress: () => changeEvent('ccEnd'),
+        onPress: () => {
+          changeAchievement('beatTheCC')
+          changeEvent('ccEnd')
+        },
         style: 'cancel',
       }],
     );
@@ -291,8 +308,10 @@ const rareCardsQuest = (
   changeEvent: (event: string) => void,
   addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
   changeCardQueenPlace: (place: string) => void,
-  texts: { [key: string]: string | string[] }
-) => {
+  texts: { [key: string]: string | string[] },
+  achievements: AchievementsInterface,
+  changeAchievement: (achievement: string) => void
+  ) => {
   if (npc === 'caraway' && cardId === 85 && events.caraway) {
     addCardToNPC({ location, npc, card: 107 });
     addCardToNPC({ location: 'fishermansHorizon', npc: 'martine', card: 85 });
@@ -301,7 +320,10 @@ const rareCardsQuest = (
       onPress: () => Alert.alert(
         'Caraway', texts.carawayClose as string, [{
           text: texts.whatever as string,
-          onPress: () => changeEvent('caraway'),
+          onPress: () => {
+            changeEvent('caraway')
+            changeAchievement('caraway')
+          },
           style: 'cancel',
         }],
       ),
@@ -344,6 +366,13 @@ const rareCardsQuest = (
     );
     changeCardQueenPlace(newLocation.location);
   } else addCardToNPC({ location, npc, card: cardId });
+
+  const queenOfCardsEvents = ['minimog', 'sacred', 'chicobo', 'alexander', 'doomtrain']
+
+  if (
+    !achievements.completeQueenOfCards.status &&
+      queenOfCardsEvents.every((event: string) => events[event] === true)
+    ) changeAchievement('completeQueenOfCards')
 };
 
 export {

@@ -17,6 +17,7 @@ import rulesReducer from './slicers/rulesSlicer'
 import preLoadedSoundsReducer from './slicers/preLoadedSoundsSlicer';
 import cardQueenReducer from './slicers/cardQueenSlicer';
 import gameOptionsReducer from './slicers/gameOptions';
+import achievementsReducer from './slicers/achievementsSlice';
 
 const persistConfig = {
   key: 'root',
@@ -33,7 +34,8 @@ const rootReducer = combineReducers({
   rules: rulesReducer,
   preLoadedSounds: preLoadedSoundsReducer,
   cardQueen: cardQueenReducer,
-  gameOptions: gameOptionsReducer
+  gameOptions: gameOptionsReducer,
+  achievements: achievementsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -39,7 +39,7 @@ const AnimatedCard = (
     preLoadedSounds,
   } = props;
   const { row, column, dragable } = playCard;
-  const { table, cardsOnTheTable, turn } = useContext(GameContext)
+  const { table, turn } = useContext(GameContext)
 
   const pan = useRef<any>(new Animated.ValueXY()).current;
 
@@ -85,7 +85,8 @@ const AnimatedCard = (
           friction: 5,
           useNativeDriver: false,
         }).start();
-        preLoadedSounds.cardSound.playAsync();
+        preLoadedSounds.cardSound.playAsync()
+        setTimeout(() => preLoadedSounds.cardSound.stopAsync(), 1000);
       } else {
         for (let i = 0; i <= 2; i += 1) {
           for (let j = 0; j <= 2; j += 1) {
@@ -95,7 +96,8 @@ const AnimatedCard = (
                 friction: 10,
                 useNativeDriver: false,
               }).start();
-              preLoadedSounds.cardSound.playAsync();
+              preLoadedSounds.cardSound.playAsync()
+              setTimeout(() => preLoadedSounds.cardSound.stopAsync(), 1000);
               handlePlaceCard(player, card, row, column, i, j);
             }
           }
@@ -107,7 +109,8 @@ const AnimatedCard = (
           friction: 5,
           useNativeDriver: false,
         }).start();
-        preLoadedSounds.cardSound.playAsync();
+        preLoadedSounds.cardSound.playAsync()
+        setTimeout(() => preLoadedSounds.cardSound.stopAsync(), 1000);
       }
     },
   });

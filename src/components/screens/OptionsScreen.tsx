@@ -9,18 +9,17 @@ const OptionsScreen = (props:
   {
     gameOptions: GameOptionsInterface,
     changeUsername: (username: string) => void
-    changeGameLanguage: (language: string) => void
+    changeGameLanguage: (language: 'eng' | 'ptbr') => void
     navigation: any
   }
 ) => {
   const { gameOptions, changeUsername, changeGameLanguage, navigation } = props;
-  const { language } = gameOptions
-
+  const language: 'eng' | 'ptbr' = gameOptions.language
 
   return (
     <View style={styles.container}>
       <View style={styles.usernameContainer}>
-        <Text style={styles.label}>{Texts[(language as 'eng' | 'ptbr')].changeUsername}</Text>
+        <Text style={styles.label}>{Texts[language].changeUsername}</Text>
         <TextInput
           style={styles.input}
           value={gameOptions.username}
@@ -28,7 +27,7 @@ const OptionsScreen = (props:
         />
       </View>
       <View style={styles.usernameContainer}>
-        <Text style={styles.label}>{Texts[(language as 'eng' | 'ptbr')].changeLanguage}</Text>
+        <Text style={styles.label}>{Texts[language].changeLanguage}</Text>
         <TouchableOpacity style={styles.flag} onPress={() => changeGameLanguage('ptbr')}>
           <Image source={Images.ptbr} style={styles.flagImage} />
         </TouchableOpacity>
@@ -37,7 +36,7 @@ const OptionsScreen = (props:
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <Button title={Texts[(language as 'eng' | 'ptbr')].goBack} onPress={() => navigation.pop()} />
+        <Button title={Texts[language].goBack} onPress={() => navigation.pop()} />
       </View>
     </View>
   )

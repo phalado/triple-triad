@@ -1,11 +1,10 @@
-import CardInterface from "./CardInterface"
+import AchievementsInterface from "./AchievementsInterface"
 import CardObjectInterface from "./CardObjectInterface"
 import DecksInterface from "./DecksInterface"
 import GameOptionsInterface from "./GameOptionsInterface"
 import { NpcsInterface } from "./NpcsInterface"
 import PreLoadedSoundsInterface from "./PreLoadedSounds"
 import RulesInterface from "./RulesInterface"
-import TableInterface from "./TableInterface"
 
 export default interface StateInterface {
   decks: {
@@ -19,5 +18,6 @@ export default interface StateInterface {
   rules: RulesInterface
   preLoadedSounds: PreLoadedSoundsInterface
   cardQueen: CardObjectInterface,
-  gameOptions: GameOptionsInterface
+  gameOptions: GameOptionsInterface,
+  achievements: AchievementsInterface
 }

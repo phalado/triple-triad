@@ -5,10 +5,9 @@ const { ScreenWidth, ScreenHeight } = CSSSizes
 
 const AppStyles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
     height: ScreenHeight,
     margin: 0,
+    marginTop: '2.5%'
   },
   halfSections: {
     height: ScreenHeight / 2.5,
@@ -16,10 +15,11 @@ const AppStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   exploreButton: {
     width: ScreenWidth / 4,
+    margin: 10,
     height: '100%',
     justifyContent: 'center',
     alignContent: 'center',
@@ -34,6 +34,7 @@ const AppStyles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
+    borderRadius: 20
   },
   buttonText: {
     fontSize: 35,

@@ -12,6 +12,7 @@ import GamePlay from './components/containers/GamePlay';
 import GameOverScreen from './components/containers/GameOverScreen';
 import CatalogScreen from './components/containers/CatalogScreen';
 import OptionsScreen from './components/containers/OptionsScreen';
+import AchievementsScreen from './components/screens/AchievementsScreen';
 
 class Navigation extends Component {
   componentDidMount() {
@@ -48,6 +49,7 @@ class Navigation extends Component {
           <Stack.Screen name="Game over" component={GameOverScreen} options={options} />
           <Stack.Screen name="Catalog" component={CatalogScreen} options={options} />
           <Stack.Screen name="Options" component={OptionsScreen} options={options} />
+          <Stack.Screen name="Achievements" component={AchievementsScreen} options={options} />
         </Stack.Navigator>
       </NavigationContainer>
     );

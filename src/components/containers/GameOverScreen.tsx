@@ -6,6 +6,7 @@ import { changeEvent } from '../../slicers/eventsSlicer';
 import GameOverScreen from '../screens/GameOverScreen';
 import { addSpecialCardQueen, changeCardQueenPlace, changeCardQueenStreak, removeSpecialCardQueen } from '../../slicers/cardQueenSlicer';
 import { NpcInterface } from '../../interfaces/NpcsInterface';
+import { changeAchievement } from '../../slicers/achievementsSlice';
 
 const mapStateToProps = (state: StateInterface) => ({
   rules: state.rules,
@@ -13,7 +14,8 @@ const mapStateToProps = (state: StateInterface) => ({
   events: state.events,
   npcs: state.npcs,
   preLoadedSounds: state.preLoadedSounds,
-  gameOptions: state.gameOptions
+  gameOptions: state.gameOptions,
+  achievements: state.achievements
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -35,7 +37,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   changeCardQueenStreak: (streak: 'win' | 'loose' | 'tie') => dispatch(changeCardQueenStreak(streak)),
   addNpcToLocation: (
     data: { npc: NpcInterface, location: string }
-  ) => dispatch(addNpcToLocation(data))
+  ) => dispatch(addNpcToLocation(data)),
+  changeAchievement: (achievement: string) => dispatch(changeAchievement(achievement))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameOverScreen);

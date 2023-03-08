@@ -13,9 +13,10 @@ import RulesInterface from '../../interfaces/RulesInterface';
 import { NpcsInterface } from '../../interfaces/NpcsInterface';
 import styles from '../../styles/ExploreScenes';
 import { GameContext } from '../GameContext';
-import CardQueenInterface from '../../interfaces/CardQueenInterface';
 import Texts from '../../constants/Texts';
 import GameOptionsInterface from '../../interfaces/GameOptionsInterface';
+import AchievementsInterface from '../../interfaces/AchievementsInterface';
+import ToastMessage from "../ToastMessage";
 
 const ExploreScenes = (
   props:
@@ -28,10 +29,12 @@ const ExploreScenes = (
     playerCards: { [index: string]: number }
     cardQueen: any,
     gameOptions: GameOptionsInterface
+    achievements: AchievementsInterface
     addCardToExploreDeck: (card: number) => void
     createNPCList: () => void
     changeEvent: (event: string) => void
     changeLastLocation: (location: string) => void
+    changeAchievement: (achievement: string) => void
   }
 ) => {
   const {
@@ -43,10 +46,12 @@ const ExploreScenes = (
     playerCards,
     cardQueen,
     gameOptions,
+    achievements,
     addCardToExploreDeck,
     createNPCList,
     changeEvent,
-    changeLastLocation
+    changeLastLocation,
+    changeAchievement
   } = props;
   const { place, image, audio } = route.params;
   const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
@@ -56,6 +61,7 @@ const ExploreScenes = (
   const [cardVisible, setCardVisible] = useState(false);
   const [cardOwner, setCardOwner] = useState('player0');
   const { resetTable, createCard, resetCards } = useContext(GameContext)
+  const [toastMessage, setToastMessage] = useState('')
 
   useFocusEffect(
     useCallback(() => {
@@ -114,11 +120,14 @@ const ExploreScenes = (
 
   //MELHORAR
   const getPupuEvent = () => {
-    if (events.pupu1) changeEvent('pupu1');
-    else if (events.pupu2) changeEvent('pupu2');
+    if (events.pupu1) {
+      changeEvent('pupu1');
+      changeAchievement('pupu1')
+    } else if (events.pupu2) changeEvent('pupu2');
     else if (events.pupu3) changeEvent('pupu3');
     else {
       changeEvent('pupu4');
+      changeAchievement('pupu4')
       addCardToExploreDeck(48);
       setCardVisible(true);
       setCardOwner('player0');
@@ -155,6 +164,7 @@ const ExploreScenes = (
           />
         </ScrollView>
       </View>
+      <ToastMessage message={toastMessage} setMessage={setToastMessage} />
       {(getRandomNumber(0, 10) <= 2 && events.pupu4) && <PupuEvent getPupuEvent={getPupuEvent} />}
     </View>
   );

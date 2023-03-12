@@ -371,7 +371,7 @@ const rareCardsQuest = (
 
   if (
     !achievements.completeQueenOfCards.status &&
-      queenOfCardsEvents.every((event: string) => events[event] === true)
+      queenOfCardsEvents.every((event: string) => events[event] === false)
     ) changeAchievement('completeQueenOfCards')
 };
 

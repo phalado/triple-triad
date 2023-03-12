@@ -29,28 +29,6 @@ const ExploreModal = (
   const [modalCard, setModalCard] = useState(1);
   const [cardOwner, setCardOwner] = useState('player0');
 
-
-  // const addFirstCardsToDeck = (cards: number[]) => {
-  //   createNPCList();
-  //   restartRules();
-
-  //   const addCards = async () => {
-  //     cards.forEach(card => {
-  //       addCardToExploreDeck(card);
-  //       setCardOwner('player0');
-  //       setCardModalVisible(true);
-  //       setModalCard(card);
-
-  //       setTimeout(() => {
-  //         setCardOwner('player1');
-  //         setTimeout(() => setCardModalVisible(false), 1000);
-  //       }, 1000)
-  //     })
-  //   }
-
-  //   addCards().then(() => startScene())
-  // }
-
   const addFirstCardsToDeck = (cards: number[]) => {
     createNPCList();
     restartRules();

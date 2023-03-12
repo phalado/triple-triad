@@ -1,10 +1,10 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 import Modal from 'react-native-modal';
+import RankNumbers from '../RankNumbers';
 import Cards from '../../constants/Cards';
 import Images from '../../constants/Images';
 import styles from '../../styles/ModalScreen';
-import RankNumbers from '../RankNumbers';
 
 const CardModal = (props: { visible: boolean, cardId: number, cardOwner: string }) => {
   const { visible, cardId, cardOwner } = props;
@@ -13,7 +13,7 @@ const CardModal = (props: { visible: boolean, cardId: number, cardOwner: string 
   return (
     <Modal isVisible={visible} style={{ alignItems: 'center' }}>
       <View style={styles.cardContainer}>
-        <Image style={styles.cardImage} source={Images[cardOwner]} />
+        <Image style={styles.cardBackgroundImage} source={Images[cardOwner]} />
         <Image style={styles.cardImage} source={Images[cardId]}  />
         <RankNumbers
           ranks={(card as any).ranks}

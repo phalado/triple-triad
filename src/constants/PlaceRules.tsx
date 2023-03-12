@@ -5,7 +5,7 @@ export default {
     same: false,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: false,
   },
   balambGarden: {
@@ -14,7 +14,7 @@ export default {
     same: false,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: false,
   },
   balambTown: {
@@ -23,7 +23,7 @@ export default {
     same: false,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: false,
   },
   delingCity: {
@@ -32,7 +32,7 @@ export default {
     same: true,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: false,
   },
   galbadiaGarden: {
@@ -41,7 +41,7 @@ export default {
     same: true,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: false,
   },
   timber: {
@@ -50,7 +50,7 @@ export default {
     same: true,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: false,
   },
   dollet: {
@@ -59,7 +59,7 @@ export default {
     same: false,
     elemental: true,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: true,
   },
   fishermansHorizon: {
@@ -68,7 +68,7 @@ export default {
     same: false,
     elemental: true,
     sameWall: false,
-    sudenDeath: true,
+    suddenDeath: true,
     random: false,
   },
   shumiVillage: {
@@ -77,7 +77,7 @@ export default {
     same: false,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: true,
   },
   trabiaGarden: {
@@ -86,7 +86,7 @@ export default {
     same: false,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: true,
   },
   winhill: {
@@ -95,7 +95,7 @@ export default {
     same: true,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: true,
   },
   edeasHouse: {
@@ -104,7 +104,7 @@ export default {
     same: true,
     elemental: false,
     sameWall: false,
-    sudenDeath: false,
+    suddenDeath: false,
     random: true,
   },
   esthar: {
@@ -113,7 +113,7 @@ export default {
     same: false,
     elemental: true,
     sameWall: true,
-    sudenDeath: false,
+    suddenDeath: false,
     random: false,
   },
 }

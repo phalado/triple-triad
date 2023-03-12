@@ -50,6 +50,14 @@ const ModalStyles = StyleSheet.create({
     resizeMode: 'stretch',
     position: 'absolute',
   },
+  cardBackgroundImage: {
+    width: cardWidth * 1.8,
+    height: cardHeight * 1.8,
+    top: cardWidth * 0.1,
+    left: cardHeight * 0.1,
+    resizeMode: 'stretch',
+    position: 'absolute',
+  },
   placeContainer: {
     margin: '10%',
     alignItems: 'center',

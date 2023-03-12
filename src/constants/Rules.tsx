@@ -4,6 +4,6 @@ export default {
   same: true,
   elemental: false,
   sameWall: true,
-  sudenDeath: false,
+  suddenDeath: false,
   random: false,
 };

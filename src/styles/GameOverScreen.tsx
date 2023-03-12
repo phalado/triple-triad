@@ -92,6 +92,14 @@ const GameOverScreenStyles = StyleSheet.create({
     resizeMode: 'stretch',
     position: 'absolute',
   },
+  insideChooseBackCard: {
+    width: cardWidth * 0.9,
+    height: cardHeight * 0.9,
+    top: cardWidth * 0.05,
+    left: cardHeight * 0.05,
+    resizeMode: 'stretch',
+    position: 'absolute',
+  },
   buttonsContainer: {
     width: '80%',
     marginTop: '5%',

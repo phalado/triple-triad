@@ -1,24 +1,40 @@
 //@ts-nocheck
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ToastManager, { Toast } from 'toastify-react-native'
+import Texts from "../constants/Texts";
+import AchievementsInterface from "../interfaces/AchievementsInterface";
+import GameOptionsInterface from "../interfaces/GameOptionsInterface";
 
 const ToastMessage = (props: {
-  message: string,
-  setMessage: (message: string) => void
+  gameOptions: GameOptionsInterface,
+  achievements: AchievementsInterface
+  changeAchievementPopup: (achiev: string) => void
 }) => {
-  const { message, setMessage } = props;
+  const getAchievement = () => Object.keys(achievements)
+    .find((key: string) => achievements[key].status && !achievements[key].popup)
+
+  const { gameOptions, achievements, changeAchievementPopup } = props;
+  const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
+  const [achievement, setAchievement] = useState(getAchievement())
 
   const notify = () => Toast.success(`
-    Achievement unlocked:
-    ${message}
+    ${texts.achievUnlocked}:
+    ${texts[achievements[achievement].title]}
   `);
 
   useEffect(() => {
-    if (message === '') return
+    if (achievement === undefined) return
+
+    if (achievements[achievement].popup) {
+      const newAchievement = getAchievement()
+      console.log(newAchievement)
+      if (newAchievement !== undefined) setAchievement(newAchievement)
+      return
+    }
 
     notify()
-    setMessage('')
-  }, [message])
+    changeAchievementPopup(achievement)
+  }, [achievement])
 
   return (
     <ToastManager

@@ -16,6 +16,7 @@ const achievementsSlicer = createSlice({
       ...state,
       [action.payload]: {
         status: true,
+        id: state[action.payload].id,
         popup: state[action.payload].popup,
         title: state[action.payload].title,
         description: state[action.payload].description
@@ -27,8 +28,9 @@ const achievementsSlicer = createSlice({
     ) => ({
       ...state,
       [action.payload]: {
-        status: state[action.payload].status,
         popup: true,
+        id: state[action.payload].id,
+        status: state[action.payload].status,
         title: state[action.payload].title,
         description: state[action.payload].description
         }

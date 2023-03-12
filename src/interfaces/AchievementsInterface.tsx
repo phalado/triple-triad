@@ -1,4 +1,5 @@
 export interface AchievementInterface {
+  id: number
   status: boolean
   popup: boolean
   title: string

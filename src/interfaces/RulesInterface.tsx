@@ -4,7 +4,7 @@ export interface LocalRulesInterface {
   same: boolean
   elemental: boolean
   sameWall: boolean
-  sudenDeath: boolean
+  suddenDeath: boolean
   random: boolean
 }
 

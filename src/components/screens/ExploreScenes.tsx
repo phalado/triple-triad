@@ -15,8 +15,8 @@ import styles from '../../styles/ExploreScenes';
 import { GameContext } from '../GameContext';
 import Texts from '../../constants/Texts';
 import GameOptionsInterface from '../../interfaces/GameOptionsInterface';
-import AchievementsInterface from '../../interfaces/AchievementsInterface';
-import ToastMessage from "../ToastMessage";
+import AchievementsInterface, { AchievementInterface } from '../../interfaces/AchievementsInterface';
+import ToastMessage from "../containers/ToastMessage";
 
 const ExploreScenes = (
   props:
@@ -164,7 +164,7 @@ const ExploreScenes = (
           />
         </ScrollView>
       </View>
-      <ToastMessage message={toastMessage} setMessage={setToastMessage} />
+      <ToastMessage />
       {(getRandomNumber(0, 10) <= 2 && events.pupu4) && <PupuEvent getPupuEvent={getPupuEvent} />}
     </View>
   );

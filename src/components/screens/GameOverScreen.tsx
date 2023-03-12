@@ -121,7 +121,7 @@ const GameOverScreen = (props: {
     });
   };
 
-  const sudenDeathGame = () => {
+  const suddenDeathGame = () => {
     resetTable();
     const allCards = getCardsId([...cards.play1Cards, ...cards.play2Cards]);
     resetCards();
@@ -138,20 +138,20 @@ const GameOverScreen = (props: {
     navigation.push('GamePlay', { screen: 'GamePlay', params: { npcDeck, location, npc } });
   };
 
-  if (rules[location].sudenDeath && gameOver === 'tie' && cardsOnTheTable() === 9) {
-    setTimeout(() => sudenDeathGame(), 2000);
+  if (rules[location].suddenDeath && gameOver === 'tie' && cardsOnTheTable() === 9) {
+    setTimeout(() => suddenDeathGame(), 2000);
     return (
       <View style={styles.container}>
         <Image style={styles.backgroundImage} source={Images.board} />
         <Image style={styles.gameOverImage} source={Images[gameOver]} />
-        <Text style={styles.suddenDeathText}>{texts.suddenDeath}</Text>
+        <Text style={styles.suddenDeathText}>{texts.suddenDeathButton}</Text>
       </View>
     );
   }
 
   if (npcDeck && location !== 'random') {
     const winCard = (cardId: number) => {
-      if (!achievements.oneGame.status) changeAchievement('oneCard')
+      if (!achievements.oneGame.status) changeAchievement('oneGame')
       if (npc === 'Card Queen') {
         if (!achievements.cardQueen.status) changeAchievement('cardQueen')
         if (cardId === 48 || cardId > 77) removeSpecialCardQueen(cardId)
@@ -246,7 +246,7 @@ const GameOverScreen = (props: {
           <View key={JSON.stringify([cardId, player, index])}>
             {getCardName(newCard.name, newCard.id)}
             <View style={styles.chooseCardImage}>
-              <Image style={styles.insideChooseCard} source={Images[thisPlayer]} />
+              <Image style={styles.insideChooseBackCard} source={Images[thisPlayer]} />
               <Image style={styles.insideChooseCard} source={Images[newCard.id]} />
               <RankNumbers
                 ranks={newCard.ranks}
@@ -263,7 +263,7 @@ const GameOverScreen = (props: {
         <View key={JSON.stringify([cardId, player, index])}>
           {getCardName(newCard.name, newCard.id)}
           <TouchableOpacity style={styles.chooseCardImage} onPress={() => winCard(cardId)}>
-            <Image style={styles.insideChooseCard} source={Images[thisPlayer]} />
+            <Image style={styles.insideChooseBackCard} source={Images[thisPlayer]} />
             <Image style={styles.insideChooseCard} source={Images[newCard.id]} />
             <RankNumbers
               ranks={newCard.ranks}

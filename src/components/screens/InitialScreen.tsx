@@ -86,6 +86,7 @@ const InitialScreen = ({
           startRandomGame={startRandomGame}
           randomRules={rules.random}
           changeRandomRules={changeRandomRules}
+          texts={texts}
         />
 
         <TouchableOpacity

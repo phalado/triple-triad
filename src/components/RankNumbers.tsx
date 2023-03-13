@@ -10,11 +10,13 @@ const RankNumbers = (
     element: string,
     playCard?: { row: number, column: number, dragable: boolean },
     player0: boolean
+    size: 'bigCard' | 'smallCard'
   }
 ) => {
-  const { ranks, element, playCard, player0 } = props;
+  const { ranks, element, playCard, player0, size } = props;
   const { row, column, dragable } = playCard || { row: 0, column: 0, dragable: true };
   const { getCellElement } = useContext(GameContext)
+  const cardStyles = styles[size]
   const rankUp = `rank${ranks[0]}`;
   const rankLf = `rank${ranks[1]}`;
   const rankRt = `rank${ranks[2]}`;
@@ -29,13 +31,15 @@ const RankNumbers = (
   }
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.rankUp} source={Images[rankUp]} />
-      <Image style={styles.rankLeft} source={Images[rankLf]} />
-      <Image style={styles.rankDown} source={Images[rankDn]} />
-      <Image style={styles.rankRight} source={Images[rankRt]} />
-      <Image style={styles.element} source={Images[element]} />
-      {plusMinus !== 'none' && <Image style={styles.plusMinus} source={Images[plusMinus]} />}
+    <View style={cardStyles.container}>
+      <View style={cardStyles.rankContainer}>
+        <Image style={cardStyles.rankUp} source={Images[rankUp]} />
+        <Image style={cardStyles.rankLeft} source={Images[rankLf]} />
+        <Image style={cardStyles.rankDown} source={Images[rankDn]} />
+        <Image style={cardStyles.rankRight} source={Images[rankRt]} />
+      </View>
+      <Image style={cardStyles.element} source={Images[element]} />
+      {plusMinus !== 'none' && <Image style={cardStyles.plusMinus} source={Images[plusMinus]} />}
     </View>
   )
 }

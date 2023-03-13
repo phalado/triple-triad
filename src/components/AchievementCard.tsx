@@ -4,7 +4,7 @@ import FlipCard from 'react-native-flip-card'
 import styles from '../styles/AchievementsScreen'
 
 const AchievementCard = (props: {
-  status: boolean, title: string, description: string, texts: { [key: string]: string | string }
+  status: boolean, title: string, description: string, texts: { [key: string]: string }
 }) => {
   const { status, title, description, texts } = props;
 

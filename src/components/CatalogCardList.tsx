@@ -10,19 +10,17 @@ const CatalogCardList = (
     playerCards: { [card: string]: number },
     setSelectedCard: (cardId: number) => void,
     level: number,
-    texts: { [key: string]: string | string[] }
+    texts: { [key: string]: string }
   }
 ) => {
   const { playerCards, setSelectedCard, level, texts } = props;
-  const tableHead = texts.catalogTableHead as string[]
+  const tableHead = texts.catalogTableHead.split('-')
 
   return (
     <ScrollView style={{ width: '90%', height: '50%' }}>
       <View style={styles.tableContainer}>
         <View style={styles.tableHead}>
-          {tableHead.map((value) => (
-            <Text style={styles.tableText} key={value}>{value}</Text>)
-          )}
+          {tableHead.map((value) => <Text style={styles.tableText} key={value}>{value}</Text>)}
         </View>
         {getCardCatalogTableData(playerCards, level).map(row => (
           <TouchableOpacity
@@ -33,7 +31,7 @@ const CatalogCardList = (
               {row.map((value, index) => {
                 let text: string | number = '?????'
 
-                if (index === 2 && value === 'neutral') text = '-'
+                if (index === 2) text = value === 'neutral' ? '-' : texts[value]
                 else if (index !== 1 || (index === 1 && playerCards[row[0]])) text = value
 
                 return (

@@ -60,6 +60,7 @@ const DeckAnimatedCard = (
           element={card.element}
           playCard={{ row: 0, column: 0, dragable: false }}
           player0={true}
+          size={'smallCard'}
         />
       </Animated.View>
     </View>

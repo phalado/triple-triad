@@ -12,7 +12,7 @@ const ChooseCardsDropZone = (
     location: string
     npc: string
     addCardsToStore: () => void
-    texts: { [key: string]: string | string[] }
+    texts: { [key: string]: string }
   }
 ) => {
   const {
@@ -46,12 +46,12 @@ const ChooseCardsDropZone = (
         ))}
       </View>
       <Button
-        title={texts.startGame as string}
+        title={texts.startGame}
         onPress={() => {
           if (deck.some((card: number) => card === 0)) {
-            Alert.alert(texts.wait as string, texts.fullDeck as string, [
+            Alert.alert(texts.wait, texts.fullDeck, [
               {
-                text: texts.whatever as string,
+                text: texts.whatever,
                 onPress: () => null,
                 style: 'cancel',
               },

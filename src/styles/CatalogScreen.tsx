@@ -100,7 +100,7 @@ const CatalogScreenStyles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     margin: 10,
     padding: 10,
-    height: '30%',
+    height: '20%',
     width: '90%',
   },
   aboutText: {

@@ -43,7 +43,7 @@ const resetGame = (
     resetTable: () => void,
     createCard: (player: boolean, card: CardInterface) => void,
     navigation: any,
-    texts: { [key: string]: string | string[] }
+    texts: { [key: string]: string }
   }
 ) => {
   const { resetCards, resetTable, createCard, navigation, texts } = props;

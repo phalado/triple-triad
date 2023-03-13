@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 import AchievementCard from "../AchievementCard";
 import AchievementsInterface from "../../interfaces/AchievementsInterface";
 import styles from '../../styles/AchievementsScreen'
@@ -10,10 +10,10 @@ interface AchievsInterface {
   status: boolean
 }
 
-const AchievementsScreen = (props: { route: any }) => {
+const AchievementsScreen = (props: { route: any, navigation: any }) => {
   const { achievements, texts } = props.route.params
   const conquered = Object.values(achievements)
-    .filter((value: AchievsInterface | unknown) => (value as AchievementsInterface).status).length
+    .filter(value => (value as AchievementsInterface).status).length
   const total = Object.keys(achievements).length
 
   return (
@@ -33,6 +33,9 @@ const AchievementsScreen = (props: { route: any }) => {
             />
           )
         })}
+        <View style={styles.goBackButton}>
+          <Button title={texts.goBack} onPress={() => props.navigation.pop()} />
+        </View>
       </View>
     </ScrollView>
   )

@@ -20,6 +20,7 @@ const CardModal = (props: { visible: boolean, cardId: number, cardOwner: string 
           element={(card as any).element}
           playCard={{ row: 0, column: 0, dragable: false }}
           player0={false}
+          size={'bigCard'}
         />
       </View>
     </Modal>

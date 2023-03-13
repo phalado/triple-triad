@@ -11,7 +11,7 @@ const RandomRulesModal = (props: {
   startRandomGame: () => void,
   randomRules: LocalRulesInterface,
   changeRandomRules: (rules: LocalRulesInterface) => void,
-  texts: { [key: string]: string | string[] }
+  texts: { [key: string]: string }
 }) => {
   const {
     startRandomGame, visible, setVisible, randomRules, changeRandomRules, texts
@@ -47,8 +47,8 @@ const RandomRulesModal = (props: {
           (value as 'open' | 'elemental' | 'same' | 'plus' | 'sameWall' | 'random' | 'suddenDeath')
         ))}
         <View style={styles.rulesButtonsContainer}>
-          <Button title={texts.startGame as string} onPress={() => startRandomGame()} />
-          <Button title={texts.goBack as string} onPress={() => setVisible(false)} />
+          <Button title={texts.startGame} onPress={() => startRandomGame()} />
+          <Button title={texts.goBack} onPress={() => setVisible(false)} />
         </View>
       </View>
     </Modal>

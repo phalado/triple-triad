@@ -37,9 +37,9 @@ const AppStyles = StyleSheet.create({
     borderRadius: 20
   },
   buttonText: {
-    fontSize: 35,
+    fontSize: ScreenWidth /30,
     color: 'white',
-    alignSelf: 'center',
+    textAlign: 'center'
   },
 });
 

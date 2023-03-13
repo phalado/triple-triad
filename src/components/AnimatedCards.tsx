@@ -136,6 +136,7 @@ const AnimatedCard = (
         element={card.element}
         playCard={playCard}
         player0={false}
+        size={'smallCard'}
       />
     </Animated.View>
   );
@@ -149,6 +150,7 @@ const AnimatedCard = (
         element={card.element}
         playCard={playCard}
         player0={false}
+        size={'smallCard'}
       />
     </View>
   );

@@ -253,6 +253,7 @@ const GameOverScreen = (props: {
                 element={newCard.element}
                 playCard={{ row: 8, column: 8, dragable: false }}
                 player0={false}
+                size={'smallCard'}
               />
             </View>
           </View>
@@ -270,6 +271,7 @@ const GameOverScreen = (props: {
               element={newCard.element}
               playCard={{ row: 8, column: 8, dragable: false }}
               player0={false}
+              size={'smallCard'}
             />
           </TouchableOpacity>
         </View>

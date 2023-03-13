@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import CSSSizes from '../constants/CSSSizes';
 
-const { ScreenWidth, ScreenHeight, TableWidth, cardWidth, cardHeight } = CSSSizes
+const { ScreenWidth, ScreenHeight } = CSSSizes
 
 const AchievemnetsScreenStyles = StyleSheet.create({
   container: {
@@ -63,8 +63,14 @@ const AchievemnetsScreenStyles = StyleSheet.create({
   },
   texts: {
     color: 'white',
-    fontSize: 15,
-    textAlign: 'center'
+    fontSize: ScreenWidth / 60,
+    textAlign: 'center',
+    margin: '5%'
+  },
+  goBackButton: {
+    position: 'absolute',
+    right: '4%',
+    top: '2%'
   }
 });
 

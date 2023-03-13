@@ -7,13 +7,10 @@ import styles from "../styles/CatalogScreen"
 import Texts from "../constants/Texts";
 
 const CatalogCard = (
-  props: {
-    card: CardObjectInterface,
-    cardType: string,
-    language: string
-  }
+  props: { card: CardObjectInterface, cardType: string, language: string }
 ) => {
   const { card, cardType, language } = props;
+  const texts: { [key: string]: string } = Texts[(language as 'eng' | 'ptbr')]
 
   return (
     <>
@@ -24,12 +21,13 @@ const CatalogCard = (
           ranks={card.ranks}
           element={card.element}
           player0={false}
+          size={'bigCard'}
         />
       </View>
       <View style={styles.aboutCard}>
         <Text style={styles.aboutText}>{card.name + " - " + cardType}</Text>
         <Text style={styles.aboutText}>
-          {Texts[(language as 'eng' | 'ptbr')].element + ": " + card.element}
+          {texts.element + ": " + texts[card.element]}
         </Text>
       </View>
     </>

@@ -7,11 +7,17 @@ const ScreenHeight = Dimensions.get('window').height;
 const cardWidth = TableWidth * 0.17;
 const cardHeight = ScreenHeight * 0.28;
 
-const rankUpDownConstant = 20;
-const rankLeftRightConstant = 10;
+const bigLetterWidth = cardWidth / 5;
+const bigLetterheight = cardHeight / 5;
 
-const letterWidth = cardWidth / 6;
-const letterheight = cardHeight / 6;
+const bigRankUpDownConstant = (cardWidth / 4) - (bigLetterWidth / 2);
+const bigRankLeftRightConstant = (cardHeight / 4) - (bigLetterheight / 2);
+
+const smallLetterWidth = cardWidth / 7;
+const smallLetterheight = cardHeight / 7;
+
+const smallRankUpDownConstant = (cardWidth / 6) - (smallLetterWidth / 2);
+const smallRankLeftRightConstant = (cardHeight / 6) - (smallLetterheight / 2);
 
 const CSSSizes = {
   ScreenWidth,
@@ -19,10 +25,14 @@ const CSSSizes = {
   TableWidth,
   cardWidth,
   cardHeight,
-  rankUpDownConstant,
-  rankLeftRightConstant,
-  letterWidth,
-  letterheight
+  bigLetterWidth,
+  bigLetterheight,
+  bigRankUpDownConstant,
+  bigRankLeftRightConstant,
+  smallLetterWidth,
+  smallLetterheight,
+  smallRankUpDownConstant,
+  smallRankLeftRightConstant,
 }
 
 export default CSSSizes;

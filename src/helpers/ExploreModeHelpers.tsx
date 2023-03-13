@@ -86,7 +86,7 @@ const cardClubEvents = (
   npc: string,
   npcs: NpcsInterface,
   addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
-  texts: { [key: string]: string | string[] },
+  texts: { [key: string]: string },
   addNpcToLocation: (data: { npc: NpcInterface, location: string }) => void,
   changeAchievement: (achievement: string) => void
 ) => {
@@ -308,7 +308,7 @@ const rareCardsQuest = (
   changeEvent: (event: string) => void,
   addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
   changeCardQueenPlace: (place: string) => void,
-  texts: { [key: string]: string | string[] },
+  texts: { [key: string]: string },
   achievements: AchievementsInterface,
   changeAchievement: (achievement: string) => void
   ) => {

@@ -28,12 +28,14 @@ const OptionsScreen = (props:
       </View>
       <View style={styles.usernameContainer}>
         <Text style={styles.label}>{Texts[language].changeLanguage}</Text>
-        <TouchableOpacity style={styles.flag} onPress={() => changeGameLanguage('ptbr')}>
-          <Image source={Images.ptbr} style={styles.flagImage} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.flag} onPress={() => changeGameLanguage('eng')}>
-          <Image source={Images.eng} style={styles.flagImage} />
-        </TouchableOpacity>
+        <View style={styles.languageButton}>
+          <TouchableOpacity style={styles.flag} onPress={() => changeGameLanguage('ptbr')}>
+            <Image source={Images.ptbr} style={styles.flagImage} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.flag} onPress={() => changeGameLanguage('eng')}>
+            <Image source={Images.eng} style={styles.flagImage} />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button title={Texts[language].goBack} onPress={() => navigation.pop()} />

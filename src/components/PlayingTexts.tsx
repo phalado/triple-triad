@@ -9,7 +9,7 @@ const PlayingTexts = (props: {
   player?: boolean
   score: number
   username?: string
-  texts: { [key: string]: string | string[] }
+  texts: { [key: string]: string }
 }) => {
   const { NPCName, player, score, username, texts } = props;
   const { turn } = useContext(GameContext)

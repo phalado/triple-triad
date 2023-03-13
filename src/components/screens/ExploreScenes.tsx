@@ -15,7 +15,7 @@ import styles from '../../styles/ExploreScenes';
 import { GameContext } from '../GameContext';
 import Texts from '../../constants/Texts';
 import GameOptionsInterface from '../../interfaces/GameOptionsInterface';
-import AchievementsInterface, { AchievementInterface } from '../../interfaces/AchievementsInterface';
+import AchievementsInterface from '../../interfaces/AchievementsInterface';
 import ToastMessage from "../containers/ToastMessage";
 
 const ExploreScenes = (
@@ -56,7 +56,7 @@ const ExploreScenes = (
   const { place, image, audio } = route.params;
   const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
   const [visible, setVisible] = useState(false);
-  const [tableHead] = useState(texts.npcTableHead);
+  const [tableHead] = useState(texts.npcTableHead.split('-'));
   const [tableData, setTableData] = useState(getTableData(npcs, place, cardQueen));
   const [cardVisible, setCardVisible] = useState(false);
   const [cardOwner, setCardOwner] = useState('player0');

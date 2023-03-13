@@ -11,7 +11,7 @@ const GameDeckFlatList = (
     handleAddCard: (cardId: number) => void
     deck: number[]
     cards: CardObjectInterface[]
-    texts: { [key: string]: string | string[] }
+    texts: { [key: string]: string }
   }
 ) => {
   const { flatListData, getFlatListData, handleAddCard, deck, cards, texts } = props

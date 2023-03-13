@@ -24,7 +24,12 @@ const GetDecksCards = (props: {
           <View style={styles.cardContainer}>
             <Image style={styles.image} source={Images.player0} />
             <Image style={styles.image} source={Images[card.id]} />
-            <RankNumbers ranks={card.ranks} element={card.element} player0={true} />
+            <RankNumbers
+              ranks={card.ranks}
+              element={card.element}
+              player0={true}
+              size={'smallCard'}
+            />
             <Text
               style={styles.removeClickable}
               onPress={() => handleRemoveCard(cardId, deck)}
@@ -44,7 +49,12 @@ const GetDecksCards = (props: {
         <View style={styles.cardContainer}>
           <Image style={styles.image} source={Images.player0} />
           <Image style={styles.image} source={Images[card.id]} />
-          <RankNumbers ranks={card.ranks} element={card.element} player0={true} />
+          <RankNumbers
+            ranks={card.ranks}
+            element={card.element}
+            player0={true}
+            size={'smallCard'}
+          />
         </View>
       </View>
     );

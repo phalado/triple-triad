@@ -244,7 +244,7 @@ export default {
   },
   ptbr: {
     whatever: 'Tanto faz (Ok)',
-    runAway: 'Eu não posso simplesmente fugir. (Cancel)',
+    runAway: 'Eu não posso fugir. (Cancel)',
     goBack: 'Voltar',
     continue: 'Continue',
     newGame: 'Novo jogo',
@@ -277,14 +277,12 @@ export default {
     elemental: 'Elemental',
     same: 'Iguais',
     plus: 'Soma',
-    sameWall: 'Paredes igauis',
+    sameWall: 'Paredes iguais',
     suddenDeath: 'Morte súbita',
     random: 'Aleatório',
-    newGameText: `
-      Opa, e aí? Você gostaria de ter estas cartas?
-      Meu irmão me deu elas, mas não é minha praia.
-      Você pode ficar com elas se quiser.
-    `,
+    newGameText: `Opa, e aí? Você gostaria de ter estas cartas?
+Meu irmão me deu elas, mas não é minha praia.
+Você pode ficar com elas se quiser.`,
     wait: 'Espere!',
     newGameAlert: 'Se você tiver um jogo salvo isto irá apagar seus dados e começar um novo jogo. Tem certeza?',
     npcTableHead: 'Nome-Vitórias-Derrotas-Empates-Desafiar',

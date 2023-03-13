@@ -58,6 +58,7 @@ const Images: { [key: string]: any } = {
   hamburguerIcon: require('../contents/img/hamburguer-icon-white.png'),
   ptbr: require('../contents/img/brasil.png'),
   eng: require('../contents/img/usa.png'),
+  info: require('../contents/img/info-box.png'),
   1: require('../contents/img/cards/001.png'),
   2: require('../contents/img/cards/002.png'),
   3: require('../contents/img/cards/003.png'),

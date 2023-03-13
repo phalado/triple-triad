@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import InitialScreen from './components/containers/InitialScreen';
-import ExploreInitialScreen from './components/screens/ExploreInitialScreen';
+import ExploreInitialScreen from './components/containers/ExploreInitialScreen';
 import ExploreScenes from './components/containers/ExploreScenes';
 import ChooseCardsScreen from './components/containers/ChooseCardsScreen';
 import GameDrawer from './components/containers/GameDrawer';

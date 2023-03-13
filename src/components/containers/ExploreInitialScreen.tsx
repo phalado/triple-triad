@@ -3,10 +3,11 @@ import StateInterface from '../../interfaces/StateInterface';
 import { createNpcList } from '../../slicers/npcsSlicer';
 import { addCardExplore, removeCardExplore } from '../../slicers/playerCardSlicer';
 import { restartRules } from '../../slicers/rulesSlicer';
-import ExploreModal from '../modals/ExploreModal';
+import ExploreInitialScreen from '../screens/ExploreInitialScreen';
 
 const mapStateToProps = (state: StateInterface) => ({
-  gameOptions: state.gameOptions
+  gameOptions: state.gameOptions,
+  events: state.events
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -16,4 +17,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   restartRules: () => dispatch(restartRules()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExploreModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ExploreInitialScreen);

@@ -48,14 +48,14 @@ const resetGame = (
 ) => {
   const { resetCards, resetTable, createCard, navigation, texts } = props;
 
-  Alert.alert(texts.wait as string, texts.giveUpGame as string, [
+  Alert.alert(texts.wait, texts.giveUpGame, [
     {
-      text: texts.runAway as string,
+      text: texts.runAway,
       onPress: () => null,
       style: 'cancel',
     },
     {
-      text: texts.whatever as string,
+      text: texts.whatever,
       onPress: () => {
         navigation.pop();
         resetTable();

@@ -385,7 +385,7 @@ const rareCardsQuest = (
       onCancel: null
     })
     changeCardQueenPlace(newLocation.location);
-  } else {console.log(location, npc, cardId); addCardToNPC({ location, npc, card: cardId })};
+  } else addCardToNPC({ location, npc, card: cardId });
 
   const queenOfCardsEvents = ['minimog', 'sacred', 'chicobo', 'alexander', 'doomtrain']
 

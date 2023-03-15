@@ -84,7 +84,6 @@ const GameOverScreenStyles = StyleSheet.create({
   chooseCardImage: {
     width: cardWidth,
     height: cardHeight,
-    justifyContent: 'space-evenly',
   },
   insideChooseCard: {
     width: cardWidth,

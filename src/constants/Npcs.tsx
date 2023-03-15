@@ -197,7 +197,7 @@ export default {
     kadowaki: {
       name: 'Dr. Kadowaki',
       cards: [4, 5, 6, 7],
-      special: [],
+      special: [97],
       win: 0,
       loose: 0,
       tie: 0,

@@ -2,7 +2,6 @@ import { getRandomBoolean, getRandomNumber } from "./OtherHelpers";
 import { NpcInterface, NpcsInterface } from "../interfaces/NpcsInterface";
 import Cards from "../constants/Cards";
 import CardObjectInterface from "../interfaces/CardObjectInterface";
-import { Alert } from "react-native";
 import CardQueenInterface from "../interfaces/CardQueenInterface";
 import Npcs from "../constants/Npcs";
 import AchievementsInterface from "../interfaces/AchievementsInterface";
@@ -57,8 +56,6 @@ const getTableData = (npcs: NpcsInterface, place: string, cardQueen: CardQueenIn
     tableData.push([name, win, loose, tie, { cards, special }, key]);
   });
 
-  tableData.sort((a: any, b: any) => a[0] - b[0]);
-
   return tableData;
 };
 
@@ -85,10 +82,16 @@ const cardClubEvents = (
   changeEvent: (event: string) => void,
   npc: string,
   npcs: NpcsInterface,
-  addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
   texts: { [key: string]: string },
   addNpcToLocation: (data: { npc: NpcInterface, location: string }) => void,
-  changeAchievement: (achievement: string) => void
+  changeAchievement: (achievement: string) => void,
+  setInfoBoxData: (props: {
+    title: string,
+    text: string,
+    onOk: () => void,
+    onCancel: null | (() => void)
+  }) => void,
+  setInfoBoxVisible: (visible: boolean) => void
 ) => {
   const vics = Object.values(npcs.balambGarden).filter(value => value.win > 0).length;
 
@@ -110,157 +113,163 @@ const cardClubEvents = (
     addNpcToLocation({ npc: { [event]: { ...Npcs.cardClub[event] } }, location: 'balambGarden' })
   }
 
-  if (vics >= 9 && events.jack) {
-    Alert.alert(
-      texts.ccJack as string, texts.ccJackOpen as string, [{
-        text: texts.whatever as string,
-        onPress: () => changeEventAndAddNpc('jack'),
-        style: 'cancel',
-      }],
-    );
+  if (vics >= 1 && events.jack) {
+    setInfoBoxData({
+      title: texts.ccJack,
+      text: texts.ccJackOpen,
+      onOk: () => {
+        changeEventAndAddNpc('jack')
+        setInfoBoxVisible(false)
+      },
+      onCancel: null
+    })
   }
 
   if (npc === 'jack' && events.joker) {
-    Alert.alert(
-      texts.ccJack as string, texts.ccJackClose as string, [{
-        text: texts.whatever as string,
-        onPress: () => {
-          Alert.alert(
-            texts.ccJoker as string, texts.ccJokerOpen as string, [{
-              text: texts.whatever as string,
-              onPress: () => changeEventAndAddNpc('joker'),
-              style: 'cancel',
-            }],
-          );
-        },
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: texts.ccJack,
+      text: texts.ccJackClose,
+      onOk: () => {
+        setInfoBoxData({
+          title: texts.ccJoker,
+          text: texts.ccJokerOpen,
+          onOk: () => {
+            changeEventAndAddNpc('joker')
+            setInfoBoxVisible(false)
+          },
+          onCancel: null
+        })
+      },
+      onCancel: null
+    })
   }
 
   if (npc === 'joker' && events.club) {
-    Alert.alert(
-      texts.ccJoker as string, texts.ccJokerClose as string, [{
-        text: texts.whatever as string,
-        onPress: () => {
-          Alert.alert(
-            texts.ccClub as string, texts.ccClubOpen as string, [{
-              text: texts.whatever as string,
-              onPress: () => changeEventAndAddNpc('club'),
-              style: 'cancel',
-            }],
-          );
-        },
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: texts.ccJoker,
+      text: texts.ccJokerClose,
+      onOk: () => {
+        setInfoBoxData({
+          title: texts.ccClub,
+          text: texts.ccClubOpen,
+          onOk: () => {
+            changeEventAndAddNpc('club')
+            setInfoBoxVisible(false)
+          },
+          onCancel: null
+        })
+      },
+      onCancel: null
+    })
   }
 
   if (npc === 'club' && events.diamond) {
-    Alert.alert(
-      texts.ccClub as string, texts.ccClubClose as string, [{
-        text: texts.whatever as string,
-        onPress: () => {
-          Alert.alert(
-            texts.ccDiamond as string, texts.ccDiamondOpen as string, [{
-              text: texts.whatever as string,
-              onPress: () => changeEventAndAddNpc('diamond'),
-              style: 'cancel',
-            }],
-          );
-        },
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: texts.ccClub,
+      text: texts.ccClubClose,
+      onOk: () => {
+        setInfoBoxData({
+          title: texts.ccDiamond,
+          text: texts.ccDiamondOpen,
+          onOk: () => {
+            changeEventAndAddNpc('diamond')
+            setInfoBoxVisible(false)
+          },
+          onCancel: null
+        })
+      },
+      onCancel: null
+    })
   }
 
   if (npc === 'diamond' && events.spade) {
-    Alert.alert(
-      texts.ccDiamond as string, texts.ccDiamondClose as string, [{
-        text: texts.whatever as string,
-        onPress: () => {
-          Alert.alert(
-            texts.ccSpade as string, texts.ccSpadeOpen as string, [{
-              text: texts.whatever as string,
-              onPress: () => changeEventAndAddNpc('spade'),
-              style: 'cancel',
-            }],
-          );
-        },
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: texts.ccDiamond,
+      text: texts.ccDiamondClose,
+      onOk: () => {
+        setInfoBoxData({
+          title: texts.ccSpade,
+          text: texts.ccSpadeOpen,
+          onOk: () => {
+            changeEventAndAddNpc('spade')
+            setInfoBoxVisible(false)
+          },
+          onCancel: null
+        })
+      },
+      onCancel: null
+    })
   }
 
   if (npc === 'spade' && events.heart) {
-    Alert.alert(
-      texts.ccSpade as string, texts.ccSpadeClose as string, [{
-        text: texts.whatever as string,
-        onPress: () => {
-          Alert.alert(
-            texts.ccHeart as string, texts.ccHeartOpen as string, [{
-              text: texts.whatever as string,
-              onPress: () => changeEventAndAddNpc('heart'),
-              style: 'cancel',
-            }],
-          );
-        },
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: texts.ccSpade,
+      text: texts.ccSpadeClose,
+      onOk: () => {
+        setInfoBoxData({
+          title: texts.ccHeart,
+          text: texts.ccHeartOpen,
+          onOk: () => {
+            changeEventAndAddNpc('heart')
+            setInfoBoxVisible(false)
+          },
+          onCancel: null
+        })
+      },
+      onCancel: null
+    })
   }
 
   if (npc === 'heart' && events.kadowaki) {
-    Alert.alert(
-      texts.ccHeart as string, texts.ccHeartClose as string, [{
-        text: texts.whatever as string,
-        onPress: () => {
-          Alert.alert(
-            'Dr Kadowaki', texts.ccKadowakiOpen as string, [{
-              text: texts.whatever as string,
-              onPress: () => {
-                addCardToNPC({ location: 'balambGarden', npc: 'kadowaki', card: 97 });
-                changeAchievement('beatHeart')
-                changeEvent('kadowaki');
-              },
-              style: 'cancel',
-            }],
-          );
-        },
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: texts.ccHeart,
+      text: texts.ccHeartClose,
+      onOk: () => {
+        setInfoBoxData({
+          title: 'Dr Kadowaki',
+          text: texts.ccKadowakiOpen,
+          onOk: () => {
+            changeAchievement('beatHeart')
+            changeEvent('kadowaki');
+            setInfoBoxVisible(false)
+          },
+          onCancel: null
+        })
+      },
+      onCancel: null
+    })
   }
 
   if (npc === 'kadowaki' && events.king && !events.kadowaki) {
-    Alert.alert(
-      'Dr Kadowaki', texts.ccKadowakiClose as string, [{
-        text: texts.whatever as string,
-        onPress: () => {
-          Alert.alert(
-            texts.ccKing as string, texts.ccKingOpen as string, [{
-              text: texts.talkToAWall as string,
-              onPress: () => changeEventAndAddNpc('king'),
-              style: 'cancel',
-            }],
-          );
-        },
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: 'Dr Kadowaki',
+      text: texts.ccKadowakiClose,
+      onOk: () => {
+        setInfoBoxData({
+          title: texts.ccKing,
+          text: texts.ccKingOpen,
+          onOk: () => {
+            changeEventAndAddNpc('king')
+            setInfoBoxVisible(false)
+          },
+          onCancel: null
+        })
+      },
+      onCancel: null
+    })
   }
 
   if (npc === 'king' && events.ccEnd) {
-    Alert.alert(
-      texts.ccKing as string, texts.ccKingClose as string, [{
-        text: texts.talkToAWall as string,
-        onPress: () => {
-          changeAchievement('beatTheCC')
-          changeEvent('ccEnd')
-        },
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: texts.ccKing,
+      text: texts.ccKingClose,
+      onOk: () => {
+        changeAchievement('beatTheCC')
+        changeEvent('ccEnd')
+        setInfoBoxVisible(false)
+      },
+      onCancel: null
+    })
   }
 };
 
@@ -310,25 +319,37 @@ const rareCardsQuest = (
   changeCardQueenPlace: (place: string) => void,
   texts: { [key: string]: string },
   achievements: AchievementsInterface,
-  changeAchievement: (achievement: string) => void
+  changeAchievement: (achievement: string) => void,
+  setInfoBoxData: (props: {
+    title: string,
+    text: string,
+    onOk: () => void,
+    onCancel: null | (() => void)
+  }) => void,
+  setInfoBoxVisible: (visible: boolean) => void
   ) => {
   if (npc === 'caraway' && cardId === 85 && events.caraway) {
     addCardToNPC({ location, npc, card: 107 });
     addCardToNPC({ location: 'fishermansHorizon', npc: 'martine', card: 85 });
-    Alert.alert('Caraway', texts.carawayOpen as string, [{
-      text: texts.whatever as string,
-      onPress: () => Alert.alert(
-        'Caraway', texts.carawayClose as string, [{
-          text: texts.whatever as string,
-          onPress: () => {
+
+    setInfoBoxData({
+      title: 'Caraway',
+      text: texts.carawayOpen,
+      onOk: () => {
+        setInfoBoxData({
+          title: 'Caraway',
+          text: texts.carawayClose,
+          onOk: () => {
             changeEvent('caraway')
             changeAchievement('caraway')
+            setInfoBoxVisible(false)
           },
-          style: 'cancel',
-        }],
-      ),
-      style: 'cancel',
-    }]);
+          onCancel: null
+        })
+      },
+      onCancel: null
+    })
+
   } else if (npc === 'Card Queen') {
     if (cardId === 81 && events.minimog) {
       addCardToNPC({ location: 'delingCity', npc: 'manInBlack', card: 101 });
@@ -357,15 +378,14 @@ const rareCardsQuest = (
 
     addCardToNPC({ location: 'dollet', npc: 'cardQueenSon', card: cardId });
     const newLocation = getNewLocation(location);
-    Alert.alert(
-      'Card Queen', (texts.cardQueenLeaving as string) + newLocation.name, [{
-        text: texts.whatever as string,
-        onPress: () => null,
-        style: 'cancel',
-      }],
-    );
+    setInfoBoxData({
+      title: 'Card Queen',
+      text: texts.cardQueenLeaving + newLocation.name,
+      onOk: () => setInfoBoxVisible(false),
+      onCancel: null
+    })
     changeCardQueenPlace(newLocation.location);
-  } else addCardToNPC({ location, npc, card: cardId });
+  } else {console.log(location, npc, cardId); addCardToNPC({ location, npc, card: cardId })};
 
   const queenOfCardsEvents = ['minimog', 'sacred', 'chicobo', 'alexander', 'doomtrain']
 

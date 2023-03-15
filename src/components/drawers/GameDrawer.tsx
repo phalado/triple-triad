@@ -15,7 +15,6 @@ const GameDrawer = (
     gameOptions: GameOptionsInterface
   }
 ) => {
-  console.log(props)
   const { rules, navigation, location, gameOptions } = props;
   const { language, username } = gameOptions;
   const { resetTable, createCard, resetCards } = useContext(GameContext)

@@ -37,7 +37,7 @@ const ExploreInitialScreen = (props: {
     handleResetDeck();
     setInfoBoxText(texts.newGameText)
     setInfoBoxCancel(null)
-    setInfoBoxOk(() => () => addFirstCardsToDeck([1, 2, 4, 6, 7, 8, 10, 85]))
+    setInfoBoxOk(() => () => addFirstCardsToDeck([1, 2, 4, 6, 7, 8, 10, 85, 106, 107, 108, 109, 110]))
   })
 
   const startScene = () => {
@@ -76,6 +76,7 @@ const ExploreInitialScreen = (props: {
         visible={infoBoxVisible}
         title={infoBoxTitle}
         text={infoBoxText}
+        heightSize={'small'}
         onOk={infoBoxOk}
         onCancel={infoBoxCancel}
       />

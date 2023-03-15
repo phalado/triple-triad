@@ -10,17 +10,15 @@ import { looseTheme, winTheme } from "../../constants/Sounds";
 import Images from "../../constants/Images";
 import Cards from "../../constants/Cards";
 import places from '../../constants/Places';
-import { getCardsId, getRandomCards } from "../../helpers/OtherHelpers";
+import Texts from "../../constants/Texts";
 import styles from '../../styles/GameOverScreen';
 
 import CardInterface from "../../interfaces/CardInterface";
 import RulesInterface from "../../interfaces/RulesInterface";
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
-import { cardClubEvents, rareCardsQuest } from "../../helpers/ExploreModeHelpers";
-import { NpcInterface, NpcsInterface } from "../../interfaces/NpcsInterface";
-import Texts from "../../constants/Texts";
 import GameOptionsInterface from "../../interfaces/GameOptionsInterface";
 import AchievementsInterface from "../../interfaces/AchievementsInterface";
+import { getCardsId, getRandomCards } from "../../helpers/OtherHelpers";
 import { checkAchievements } from "../../helpers/AchievementsHelper";
 
 const GameOverScreen = (props: {
@@ -28,22 +26,15 @@ const GameOverScreen = (props: {
   route: any
   rules: RulesInterface
   playerCards: { [card: string]: number }
-  events: { [event: string]: boolean }
-  npcs: NpcsInterface
   preLoadedSounds: any
   gameOptions: GameOptionsInterface
   achievements: AchievementsInterface
-  addCardToNPC: (data: { npc: string, card: number, location: string }) => void
   removeCardFromNPC: (data: { npc: string, card: number, location: string }) => void
   changeNPCStreak: (data: { npc: string, streak: 'win' | 'loose' | 'tie', location: string }) => void
   addCardToExploreDeck: (cardId: number) => void
   removeCardFromExploreDeck: (cardId: number) => void
-  changeEvent: (event: string) => void,
-  changeCardQueenPlace: (place: string) => void
-  addSpecialCardQueen: (card: number) => void
   removeSpecialCardQueen: (card: number) => void
   changeCardQueenStreak: (streak: 'win' | 'loose' | 'tie') => void
-  addNpcToLocation: (data: { npc: NpcInterface, location: string }) => void
   changeAchievement: (achievement: string) => void
 }) => {
   const {
@@ -51,27 +42,22 @@ const GameOverScreen = (props: {
     route,
     rules,
     playerCards,
-    events,
-    npcs,
     preLoadedSounds,
     gameOptions,
     achievements,
-    addCardToNPC,
     removeCardFromNPC,
     changeNPCStreak,
     addCardToExploreDeck,
     removeCardFromExploreDeck,
-    changeEvent,
-    changeCardQueenPlace,
-    addSpecialCardQueen,
     removeSpecialCardQueen,
     changeCardQueenStreak,
-    addNpcToLocation,
     changeAchievement
   } = props
 
   const { gameOver, npcDeck, location, npc, p1InitialCards } = route.params
-  const { resetTable, resetCards, createCard, cards, cardsOnTheTable } = useContext(GameContext)
+  const {
+    resetTable, resetCards, createCard, cards, cardsOnTheTable, setNpc, setCardId, setGameOverState
+  } = useContext(GameContext)
   const [visible, setVisible] = useState(false);
   const [modalCard, setModalCard] = useState(1);
   const [cardOwner, setCardOwner] = useState('player0');
@@ -151,9 +137,12 @@ const GameOverScreen = (props: {
 
   if (npcDeck && location !== 'random') {
     const winCard = (cardId: number) => {
+      setNpc(npc)
+      setCardId(cardId)
+      setGameOverState('win')
       if (!achievements.oneGame.status) changeAchievement('oneGame')
       if (npc === 'Card Queen') {
-        if (!achievements.cardQueen.status) changeAchievement('cardQueen')
+        if (!achievements.queenOfCards.status) changeAchievement('queenOfCards')
         if (cardId === 48 || cardId > 77) removeSpecialCardQueen(cardId)
         changeCardQueenStreak('win')
       } else {
@@ -178,35 +167,15 @@ const GameOverScreen = (props: {
           navigation.push('Explore Scenes', {
             place: myPlace[1], image: myPlace[2], audio: myPlace[3]
           });
-          cardClubEvents(
-            events,
-            changeEvent,
-            npc,
-            npcs,
-            addCardToNPC,
-            texts,
-            addNpcToLocation,
-            changeAchievement
-          );
+          
         }, 500);
       }, 1000);
     };
 
     const looseCard = (cardId: number) => {
-      if (cardId === 48 || cardId > 77) {
-        rareCardsQuest(
-          npc,
-          cardId,
-          location,
-          events,
-          changeEvent,
-          addCardToNPC,
-          changeCardQueenPlace,
-          texts,
-          achievements,
-          changeAchievement
-        );
-      }
+      setNpc(npc)
+      setCardId(cardId)
+      setGameOverState('loose')
       if (npc === 'Card Queen') changeCardQueenStreak('loose')
       else {
         const newLocation = cardClub.includes(npc) ? 'cardClub' : location

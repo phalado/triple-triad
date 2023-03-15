@@ -5,18 +5,19 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 import NPCsTable from '../NPCsTable';
 import PupuEvent from '../PupuEvent';
-import { getRandonPlayerCards, getTableData } from '../../helpers/ExploreModeHelpers';
+import { cardClubEvents, getRandonPlayerCards, getTableData, rareCardsQuest } from '../../helpers/ExploreModeHelpers';
 import { getRandomNumber } from '../../helpers/OtherHelpers';
 import CardModal from '../modals/CardModal';
 import PlacesModal from '../modals/PlacesModal';
 import RulesInterface from '../../interfaces/RulesInterface';
-import { NpcsInterface } from '../../interfaces/NpcsInterface';
+import { NpcInterface, NpcsInterface } from '../../interfaces/NpcsInterface';
 import styles from '../../styles/ExploreScenes';
 import { GameContext } from '../GameContext';
 import Texts from '../../constants/Texts';
 import GameOptionsInterface from '../../interfaces/GameOptionsInterface';
 import AchievementsInterface from '../../interfaces/AchievementsInterface';
 import ToastMessage from "../containers/ToastMessage";
+import InfoModal from '../modals/InfoModal';
 
 const ExploreScenes = (
   props:
@@ -35,6 +36,9 @@ const ExploreScenes = (
     changeEvent: (event: string) => void
     changeLastLocation: (location: string) => void
     changeAchievement: (achievement: string) => void
+    addCardToNPC: (data: { npc: string, card: number, location: string }) => void
+    addNpcToLocation: (data: { npc: NpcInterface, location: string }) => void
+    changeCardQueenPlace: (place: string) => void
   }
 ) => {
   const {
@@ -51,7 +55,10 @@ const ExploreScenes = (
     createNPCList,
     changeEvent,
     changeLastLocation,
-    changeAchievement
+    changeAchievement,
+    addCardToNPC,
+    addNpcToLocation,
+    changeCardQueenPlace
   } = props;
   const { place, image, audio } = route.params;
   const [texts] = useState(Texts[(gameOptions.language as 'eng' | 'ptbr')])
@@ -60,8 +67,17 @@ const ExploreScenes = (
   const [tableData, setTableData] = useState(getTableData(npcs, place, cardQueen));
   const [cardVisible, setCardVisible] = useState(false);
   const [cardOwner, setCardOwner] = useState('player0');
-  const { resetTable, createCard, resetCards } = useContext(GameContext)
-  const [toastMessage, setToastMessage] = useState('')
+  const {
+    resetTable,
+    createCard,
+    resetCards,
+    npc,
+    setNpc,
+    cardId,
+    setCardId,
+    gameOverState,
+    setGameOverState
+  } = useContext(GameContext)
 
   useFocusEffect(
     useCallback(() => {
@@ -86,6 +102,64 @@ const ExploreScenes = (
   useEffect(() => setTableData(getTableData(npcs, place, cardQueen)), [npcs])
 
   if (Object.entries(npcs).length === 0) createNPCList();
+
+  const [infoBoxVisible, setInfoBoxVisible] = useState(false);
+  const [infoBoxText, setInfoBoxText] = useState(texts.newGameAlert)
+  const [infoBoxTitle, setInfoBoxTitle] = useState(texts.wait)
+  const [infoBoxCancel, setInfoBoxCancel] = useState<null | (() => void)>(null)
+  const [infoBoxOk, setInfoBoxOk] = useState<() => void>()
+
+  const setInfoBoxData = (props: {
+    title: string,
+    text: string,
+    onOk: () => void,
+    onCancel: null | (() => void)
+  }) => {
+    const { title, text, onOk, onCancel } = props;
+
+    setInfoBoxTitle(title)
+    setInfoBoxText(text)
+    setInfoBoxOk(() => () => onOk())
+    setInfoBoxCancel(onCancel)
+    setInfoBoxVisible(true)
+  }
+
+  useEffect(() => {
+    if (cardId === 0) return
+
+    if (gameOverState === 'win') {
+      cardClubEvents(
+        events,
+        changeEvent,
+        npc,
+        npcs,
+        texts,
+        addNpcToLocation,
+        changeAchievement,
+        setInfoBoxData,
+        setInfoBoxVisible
+      );
+    } else if (gameOverState === 'loose' && (cardId === 48 || cardId > 77)) {
+      rareCardsQuest(
+        npc,
+        cardId,
+        place,
+        events,
+        changeEvent,
+        addCardToNPC,
+        changeCardQueenPlace,
+        texts,
+        achievements,
+        changeAchievement,
+        setInfoBoxData,
+        setInfoBoxVisible
+      );
+    }
+
+    setCardId(0)
+    setNpc('')
+    setGameOverState(null)
+  }, [cardId])
 
   const addCardsToStore = (myDeck: number[], npcDeck: number[]) => {
     resetCards();
@@ -165,6 +239,15 @@ const ExploreScenes = (
         </ScrollView>
       </View>
       <ToastMessage />
+      <InfoModal
+        texts={texts}
+        visible={infoBoxVisible}
+        title={infoBoxTitle}
+        text={infoBoxText}
+        heightSize={'medium'}
+        onOk={infoBoxOk}
+        onCancel={infoBoxCancel}
+      />
       {(getRandomNumber(0, 10) <= 2 && events.pupu4) && <PupuEvent getPupuEvent={getPupuEvent} />}
     </View>
   );

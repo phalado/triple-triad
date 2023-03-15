@@ -6,7 +6,7 @@ const { ScreenHeight, ScreenWidth } = CSSSizes
 const InfoModalStyles = StyleSheet.create({
   container: {
     position: 'relative',
-    maxHeight: ScreenHeight / 2.5,
+    maxHeight: ScreenHeight / 1.9,
     width: ScreenWidth / 2,
     alignSelf: 'center',
     marginTop: ScreenHeight / 5
@@ -24,22 +24,26 @@ const InfoModalStyles = StyleSheet.create({
     color: 'white',
     fontSize: ScreenWidth / 50
   },
-  text: {
+  scrollContainer: {
     position: 'absolute',
-    width: '90%',
     top: ScreenHeight / 8,
+    left: 0,
+    width: '100%',
+    height: '60%',
+  },
+  text: {
+    width: '90%',
     left: '5%',
     color: 'white',
-    fontSize: ScreenWidth / 60
+    marginBottom: '8%',
+    fontSize: ScreenWidth / 60,
   },
   buttonContainer: {
-    position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginLeft: '5%',
     width: '90%',
     bottom: ScreenHeight / 30,
-
   }
 });
 

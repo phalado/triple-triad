@@ -20,7 +20,13 @@ export const GameContext = createContext<any>({
   placeCard: () => {},
   existCard: () => {},
   turn: true,
-  setTurn: () => {}
+  setTurn: () => {},
+  npc: '',
+  setNpc: () => {},
+  cardId: 0,
+  setCardId: () => {},
+  gameOverState: null,
+  setGameOverState: () => {}
 })
 
 
@@ -28,6 +34,9 @@ export const GameProvider = ({ children }: { children: ReactElement }) => {
   const [table, setTable] = useState<TableInterface>([])
   const [cards, setcards] = useState<PlayerCardsInterface>({ player1Cards: [], player2Cards: [] })
   const [turn, setTurn] = useState(getRandomBoolean())
+  const [npc, setNpc] = useState('')
+  const [cardId, setCardId] = useState('')
+  const [gameOverState, setGameOverState] = useState(null)
 
   const cardsOnTheTable = () => table.flat().filter((field: CellInterface) => field.card).length
 
@@ -111,7 +120,13 @@ export const GameProvider = ({ children }: { children: ReactElement }) => {
       placeCard,
       existCard,
       turn,
-      setTurn
+      setTurn,
+      npc,
+      setNpc,
+      cardId,
+      setCardId,
+      gameOverState,
+      setGameOverState
     }}>
       {children}
     </GameContext.Provider>

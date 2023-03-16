@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import StateInterface from '../../interfaces/StateInterface';
+import { startDecks } from '../../slicers/decksSlicer';
 import { createNpcList } from '../../slicers/npcsSlicer';
 import { addCardExplore, removeCardExplore } from '../../slicers/playerCardSlicer';
 import { restartRules } from '../../slicers/rulesSlicer';
@@ -15,6 +16,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   removeCardFromExploreDeck: (card: number) => dispatch(removeCardExplore(card)),
   createNPCList: () => dispatch(createNpcList()),
   restartRules: () => dispatch(restartRules()),
+  startDecks: () => dispatch(startDecks())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExploreInitialScreen);

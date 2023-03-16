@@ -17,6 +17,18 @@ const getCardsFromPlayerDeck = (playerCards: { [card: string]: number }) => {
   return deck;
 };
 
+const getFlatListCards = (playerCards: CardObjectInterface[], deck: number[]) => {
+  let newcards = [...playerCards]
+  deck.forEach((cardId: number) => {
+    const elementIndex = newcards.indexOf(
+      newcards.find((card: CardObjectInterface) => card.id === cardId) as CardObjectInterface
+    )
+    if (elementIndex >= 0) newcards.splice(elementIndex, 1)
+  })
+
+  return newcards
+}
+
 // MELHORAR
 const getNPCsCards = (cards: number[], special: number[]) => {
   const deck: number[] = [];
@@ -113,7 +125,7 @@ const cardClubEvents = (
     addNpcToLocation({ npc: { [event]: { ...Npcs.cardClub[event] } }, location: 'balambGarden' })
   }
 
-  if (vics >= 1 && events.jack) {
+  if (vics >= 9 && events.jack) {
     setInfoBoxData({
       title: texts.ccJack,
       text: texts.ccJackOpen,
@@ -397,6 +409,7 @@ const rareCardsQuest = (
 
 export {
   getCardsFromPlayerDeck,
+  getFlatListCards,
   getTableData,
   getRandonPlayerCards,
   getNPCsCards,

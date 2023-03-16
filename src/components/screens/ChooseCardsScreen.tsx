@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import Cards from "../../constants/Cards";
-import { getCardsFromPlayerDeck } from "../../helpers/ExploreModeHelpers";
+import { getCardsFromPlayerDeck, getFlatListCards } from "../../helpers/ExploreModeHelpers";
 import ChooseCardsDropZone from "../ChooseCardsDropZone";
 import GameDeckFlatList from "../GameDeckFlatList";
 import CardObjectInterface from "../../interfaces/CardObjectInterface";
@@ -9,21 +9,28 @@ import GameOptionsInterface from "../../interfaces/GameOptionsInterface";
 import { GameContext } from "../GameContext";
 import styles from '../../styles/GameDeck';
 import Texts from "../../constants/Texts";
+import DecksInterface from "../../interfaces/DecksInterface";
 
 const ChooseCardsScreen = (
   props: {
     navigation: any
     route: any
-    playerCards: { [index: string]: number },
+    playerCards: { [index: string]: number }
     gameOptions: GameOptionsInterface
+    decks: DecksInterface
+    changeDeck: (data: { deck: string, cards: number[] }) => void
+    changeSelectedDeck: (deck: string) => void
   }
 ) => {
-  const { navigation, route, playerCards, gameOptions } = props
+  const {
+    navigation, route, playerCards, gameOptions, decks, changeDeck, changeSelectedDeck
+  } = props
   const { language } = gameOptions
   const { npcDeck, location, npc } = route.params.params || route.params;
   const [myCards] = useState(getCardsFromPlayerDeck(playerCards));
-  const [myDeck, setMyDeck] = useState([0, 0, 0, 0, 0]);
-  const [flatListData, setFlatListData] = useState([...myCards]);
+  const [selectedDeck, setSelectedDeck] = useState(decks.selected === '' ? 'deck1' : decks.selected)
+  const [myDeck, setMyDeck] = useState(decks[selectedDeck] || decks.deck1);
+  const [flatListData, setFlatListData] = useState(getFlatListCards(myCards, myDeck));
   const { createCard, resetCards } = useContext(GameContext)
   const [texts] = useState(Texts[language as 'eng' | 'ptbr'])
 
@@ -38,10 +45,22 @@ const ChooseCardsScreen = (
     });
   };
 
+  useEffect(() => {
+    changeSelectedDeck(selectedDeck)
+    setMyDeck(decks[selectedDeck])
+  }, [selectedDeck])
+  
+  useEffect(() => {
+    setFlatListData(getFlatListCards(myCards, myDeck))
+    changeDeck({ deck: selectedDeck, cards: [...myDeck] })
+  },[myDeck])
+
   const handleAddCard = (cardId: number) => {
     if (myDeck.some((value: number) => value === 0)) {
-      myDeck.splice(myDeck.indexOf(0), 1, cardId).sort();
-      setMyDeck([...myDeck]);
+      let newDeck = [...myDeck]
+      newDeck.splice(myDeck.indexOf(0), 1, cardId)
+      newDeck = newDeck.sort((a: any, b: any) => a.id - b.id)
+      setMyDeck([...newDeck]);
       const thisCard = Cards.find(card => card.id === cardId) as CardObjectInterface;
       flatListData.splice(flatListData.indexOf(thisCard), 1).sort();
       setFlatListData(flatListData);
@@ -49,8 +68,10 @@ const ChooseCardsScreen = (
   };
 
   const handleRemoveCard = (cardId: number) => {
-    myDeck.splice(myDeck.indexOf(cardId), 1, 0).sort();
-    setMyDeck([...myDeck]);
+    let newDeck = [...myDeck]
+    newDeck.splice(myDeck.indexOf(cardId), 1, 0)
+    newDeck = newDeck.sort((a: any, b: any) => a.id - b.id)
+    setMyDeck([...newDeck]);
     const thisCard = Cards.find(card => card.id === cardId) as CardObjectInterface;
     flatListData.push(thisCard);
     setFlatListData(flatListData.sort((a: any, b: any) => a.id - b.id));
@@ -60,8 +81,8 @@ const ChooseCardsScreen = (
     <View style={styles.container}>
       <GameDeckFlatList
         flatListData={flatListData.sort((
-            a: CardObjectInterface, b: CardObjectInterface
-          ) => b.id - a.id)}
+          a: CardObjectInterface, b: CardObjectInterface
+        ) => b.id - a.id)}
         handleAddCard={handleAddCard}
         deck={myDeck}
         cards={myCards}
@@ -76,6 +97,9 @@ const ChooseCardsScreen = (
         location={location}
         npc={npc}
         texts={texts}
+        changeDeck={changeDeck}
+        selectedDeck={selectedDeck}
+        setSelectedDeck={setSelectedDeck}
       />
     </View>
   )

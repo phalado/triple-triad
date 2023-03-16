@@ -122,6 +122,18 @@ const ModalStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     margin: 20
+  },
+  decksModal: {
+    width: '50%',
+    height: '50%',
+    alignSelf: 'center'
+  },
+  decksContainer: {
+    width: '30%',
+    height: '50%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignSelf: 'center'
   }
 });
 

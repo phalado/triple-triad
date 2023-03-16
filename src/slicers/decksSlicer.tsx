@@ -2,20 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import DecksInterface from '../interfaces/DecksInterface';
 
 const initialState: DecksInterface = {
-  player: {
-    deck1: [1, 2, 4, 6, 7],
-    deck2: [1, 2, 4, 6, 7],
-    deck3: [1, 2, 4, 6, 7],
-    deck4: [1, 2, 4, 6, 7],
-    deck5: [1, 2, 4, 6, 7],
-  },
-  custom: {
-    deck1: Array(5).fill(1),
-    deck2: Array(5).fill(2),
-    deck3: Array(5).fill(3),
-    deck4: Array(5).fill(4),
-    deck5: Array(5).fill(5),
-  },
+  deck1: [0, 0, 0, 0, 0],
+  deck2: [0, 0, 0, 0, 0],
+  deck3: [0, 0, 0, 0, 0],
+  deck4: [0, 0, 0, 0, 0],
+  deck5: [0, 0, 0, 0, 0],
+  selected: 'deck1'
 }
 
 const decksSlicer = createSlice({
@@ -25,22 +17,14 @@ const decksSlicer = createSlice({
     startDecks: () => initialState,
     changeDeck: (
       state = initialState,
-      action: { payload: { player: boolean, deck: string, cards: number[] } }
-    ) => {
-      const { player, deck, cards } = action.payload
-
-      if (player) return {
-        player: { ...state.player, [deck]: [...cards] },
-        custom: state.custom
-      }
-
-      return {
-        player: state.player,
-        custom: { ...state.custom, [deck]: [...cards] }
-      }
-    }
+      action: { payload: { deck: string, cards: number[] } }
+    ) => ({ ...state, [action.payload.deck]: [...action.payload.cards] }),
+    changeSelectedDeck: (
+      state = initialState,
+      action: { payload: '' | 'deck1' | 'deck2' | 'deck3' | 'deck4' | 'deck5' }
+    ) => ({ ...state, selected: action.payload })
   }
 })
 
-export const { startDecks, changeDeck } = decksSlicer.actions
+export const { startDecks, changeDeck, changeSelectedDeck } = decksSlicer.actions
 export default decksSlicer.reducer

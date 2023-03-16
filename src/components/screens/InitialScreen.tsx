@@ -108,6 +108,20 @@ const InitialScreen = ({
         </TouchableOpacity>
 
         <TouchableOpacity
+          onPress={() => {
+            const params = { npcDeck: [], location: 'choose', npc: '' }
+            navigation.navigate('Choose Cards', { screen: 'Choose Cards', params })}
+          }
+          style={styles.exploreButton2}
+        >
+          <Image
+            style={styles.backgroundImages}
+            source={Images.deckScreen}
+          />
+          <Text style={styles.buttonText}>Edit your decks</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
           onPress={() => navigation.navigate('Catalog', { screen: 'Catalog', params: { deck: 'none', type: 'custom' } })}
           style={styles.exploreButton}
         >

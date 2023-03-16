@@ -7,10 +7,7 @@ import PreLoadedSoundsInterface from "./PreLoadedSounds"
 import RulesInterface from "./RulesInterface"
 
 export default interface StateInterface {
-  decks: {
-    player: DecksInterface
-    custom: DecksInterface
-  }
+  decks: DecksInterface
   events: { [event: string]: boolean }
   streak: number[]
   npcs: NpcsInterface

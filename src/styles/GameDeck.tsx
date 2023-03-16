@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import CSSSizes from '../constants/CSSSizes';
 
-const { cardWidth, cardHeight, ScreenWidth } = CSSSizes
+const { cardWidth, cardHeight, ScreenWidth, ScreenHeight } = CSSSizes
 
 const GameDeckStyle = StyleSheet.create({
   container: {
@@ -50,6 +50,10 @@ const GameDeckStyle = StyleSheet.create({
     marginBottom: 10,
     zIndex: 2,
   },
+  buttonsContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-evenly'
+  },
   playerCardContainer: {
     position: 'relative',
     alignItems: 'center',
@@ -63,6 +67,11 @@ const GameDeckStyle = StyleSheet.create({
     borderColor: 'red',
     borderWidth: 1,
   },
+  deckText: {
+    alignSelf: 'center',
+    fontSize: ScreenHeight / 30,
+    marginTop: ScreenHeight / 100
+  }
 });
 
 export default GameDeckStyle;

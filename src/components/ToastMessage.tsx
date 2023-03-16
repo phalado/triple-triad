@@ -43,7 +43,7 @@ const ToastMessage = (props: {
       width={ScreenWidth / 2}
       animationIn={'slideInLeft'}
       animationOut={'slideOutRight'}
-      duration={600000}
+      duration={6000}
     />
   )
 }

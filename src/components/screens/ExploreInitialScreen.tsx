@@ -20,8 +20,11 @@ const ExploreInitialScreen = (props: {
   addCardToExploreDeck: (card: number) => void
   createNPCList: () => void
   restartRules: () => void
+  startDecks: () => void
 }) => {
-  const { navigation, route, addCardToExploreDeck, createNPCList, restartRules } = props
+  const {
+    navigation, route, addCardToExploreDeck, createNPCList, restartRules, startDecks
+  } = props
   const { eventNewGame, gameOptions, handleResetDeck } = route.params
   const { language, lastLocation } = gameOptions
   const [texts] = useState(Texts[(language as 'eng' | 'ptbr')])
@@ -52,6 +55,7 @@ const ExploreInitialScreen = (props: {
   const addFirstCardsToDeck = (cards: number[]) => {
     createNPCList();
     restartRules();
+    startDecks();
     addCardToExploreDeck(cards[0]);
     setCardOwner('player0');
     setCardModalVisible(true);

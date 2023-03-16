@@ -285,6 +285,56 @@ const cardClubEvents = (
   }
 };
 
+const addSpecialCards = (
+  addCardToNPC: (data: { npc: string, card: number, location: string }) => void,
+  setInfoBoxData: (props: {
+    title: string,
+    text: string,
+    onOk: () => void,
+    onCancel: null | (() => void)
+  }) => void,
+  texts: { [key: string]: string },
+  changeEvent: (event: string) => void,
+
+) => {
+  const specialCards = [
+    {location: 'balambGarden', npc: 'quistisGroupie2', card: 104},
+    {location: 'balambGarden', npc: 'runningBoy', card: 81},
+    {location: 'balambGarden', npc: 'cid', card: 90},
+    {location: 'balambTown', npc: 'hotelOwner', card: 93},
+    {location: 'balambTown', npc: 'maDincht', card: 106},
+    {location: 'dollet', npc: 'barOwner', card: 86},
+    {location: 'delingCity', npc: 'carawayGuard', card: 87},
+    {location: 'delingCity', npc: 'carawayGuard', card: 88},
+    {location: 'galbadiaGarden', npc: 'youngStudent', card: 94},
+    {location: 'fishermansHorizon', npc: 'fisherman', card: 99},
+    {location: 'fishermansHorizon', npc: 'dobe', card: 83},
+    {location: 'trabiaGarden', npc: 'selphieFriend', card: 103},
+    {location: 'winhill', npc: 'littleGirl', card: 92},
+    {location: 'edeasHouse', npc: 'chocoboy', card: 82},
+    {location: 'edeasHouse', npc: 'watts', card: 79},
+    {location: 'edeasHouse', npc: 'zone', card: 84},
+    {location: 'edeasHouse', npc: 'edea', card: 108},
+    {location: 'edeasHouse', npc: 'cid', card: 109},
+    {location: 'esthar', npc: 'odine', card: 100},
+    {location: 'esthar', npc: 'laguna', card: 110},
+    {location: 'esthar', npc: 'piet', card: 95},
+    {location: 'esthar', npc: 'ellone', card: 102},
+  ]
+
+  setInfoBoxData({
+    title: texts.specialCards,
+    text: texts.specialCardsText,
+    onOk: () => {
+      specialCards.forEach((specialCard: { location: string, npc: string, card: number }) => {
+        addCardToNPC({ ...specialCard })
+      })
+      changeEvent('specialCards')
+    },
+    onCancel: null
+  })
+}
+
 const getNewLocation = (location: string) => {
   const value = getRandomNumber(1, 1000);
   switch (location) {
@@ -414,5 +464,6 @@ export {
   getRandonPlayerCards,
   getNPCsCards,
   cardClubEvents,
-  rareCardsQuest
+  rareCardsQuest,
+  addSpecialCards
 }

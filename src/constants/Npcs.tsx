@@ -107,7 +107,7 @@ export default {
     quistisGroupie2: {
       name: 'Quistis Groupie 2',
       cards: [2, 5],
-      special: [104],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -131,7 +131,7 @@ export default {
     runningBoy: {
       name: 'Runinng Boy',
       cards: [1, 2, 3, 5],
-      special: [81],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -139,7 +139,7 @@ export default {
     cid: {
       name: 'Cid',
       cards: [1, 2, 3, 5],
-      special: [90],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -156,7 +156,7 @@ export default {
     },
     joker: {
       name: 'CC Magician Joker',
-      cards: [1, 2, 3, 4, 5, 6, 7],
+      cards: [1, 2, 7],
       special: [91],
       win: 0,
       loose: 0,
@@ -172,7 +172,7 @@ export default {
     },
     diamond: {
       name: 'CC Princess Diamond',
-      cards: [3, 4, 5, 6],
+      cards: [5, 6],
       special: [],
       win: 0,
       loose: 0,
@@ -180,7 +180,7 @@ export default {
     },
     spade: {
       name: 'CC Prince Spade',
-      cards: [3, 4, 6, 7],
+      cards: [5, 6, 7],
       special: [],
       win: 0,
       loose: 0,
@@ -188,7 +188,7 @@ export default {
     },
     heart: {
       name: 'CC Queen of Heart - Xu',
-      cards: [3, 5, 6, 7],
+      cards: [6, 7],
       special: [89],
       win: 0,
       loose: 0,
@@ -196,7 +196,7 @@ export default {
     },
     kadowaki: {
       name: 'Dr. Kadowaki',
-      cards: [4, 5, 6, 7],
+      cards: [6, 7],
       special: [97],
       win: 0,
       loose: 0,
@@ -204,7 +204,7 @@ export default {
     },
     king: {
       name: 'CC Master King - Quistis',
-      cards: [1, 2, 3, 4, 5, 6, 7],
+      cards: [7],
       special: [80],
       win: 0,
       loose: 0,
@@ -255,7 +255,7 @@ export default {
     hotelOwner: {
       name: 'Hotel owner',
       cards: [4, 5],
-      special: [93],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -271,7 +271,7 @@ export default {
     maDincht: {
       name: 'Ma Dincht - Zell\'s mother',
       cards: [1, 2, 4, 5],
-      special: [106],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -361,7 +361,7 @@ export default {
     barOwner: {
       name: 'Bar Owner',
       cards: [1, 2, 3, 4],
-      special: [86],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -419,7 +419,7 @@ export default {
     carawayGuard: {
       name: 'Caraway mansion guard',
       cards: [1, 2, 3, 4],
-      special: [87, 88],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -485,7 +485,7 @@ export default {
     youngStudent: {
       name: 'Young Student',
       cards: [1, 2, 3, 4, 5],
-      special: [94],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -633,7 +633,7 @@ export default {
     fisherman: {
       name: 'Fisherman',
       cards: [1, 6, 7],
-      special: [99],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -649,7 +649,7 @@ export default {
     dobe: {
       name: 'Mayor Dobe',
       cards: [1, 2, 4, 5, 6],
-      special: [83],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -797,7 +797,7 @@ export default {
     selphieFriend: {
       name: 'Selphie Friend',
       cards: [1, 2, 3, 4, 5],
-      special: [103],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -863,7 +863,7 @@ export default {
     littleGirl: {
       name: 'Little Girl',
       cards: [6, 7],
-      special: [92],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -873,7 +873,7 @@ export default {
     chocoboy: {
       name: 'Chocoboy',
       cards: [1, 2],
-      special: [82],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -881,7 +881,7 @@ export default {
     watts: {
       name: 'Watts',
       cards: [1, 4, 5],
-      special: [79],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -889,7 +889,7 @@ export default {
     zone: {
       name: 'Zone',
       cards: [2, 3, 7],
-      special: [84],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -897,7 +897,7 @@ export default {
     edea: {
       name: 'Edea',
       cards: [1, 2, 3, 4, 5, 6, 7],
-      special: [108],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -905,7 +905,7 @@ export default {
     cid: {
       name: 'Cid',
       cards: [1, 2, 3, 4, 5, 6, 7],
-      special: [109],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -1011,7 +1011,7 @@ export default {
     odine: {
       name: 'Odine',
       cards: [3, 4, 5, 6],
-      special: [100],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -1019,7 +1019,7 @@ export default {
     laguna: {
       name: 'Laguna',
       cards: [1, 2, 3, 4, 5, 6],
-      special: [110],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -1027,7 +1027,7 @@ export default {
     piet: {
       name: 'Piet',
       cards: [1, 2, 5, 6],
-      special: [95],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,
@@ -1035,7 +1035,7 @@ export default {
     ellone: {
       name: 'Ellone',
       cards: [1, 2, 6],
-      special: [102],
+      special: [],
       win: 0,
       loose: 0,
       tie: 0,

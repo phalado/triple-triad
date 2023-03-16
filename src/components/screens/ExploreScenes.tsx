@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 import NPCsTable from '../NPCsTable';
 import PupuEvent from '../PupuEvent';
-import { cardClubEvents, getRandonPlayerCards, getTableData, rareCardsQuest } from '../../helpers/ExploreModeHelpers';
+import { addSpecialCards, cardClubEvents, getRandonPlayerCards, getTableData, rareCardsQuest } from '../../helpers/ExploreModeHelpers';
 import { getRandomNumber } from '../../helpers/OtherHelpers';
 import CardModal from '../modals/CardModal';
 import PlacesModal from '../modals/PlacesModal';
@@ -100,6 +100,12 @@ const ExploreScenes = (
   );
 
   useEffect(() => setTableData(getTableData(npcs, place, cardQueen)), [npcs])
+
+  useEffect(() => {
+    if (!events.ccEnd && events.specialCards) {
+      addSpecialCards(addCardToNPC, setInfoBoxData, texts, changeEvent)
+    }
+  }, [events.ccEnd])
 
   if (Object.entries(npcs).length === 0) createNPCList();
 
@@ -221,10 +227,6 @@ const ExploreScenes = (
         <PlacesModal visible={visible} handleTravel={handleTravel} />
         <CardModal visible={cardVisible} cardId={48} cardOwner={cardOwner} />
         <Button title={texts.travel} onPress={() => setVisible(true)} />
-        {/* <Button
-          title="Edit Deck"
-          onPress={() => navigation.navigate('Game Deck', { screen: 'Game Deck', params: { deck: 'none', type: 'player' } })}
-        /> */}
         <Button title={texts.goBack} onPress={() => navigation.pop()} />
       </View>
       <View style={styles.subContainerRight}>

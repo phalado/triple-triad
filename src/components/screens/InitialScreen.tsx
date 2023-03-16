@@ -116,9 +116,9 @@ const InitialScreen = ({
         >
           <Image
             style={styles.backgroundImages}
-            source={Images.deckScreen}
+            source={Images.deck}
           />
-          <Text style={styles.buttonText}>Edit your decks</Text>
+          <Text style={styles.buttonText}>{texts.editDecks}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

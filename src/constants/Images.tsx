@@ -59,6 +59,7 @@ const Images: { [key: string]: any } = {
   ptbr: require('../contents/img/brasil.png'),
   eng: require('../contents/img/usa.png'),
   info: require('../contents/img/info-box.png'),
+  deck: require('../contents/img/scenes/deck.jpg'),
   1: require('../contents/img/cards/001.png'),
   2: require('../contents/img/cards/002.png'),
   3: require('../contents/img/cards/003.png'),

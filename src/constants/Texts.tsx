@@ -10,6 +10,7 @@ export default {
     randomGame: 'Random Game',
     catalog: 'Catalog',
     gameOptions: 'Game Options',
+    editDecks: 'Edit your decks',
     suddenDeathButton: 'SUDDEN DEATH!!!',
     chooseOneCard: 'Choose one card',
     cardWillBeChoosen: 'One card will be choosen',
@@ -212,7 +213,12 @@ Well, I lost it to my friend Martine.`,
     poison: 'Poison',
     fire: 'Fire',
     water: 'Water',
-    holy: 'Holy'
+    holy: 'Holy',
+    specialCards: 'Special cards',
+    specialCardsText: `Congratulations on beating the Card Club!
+Now that the King recognized you the special cards were unlocked.
+Several level 8, 9, and 10 cards were spread throughout the world.
+Can you beat its owners and collect all of them?`,
   },
   ptbr: {
     whatever: 'Tanto faz (Ok)',
@@ -225,6 +231,7 @@ Well, I lost it to my friend Martine.`,
     randomGame: 'Jogo aleatório',
     catalog: 'Catálogo',
     gameOptions: 'Opções de Jogo',
+    editDecks: 'Edite seus decks',
     suddenDeathButton: 'MORTE SÚBITA!!!',
     chooseOneCard: 'Escolha uma carta',
     cardWillBeChoosen: 'Uma carta será escolhida',
@@ -425,6 +432,11 @@ Bem, eu a perdi para meu amigo Martine.`,
     poison: 'Veneno',
     fire: 'Fogo',
     water: 'Água',
-    holy: 'Luz'
+    holy: 'Luz',
+    specialCards: 'Cartas especiais',
+    specialCardsText: `Parabéns por derrotar o Card Club!
+Agora que você foi reconhecido pelo Rei, as cartas especiais foram desbloqueadas.
+Diversas cartas de level 8, 9 e 10 foram espalhadas por todo o mundo.
+Será que você é capaz de derrotar seus donos e colecioná-las?`,
   }
 }

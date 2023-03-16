@@ -10,6 +10,7 @@ export default {
   kadowaki: true,
   king: true,
   ccEnd: true,
+  specialCards: true,
   minimog: true,
   sacred: true,
   chicobo: true,

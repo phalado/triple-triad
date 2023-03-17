@@ -117,11 +117,12 @@ const cardClubEvents = (
       diamond: 'beatClub',
       spade: 'beatDiamond',
       heart: 'beatSpade',
+      kadowaki: 'beatKadowaki',
       king: 'beatKadowaki',
     }
 
     changeEvent(event)
-    if (event !== 'kadowaki') changeAchievement(achievementName[event])
+    changeAchievement(achievementName[event])
     addNpcToLocation({ npc: { [event]: { ...Npcs.cardClub[event] } }, location: 'balambGarden' })
   }
 
@@ -241,8 +242,7 @@ const cardClubEvents = (
           title: 'Dr Kadowaki',
           text: texts.ccKadowakiOpen,
           onOk: () => {
-            changeAchievement('beatHeart')
-            changeEvent('kadowaki');
+            changeEventAndAddNpc('kadowaki');
             setInfoBoxVisible(false)
           },
           onCancel: null

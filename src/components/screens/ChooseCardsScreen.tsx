@@ -47,7 +47,7 @@ const ChooseCardsScreen = (
 
   useEffect(() => {
     changeSelectedDeck(selectedDeck)
-    setMyDeck(decks[selectedDeck])
+    setMyDeck(decks[selectedDeck].map(card => playerCards[card] > 0 ? card : 0))
   }, [selectedDeck])
   
   useEffect(() => {

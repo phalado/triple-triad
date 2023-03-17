@@ -15,12 +15,13 @@ const AchievementsScreen = (props: { route: any, navigation: any }) => {
   const conquered = Object.values(achievements)
     .filter(value => (value as AchievementsInterface).status).length
   const total = Object.keys(achievements).length
+  const achievsArray = Object.values(achievements).sort((a: any, b: any) => a.id - b.id)
 
   return (
     <ScrollView persistentScrollbar>
       <View style={styles.container}>
         <Text style={styles.title}>{texts.achievements + ' - ' + conquered + ' / ' + total}</Text>
-        {Object.values(achievements).map((value: AchievsInterface | unknown, index: number) => {
+        {achievsArray.map((value: AchievsInterface | unknown, index: number) => {
           const { status, title, description } = value as AchievsInterface
 
           return (
